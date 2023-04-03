@@ -1,4 +1,9 @@
 class Validator {
+  // check password & repassword is equals
+  static bool isPasswordEquals(String password, String rePassword) {
+    return (password == rePassword) ? true : false;
+  }
+
   static String? emailValidator(String? value) {
     if (value!.isEmpty) return "This field is required";
 

@@ -10,9 +10,11 @@ abstract class AuthEvent extends Equatable {
 class RegisterRestoEvent extends AuthEvent {
   String email;
   String password;
+  String rePassword;
 
   RegisterRestoEvent({
     required this.email,
     required this.password,
+    required this.rePassword,
   });
 }

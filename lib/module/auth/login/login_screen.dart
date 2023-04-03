@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:posapplication/shared/constants/constatns.dart';
 
 import '../../../shared/routes/app_routes.dart';

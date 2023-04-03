@@ -14,6 +14,8 @@ class _CoverAuthScreenState extends State<CoverAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final sizeLayer = MediaQuery.of(context).size;
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -22,54 +24,90 @@ class _CoverAuthScreenState extends State<CoverAuthScreen> {
             child: Column(
               children: <Widget>[
                 Container(
-                  height: MediaQuery.of(context).size.height / 2,
-                  width: MediaQuery.of(context).size.width,
+                  height: sizeLayer.height / 2,
+                  width: sizeLayer.width,
                   decoration: BoxDecoration(
                       color: Colors.amber,
                       borderRadius: BorderRadius.circular(15)),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height / 3.5,
-                  width: MediaQuery.of(context).size.width,
+                  height: sizeLayer.height / 3.5,
+                  width: sizeLayer.width,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Center(child: Text("data")),
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height / 14,
-                  width: MediaQuery.of(context).size.width,
-                  child: CupertinoSlidingSegmentedControl<bool>(
-                    groupValue: isRegister,
-                    children: {
-                      true: SliderMenuLogin(label: "REGISTER"),
-                      false: SliderMenuLogin(label: "LOGIN"),
-                    },
-                    onValueChanged: (value) {
-                      isRegister = value!;
-
-                      Future.delayed(
-                        Duration(
-                          milliseconds: 400,
+                SizedBox(
+                  height: sizeLayer.height / 16,
+                  width: sizeLayer.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        child: SizedBox(
+                          height: double.infinity,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red),
+                            onPressed: () =>
+                                Navigator.pushNamed(context, AppRoutes.login),
+                            child: Text("LOGIN"),
+                          ),
                         ),
-                        () {
-                          // (isRegister)
-                          //     ? Navigator.pushNamed(context, AppRoutes.register)
-                          //     : Navigator.pushNamed(context, AppRoutes.login);
-                          if (isRegister) {
-                            print("jalan");
-                            Navigator.pushNamed(context, AppRoutes.register);
-                          } else {
-                            print("jalan2");
-                            Navigator.pushNamed(context, AppRoutes.login);
-                          }
-                        },
-                      );
-
-                      setState(() {});
-                    },
+                      ),
+                      const SizedBox(width: 4),
+                      Expanded(
+                        child: SizedBox(
+                          height: double.infinity,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.grey.shade200,
+                              foregroundColor: Colors.black,
+                            ),
+                            onPressed: () => Navigator.pushNamed(
+                                context, AppRoutes.register),
+                            child: Text("DAFTAR"),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+                // Container(
+                //   height: sizeLayer.height / 14,
+                //   width: sizeLayer.width,
+                //   child: CupertinoSlidingSegmentedControl<bool>(
+                //     groupValue: isRegister,
+                //     children: {
+                //       true: SliderMenuLogin(label: "REGISTER"),
+                //       false: SliderMenuLogin(label: "LOGIN"),
+                //     },
+                //     onValueChanged: (value) {
+                //       isRegister = value!;
+
+                //       Future.delayed(
+                //         Duration(
+                //           milliseconds: 400,
+                //         ),
+                //         () {
+                //           // (isRegister)
+                //           //     ? Navigator.pushNamed(context, AppRoutes.register)
+                //           //     : Navigator.pushNamed(context, AppRoutes.login);
+                //           if (isRegister) {
+                //             print("jalan");
+                //             Navigator.pushNamed(context, AppRoutes.register);
+                //           } else {
+                //             print("jalan2");
+                //             Navigator.pushNamed(context, AppRoutes.login);
+                //           }
+                //         },
+                //       );
+
+                //       setState(() {});
+                //     },
+                //   ),
+                // ),
               ],
             ),
           ),

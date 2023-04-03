@@ -27,5 +27,14 @@ class FailureRegisterResto extends FailureState {
   FailureRegisterResto({required super.messageError});
 }
 
-class SuccessRegisterResto extends AuthState {}
+class SuccessRegisterResto extends AuthState {
+  SignInSignUpResult result;
+
+  SuccessRegisterResto({
+    required this.result,
+  });
+
+  @override
+  List<Object> get props => [result];
+}
 // register end
