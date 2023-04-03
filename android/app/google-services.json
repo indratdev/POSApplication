@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "738882296645",
+    "project_id": "posapplication-f36fa",
+    "storage_bucket": "posapplication-f36fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:738882296645:android:f1ce775358b8b97ac73c2c",
+        "android_client_info": {
+          "package_name": "com.indratdev.posapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "738882296645-fp2cpf4lfukhusmq7t10q97es27skrhr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAI0UrENx1W1jyFlLRDl_YSZSr4mBrabEQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "738882296645-fp2cpf4lfukhusmq7t10q97es27skrhr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
