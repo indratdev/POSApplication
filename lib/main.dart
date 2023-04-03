@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
 
-import 'module/auth/cover/login_screen.dart';
+import 'module/auth/cover/coverauth_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

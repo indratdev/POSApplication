@@ -47,14 +47,25 @@ class _CoverAuthScreenState extends State<CoverAuthScreen> {
                     },
                     onValueChanged: (value) {
                       isRegister = value!;
-                      (isRegister)
-                          ? Navigator.pushNamed(context, AppRoutes.register)
-                          : Navigator.pushNamed(context, AppRoutes.login);
-                      // if (isRegister) {
 
-                      // } else {
-                      //   Navigator.pushNamed(context, AppRoutes.login);
-                      // }
+                      Future.delayed(
+                        Duration(
+                          milliseconds: 400,
+                        ),
+                        () {
+                          // (isRegister)
+                          //     ? Navigator.pushNamed(context, AppRoutes.register)
+                          //     : Navigator.pushNamed(context, AppRoutes.login);
+                          if (isRegister) {
+                            print("jalan");
+                            Navigator.pushNamed(context, AppRoutes.register);
+                          } else {
+                            print("jalan2");
+                            Navigator.pushNamed(context, AppRoutes.login);
+                          }
+                        },
+                      );
+
                       setState(() {});
                     },
                   ),

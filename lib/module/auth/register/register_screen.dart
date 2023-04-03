@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:posapplication/service/auth_service/auth_service.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
+import 'package:posapplication/shared/utils/validator/validator.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -33,7 +34,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   color: Colors.amber,
                   alignment: Alignment.center,
                   child: Column(
-                    children: <Widget>[
+                    children: const <Widget>[
                       Text("Daftar"),
                       SizedBox(height: 10),
                       Text(
@@ -43,44 +44,51 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: TextField(
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      hintText: "Ketik Email Anda",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      fillColor: Colors.white70,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: TextField(
-                    controller: passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: "Ketik Kata Sandi / Password",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      fillColor: Colors.white70,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: TextField(
-                    controller: rePasswordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: "Ketik Ulang Kata Sandi / Password",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      fillColor: Colors.white70,
+                Form(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          validator: (value) => Validator.emailValidator(value),
+                          controller: emailController,
+                          decoration: InputDecoration(
+                            hintText: "Ketik Email Anda",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            fillColor: Colors.white70,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          child: TextField(
+                            controller: passwordController,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              hintText: "Ketik Kata Sandi / Password",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              fillColor: Colors.white70,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          child: TextField(
+                            controller: rePasswordController,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              hintText: "Ketik Ulang Kata Sandi / Password",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              fillColor: Colors.white70,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
