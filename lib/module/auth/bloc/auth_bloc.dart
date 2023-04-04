@@ -42,8 +42,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<ForgotPasswordEvent>((event, emit) async {
       emit(LoadingForgotPassword());
       try {
-        String email = event.email;
-
         var result = await AuthService.forgotPassword(email: event.email);
         result.fold((err) {
           emit(FailureForgotPassword(messageError: err));
@@ -53,6 +51,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         });
       } catch (e) {
         emit(FailureForgotPassword(messageError: e.toString()));
+      }
+    });
+
+    // login
+    on<LoginUserEvent>((event, emit) async {
+      emit(LoadingLoginUser());
+      try {
+        var result = await AuthService.signInWithEmail(
+            email: event.email, pass: event.password);
+        result.fold((err) {
+          emit(FailureLoginUser(messageError: err));
+        }, (data) {
+          print(">>> data : ${data.user}");
+          emit(SuccessLoginUser(result: data));
+        });
+      } catch (e) {
+        emit(FailureLoginUser(messageError: e.toString()));
       }
     });
   }

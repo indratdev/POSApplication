@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:posapplication/module/auth/cover/coverauth_screen.dart';
-import 'package:posapplication/module/auth/login/forgot_password_screen.dart';
+import 'package:posapplication/module/auth/forgot_password/forgot_password_screen.dart';
 import 'package:posapplication/module/auth/login/login_screen.dart';
 import 'package:posapplication/module/auth/register/register_Screen.dart';
 

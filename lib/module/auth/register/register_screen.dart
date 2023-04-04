@@ -46,9 +46,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               }
             },
             builder: (context, state) {
-              // if (state is LoadingRegisterResto) {
-              //   return CustomWidgets.showLoadingWidgetContainer(context);
-              // }
               return Padding(
                 padding: const EdgeInsets.all(18),
                 child: Column(

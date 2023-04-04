@@ -26,3 +26,13 @@ class ForgotPasswordEvent extends AuthEvent {
     required this.email,
   });
 }
+
+class LoginUserEvent extends AuthEvent {
+  String email;
+  String password;
+
+  LoginUserEvent({
+    required this.email,
+    required this.password,
+  });
+}

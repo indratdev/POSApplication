@@ -59,3 +59,22 @@ class SuccessForgotPassword extends AuthState {
   List<Object> get props => [result];
 }
 // forgot password end
+
+// login
+class LoadingLoginUser extends AuthState {}
+
+class FailureLoginUser extends FailureState {
+  FailureLoginUser({required super.messageError});
+}
+
+class SuccessLoginUser extends AuthState {
+  SignInSignUpResult result;
+
+  SuccessLoginUser({
+    required this.result,
+  });
+
+  @override
+  List<Object> get props => [result];
+}
+// login end

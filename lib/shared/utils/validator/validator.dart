@@ -1,4 +1,15 @@
 class Validator {
+  // basic
+  static String? rule(
+    String? value, {
+    bool required = false,
+  }) {
+    if (required && value!.isEmpty) {
+      return "This field is required";
+    }
+    return null;
+  }
+
   // check password & repassword is equals
   static bool isPasswordEquals(String password, String rePassword) {
     return (password == rePassword) ? true : false;
