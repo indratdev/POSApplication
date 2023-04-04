@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/module/auth/bloc/auth_bloc.dart';
-import 'package:posapplication/service/auth_service/auth_service.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
 import 'package:posapplication/shared/utils/validator/validator.dart';
+import 'package:posapplication/shared/widgets/custom_widgets.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -19,22 +19,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // bool isPasswordEquals(String password, String rePassword) {
-    //   return (password == rePassword) ? true : false;
-    // }
-
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       body: SafeArea(
         child: SingleChildScrollView(
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
+              if (state is SuccessRegisterResto) {
+                Navigator.pop(context);
+                CustomWidgets.showMessageAlertWithF(
+                    context,
+                    state.message,
+                    true,
+                    () => Navigator.pushNamedAndRemoveUntil(
+                        context, AppRoutes.first, (route) => false));
+              }
+
               if (state is FailureRegisterResto) {
-                print("------------------");
-                print(state.messageError);
+                Navigator.pop(context);
+                CustomWidgets.showMessageAlertBasic(
+                    context, state.messageError, false);
+              }
+
+              if (state is LoadingRegisterResto) {
+                CustomWidgets.showLoadingWidgetContainer(context);
               }
             },
             builder: (context, state) {
+              // if (state is LoadingRegisterResto) {
+              //   return CustomWidgets.showLoadingWidgetContainer(context);
+              // }
               return Padding(
                 padding: const EdgeInsets.all(18),
                 child: Column(
@@ -60,6 +74,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: Column(
                           children: [
                             TextFormField(
+                              enableInteractiveSelection: true,
                               validator: (value) =>
                                   Validator.emailValidator(value),
                               controller: emailController,

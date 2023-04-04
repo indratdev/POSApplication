@@ -29,7 +29,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               await authService.registerUser(emailUser, passwordUser, "Owner");
           result.fold(
             (l) => emit(FailureRegisterResto(messageError: l.message)),
-            (r) => emit(SuccessRegisterResto(result: r)),
+            (r) => emit(SuccessRegisterResto(result: r, message: r.message)),
           );
         }
       } catch (e) {

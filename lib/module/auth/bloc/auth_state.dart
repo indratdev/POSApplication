@@ -29,12 +29,14 @@ class FailureRegisterResto extends FailureState {
 
 class SuccessRegisterResto extends AuthState {
   SignInSignUpResult result;
+  String message;
 
   SuccessRegisterResto({
     required this.result,
+    required this.message,
   });
 
   @override
-  List<Object> get props => [result];
+  List<Object> get props => [result, message];
 }
 // register end

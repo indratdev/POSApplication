@@ -57,7 +57,9 @@ class AuthService {
         password: password,
       );
       var result = userCredential.user;
-      return Right(SignInSignUpResult(user: result));
+      return Right(SignInSignUpResult(
+          user: result,
+          message: "Pendaftaran User Baru Berhasil \n Silahkan Login"));
     } on FirebaseAuthException catch (e) {
       String message = "";
       if (e.code == 'weak-password') {
