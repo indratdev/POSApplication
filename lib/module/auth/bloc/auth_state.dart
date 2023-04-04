@@ -40,3 +40,22 @@ class SuccessRegisterResto extends AuthState {
   List<Object> get props => [result, message];
 }
 // register end
+
+// forgot password
+class LoadingForgotPassword extends AuthState {}
+
+class FailureForgotPassword extends FailureState {
+  FailureForgotPassword({required super.messageError});
+}
+
+class SuccessForgotPassword extends AuthState {
+  String result;
+
+  SuccessForgotPassword({
+    required this.result,
+  });
+
+  @override
+  List<Object> get props => [result];
+}
+// forgot password end

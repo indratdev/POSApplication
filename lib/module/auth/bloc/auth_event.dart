@@ -18,3 +18,11 @@ class RegisterRestoEvent extends AuthEvent {
     required this.rePassword,
   });
 }
+
+class ForgotPasswordEvent extends AuthEvent {
+  String email;
+
+  ForgotPasswordEvent({
+    required this.email,
+  });
+}

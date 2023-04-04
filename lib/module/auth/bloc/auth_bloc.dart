@@ -11,6 +11,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthService authService = AuthService();
 
   AuthBloc() : super(AuthInitial()) {
+    // register
     on<RegisterRestoEvent>((event, emit) async {
       emit(LoadingRegisterResto());
       try {
@@ -34,6 +35,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       } catch (e) {
         emit(FailureRegisterResto(messageError: e.toString()));
+      }
+    });
+
+    // forgot password
+    on<ForgotPasswordEvent>((event, emit) async {
+      emit(LoadingForgotPassword());
+      try {
+        String email = event.email;
+
+        var result = await AuthService.forgotPassword(email: event.email);
+        result.fold((err) {
+          emit(FailureForgotPassword(messageError: err));
+        }, (data) {
+          emit(SuccessForgotPassword(
+              result: "Periksa email anda untuk reset password"));
+        });
+      } catch (e) {
+        emit(FailureForgotPassword(messageError: e.toString()));
       }
     });
   }

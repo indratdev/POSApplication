@@ -59,8 +59,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: () {},
-                    child: Text("Lupa Kata Sandi ?"),
+                    onPressed: () =>
+                        Navigator.pushNamed(context, AppRoutes.forgotPassword),
+                    child: const Text("Lupa Kata Sandi ?"),
                   ),
                 ),
                 SizedBox(height: 50),
