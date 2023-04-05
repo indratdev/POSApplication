@@ -18,10 +18,10 @@ class UserService {
     RoleUsers roleUsers,
   ) async {
     late Either<String, String> myEither;
-    String companyID = await mySharedP.getCompanyID();
+    // String companyID = await mySharedP.getCompanyID();
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(companyID)
+        .doc(FirebaseAuth.instance.currentUser!.uid.toString())
         .set({
           "companyID": FirebaseAuth.instance.currentUser!.uid.toString(),
           "userID": FirebaseAuth.instance.currentUser!.uid.toString(),

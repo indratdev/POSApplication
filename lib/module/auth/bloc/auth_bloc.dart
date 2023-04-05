@@ -1,4 +1,3 @@
-import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,21 +19,31 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<RegisterRestoEvent>((event, emit) async {
       try {
         emit(LoadingRegisterResto());
+        String messageError = "";
+        SignInSignUpResult userData = SignInSignUpResult();
+
         var regisUser = await authService.registerUser(
             event.email, event.password, "Owner");
 
+        regisUser.fold(
+          (l) => messageError = l.message,
+          (data) => userData = data,
+        );
+
         // kalau register user berhasil
         if (regisUser.isRight()) {
-          var user = Right(regisUser);
           var resultSaveUser = await userService.saveUserData(RoleUsers.owner);
-          resultSaveUser.fold((l) {
-            emit(FailureRegisterResto(messageError: l));
+          resultSaveUser.fold((err) {
+            emit(FailureRegisterResto(messageError: "$messageError $err"));
           }, (data) {
-            emit(SuccessRegisterResto(result: user, message: data));
+            emit(SuccessRegisterResto(result: userData, message: data));
           });
+        } else {
+          emit(FailureRegisterResto(messageError: messageError));
         }
       } catch (e) {
         print(e.toString());
+        emit(FailureRegisterResto(messageError: e.toString()));
       }
     });
 
