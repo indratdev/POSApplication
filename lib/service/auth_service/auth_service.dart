@@ -66,11 +66,8 @@ class AuthService {
   static Future<Either<String, AuthStatus>> forgotPassword(
       {required String email}) async {
     late Either<String, AuthStatus> myEither;
-    await _auth
-        .sendPasswordResetEmail(email: email)
-        // .then((value) =>  Right(AuthStatus.successful))
-        .then((value) {
-      myEither = Right(AuthStatus.successful);
+    await _auth.sendPasswordResetEmail(email: email).then((value) {
+      myEither = const Right(AuthStatus.successful);
     })
         // .catchError((e) => Left(AuthExceptionHandler.handleAuthException(e)));
         .catchError((e) {

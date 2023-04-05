@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/module/auth/bloc/auth_bloc.dart';
+import 'package:posapplication/module/auth/register/widgets/export.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
 import 'package:posapplication/shared/utils/validator/validator.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
@@ -16,6 +17,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController rePasswordController = TextEditingController();
+
+  bool checkIsValidPassword(String password, String rePassword) {
+    bool result = Validator.isPasswordEquals(password, rePassword);
+    if (!result) {
+      CustomWidgets.showMessageAlertBasic(
+          context, "Kata Sandi Tidak Sesuai", false);
+    }
+    return result;
+  }
+
+  registerUser(String email, String password, String rePassword) {
+    bool isValidPassword = checkIsValidPassword(password, rePassword);
+    if (isValidPassword) {
+      BlocProvider.of<AuthBloc>(context).add(RegisterRestoEvent(
+        email: email,
+        password: password,
+        rePassword: rePassword,
+      ));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +72,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.only(top: 50, bottom: 10),
+                      margin: const EdgeInsets.only(top: 50, bottom: 10),
                       color: Colors.amber,
                       alignment: Alignment.center,
                       child: Column(
@@ -84,7 +105,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10),
+                              padding: const EdgeInsets.symmetric(vertical: 10),
                               child: TextField(
                                 controller: passwordController,
                                 obscureText: true,
@@ -98,7 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10),
+                              padding: const EdgeInsets.symmetric(vertical: 10),
                               child: TextField(
                                 controller: rePasswordController,
                                 obscureText: true,
@@ -116,7 +137,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     SizedBox(height: 50),
-                    SizedBox(
+                    Container(
+                      // padding: const EdgeInsets.only(top: 50, bottom: 50),
                       height: MediaQuery.of(context).size.width / 7,
                       width: double.infinity,
                       child: ElevatedButton(
@@ -128,36 +150,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12),
-                                    side: BorderSide(color: Colors.red)))),
-                        onPressed: () {
-                          BlocProvider.of<AuthBloc>(context).add(
-                              RegisterRestoEvent(
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                  rePassword: rePasswordController.text));
-                          // bool resultPass = isPasswordEquals(
-                          //     passwordController.text, rePasswordController.text);
-                          // print("${resultPass}");
-                          // if (resultPass) {
-                          //   AuthService.registerUser(emailController.text,
-                          //       passwordController.text, "Owner");
-                          // }
+                                    side:
+                                        const BorderSide(color: Colors.red)))),
+                        onPressed: () async {
+                          registerUser(
+                              emailController.text,
+                              passwordController.text,
+                              rePasswordController.text);
                         },
                       ),
                     ),
-                    SizedBox(height: 50),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Text("Sudah memiliki akun?"),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, AppRoutes.login);
-                            },
-                            child: Text("Masuk")),
-                      ],
-                    )
+                    // SizedBox(height: 50),
+                    HaveAccountWidget()
                   ],
                 ),
               );

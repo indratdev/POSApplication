@@ -1,7 +1,11 @@
+import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/service/auth_service/auth_service.dart';
 import 'package:posapplication/service/signInSignUp.dart';
+import 'package:posapplication/service/user_service/user_service.dart';
+import 'package:posapplication/shared/utils/shared_preferences/myshared_preferences.dart';
 import 'package:posapplication/shared/utils/validator/validator.dart';
 
 part 'auth_event.dart';
@@ -9,34 +13,61 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthService authService = AuthService();
+  MySharedPreferences mySharedP = MySharedPreferences();
+  UserService userService = UserService();
 
   AuthBloc() : super(AuthInitial()) {
-    // register
     on<RegisterRestoEvent>((event, emit) async {
-      emit(LoadingRegisterResto());
       try {
-        String emailUser = event.email;
-        String passwordUser = event.password;
-        String rePasswordUser = event.rePassword;
+        emit(LoadingRegisterResto());
+        var regisUser = await authService.registerUser(
+            event.email, event.password, "Owner");
 
-        bool isValidPassword =
-            Validator.isPasswordEquals(passwordUser, rePasswordUser);
-
-        if (!isValidPassword) {
-          // if password and repassword not equals
-          emit(FailureRegisterResto(messageError: "Kata Sandi Tidak Sesuai"));
-        } else {
-          var result =
-              await authService.registerUser(emailUser, passwordUser, "Owner");
-          result.fold(
-            (l) => emit(FailureRegisterResto(messageError: l.message)),
-            (r) => emit(SuccessRegisterResto(result: r, message: r.message)),
-          );
+        // kalau register user berhasil
+        if (regisUser.isRight()) {
+          var user = Right(regisUser);
+          var resultSaveUser = await userService.saveUserData(RoleUsers.owner);
+          resultSaveUser.fold((l) {
+            emit(FailureRegisterResto(messageError: l));
+          }, (data) {
+            emit(SuccessRegisterResto(result: user, message: data));
+          });
         }
       } catch (e) {
-        emit(FailureRegisterResto(messageError: e.toString()));
+        print(e.toString());
       }
     });
+
+    // // register user
+    // on<RegisterRestoEvent>(
+    //   (event, emit) async {
+    //     emit(LoadingRegisterResto());
+    //     try {
+    //       String emailUser = event.email;
+    //       String passwordUser = event.password;
+
+    //       // saveUser(SignInSignUpResult r) async {
+    //       //   var resultSaveUser =
+    //       //       await userService.saveUserData(RoleUsers.owner);
+    //       //   resultSaveUser.fold(
+    //       //       (l) => emit(FailureRegisterResto(messageError: l)),
+    //       //       (data) => emit(SuccessRegisterResto(result: r, message: data)));
+    //       // }
+
+    //       var result =
+    //           await authService.registerUser(emailUser, passwordUser, "Owner");
+
+    //       result.fold((l) {
+    //         emit(FailureRegisterResto(messageError: l.message));
+    //       }, (r) {
+    //         saveUser(r);
+    //       });
+    //     } catch (e) {
+    //       emit(FailureRegisterResto(messageError: e.toString()));
+    //     }
+    //   },
+    //   // transformer: sequential(),
+    // );
 
     // forgot password
     on<ForgotPasswordEvent>((event, emit) async {
