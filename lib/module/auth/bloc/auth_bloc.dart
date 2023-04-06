@@ -1,11 +1,11 @@
-import 'package:dartz/dartz.dart';
+import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/service/auth_service/auth_service.dart';
 import 'package:posapplication/service/signInSignUp.dart';
 import 'package:posapplication/service/user_service/user_service.dart';
 import 'package:posapplication/shared/utils/shared_preferences/myshared_preferences.dart';
-import 'package:posapplication/shared/utils/validator/validator.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -23,7 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         SignInSignUpResult userData = SignInSignUpResult();
 
         var regisUser = await authService.registerUser(
-            event.email, event.password, "Owner");
+            event.email, event.password, RoleUsers.owner);
 
         regisUser.fold(
           (l) => messageError = l.message,
@@ -42,7 +42,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(FailureRegisterResto(messageError: messageError));
         }
       } catch (e) {
-        print(e.toString());
+        log(e.toString());
         emit(FailureRegisterResto(messageError: e.toString()));
       }
     });
@@ -96,16 +96,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     // login
     on<LoginUserEvent>((event, emit) async {
-      emit(LoadingLoginUser());
+      Map<String, dynamic> users = {};
+      // emit(LoadingLoginUser());
       try {
-        var result = await AuthService.signInWithEmail(
+        // var result = await AuthService.signInWithEmail(
+        //     email: event.email, pass: event.password);
+        var result = await AuthService.signInWithEmailNew(
             email: event.email, pass: event.password);
-        result.fold((err) {
-          emit(FailureLoginUser(messageError: err));
-        }, (data) {
-          print(">>> data : ${data.user}");
-          emit(SuccessLoginUser(result: data));
+
+        result.fold((l) {
+          emit(FailureLoginUser(messageError: l));
+        }, (r) {
+          print(">>> r : $r");
         });
+
+        // result.fold((err) {
+        //   emit(FailureLoginUser(messageError: err));
+        // }, (values) async {
+        //   // print(">>> data ::: ${data}");
+        //   // print(">>> role:: ${data.data()} ");
+        //   // users = data.data() ?? {};
+        // });
+        emit(SuccessLoginUser(result: users));
       } catch (e) {
         emit(FailureLoginUser(messageError: e.toString()));
       }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
+import 'package:posapplication/shared/utils/shared_preferences/myshared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CoverAuthScreen extends StatefulWidget {
   const CoverAuthScreen({super.key});
@@ -73,6 +75,12 @@ class _CoverAuthScreenState extends State<CoverAuthScreen> {
                     ],
                   ),
                 ),
+                ElevatedButton(
+                    onPressed: () async {
+                      var aaa = await MySharedPreferences().getCompanyID();
+                      print(aaa);
+                    },
+                    child: Text("test")),
                 // Container(
                 //   height: sizeLayer.height / 14,
                 //   width: sizeLayer.width,

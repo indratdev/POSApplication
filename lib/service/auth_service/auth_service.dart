@@ -2,24 +2,27 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:posapplication/service/user_service/user_service.dart';
 import 'package:posapplication/shared/utils/failure/authexception_handler.dart';
 
 import '../../shared/utils/failure/exception.dart';
 import '../../shared/utils/failure/failure.dart';
+import '../../shared/utils/shared_preferences/myshared_preferences.dart';
 import '../signInSignUp.dart';
 
 class AuthService {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
+  final MySharedPreferences mySharedP = MySharedPreferences();
 
-  static String role = "";
-  static bool get isOwner => role == "Owner";
-  static bool get isAdmin => role == "Admin";
-  static bool get isCashier => role == "Cashier";
-  static bool get isChef => role == "Chef";
+  // static String role = "";
+  // static bool get isOwner => role == "Owner";
+  // static bool get isAdmin => role == "Admin";
+  // static bool get isCashier => role == "Cashier";
+  // static bool get isChef => role == "Chef";
 
   // register user
   Future<Either<Failure, SignInSignUpResult>> registerUser(
-      String email, String password, String role) async {
+      String email, String password, RoleUsers roleUsers) async {
     try {
       UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -27,6 +30,10 @@ class AuthService {
         password: password,
       );
       var result = userCredential.user;
+      if (roleUsers.name == RoleUsers.owner.name) {
+        await mySharedP
+            .saveCompanyID(FirebaseAuth.instance.currentUser!.uid.toString());
+      }
       return Right(SignInSignUpResult(
           user: result,
           message: "Pendaftaran User Baru Berhasil \n Silahkan Login"));
@@ -55,6 +62,53 @@ class AuthService {
           await _auth.signInWithEmailAndPassword(email: email, password: pass);
       // return SignInSignUpResult(user: result.user);
       return Right(SignInSignUpResult(user: result.user));
+    } on FirebaseAuthException catch (e) {
+      // return SignInSignUpResult(message: e.toString());
+      var err = AuthExceptionHandler.handleAuthException(e);
+      return Left((AuthExceptionHandler.generateErrorMessage(err)));
+    }
+  }
+
+  // // sign in (backup)
+  // static Future<Either<String, SignInSignUpResult>> signInWithEmailNew({
+  //   required String email,
+  //   required String pass,
+  // }) async {
+  //   try {
+  //     UserCredential result =
+  //         await _auth.signInWithEmailAndPassword(email: email, password: pass);
+
+  //     if (result.user!.uid.isNotEmpty) {
+  //       UserService().readDataUser();
+  //     }
+
+  //     return Right(SignInSignUpResult(user: result.user));
+  //   } on FirebaseAuthException catch (e) {
+  //     // return SignInSignUpResult(message: e.toString());
+  //     var err = AuthExceptionHandler.handleAuthException(e);
+  //     return Left((AuthExceptionHandler.generateErrorMessage(err)));
+  //   }
+  // }
+
+  // sign in
+  static Future<Either<String, Map<String, dynamic>>> signInWithEmailNew({
+    required String email,
+    required String pass,
+  }) async {
+    Map<String, dynamic> detailUser = {};
+    try {
+      UserCredential result =
+          await _auth.signInWithEmailAndPassword(email: email, password: pass);
+
+      if (result.user!.uid.isNotEmpty) {
+        detailUser = await UserService().readDataUser();
+      }
+
+      print(">>> detailuser :: ${detailUser}");
+
+      return Right(detailUser);
+
+      // return Right(SignInSignUpResult(user: result.user));
     } on FirebaseAuthException catch (e) {
       // return SignInSignUpResult(message: e.toString());
       var err = AuthExceptionHandler.handleAuthException(e);

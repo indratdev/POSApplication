@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MySharedPreferences {
-  static const String _companyID = 'companyID';
+  static const String _companyID = '';
 
   // Fungsi untuk menyimpan companyID
   Future<void> saveCompanyID(String idCompany) async {

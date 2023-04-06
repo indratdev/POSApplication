@@ -68,7 +68,7 @@ class FailureLoginUser extends FailureState {
 }
 
 class SuccessLoginUser extends AuthState {
-  SignInSignUpResult result;
+  Map<String, dynamic> result;
 
   SuccessLoginUser({
     required this.result,

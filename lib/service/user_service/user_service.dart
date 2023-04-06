@@ -13,17 +13,74 @@ enum RoleUsers {
 
 class UserService {
   final MySharedPreferences mySharedP = MySharedPreferences();
+  static const String userCollection = "users";
+  static const String listUserCollection = "list_user";
+
+  getCompanyID(RoleUsers roleUsers) async {
+    String companyID = "";
+    if (roleUsers.name == RoleUsers.owner.name) {
+      companyID = await mySharedP.getCompanyID();
+    } else {
+      companyID = FirebaseAuth.instance.currentUser!.uid.toString();
+    }
+    return companyID;
+  }
+
+  // Future<Either<String, DocumentSnapshot<Map<String, dynamic>>>>
+  //     saveAndReadUserData(
+  //         // Future<DocumentSnapshot<Map<String, dynamic>>> saveAndReadUserData(
+  //         RoleUsers roleUsers) async {
+  //   late Either<String, DocumentSnapshot<Map<String, dynamic>>> myEither;
+  //   String message = "";
+
+  //   var result = await saveUserData(roleUsers);
+  //   result.fold(
+  //     (l) => message = l,
+  //     (data) => message = data,
+  //   );
+
+  //   var detailData = await FirebaseFirestore.instance
+  //       .collection(userCollection)
+  //       .doc(getCompanyID(roleUsers))
+  //       .collection(listUserCollection)
+  //       .doc(FirebaseAuth.instance.currentUser!.uid.toString())
+  //       .get()
+  //       .then((value) => myEither = Right(value))
+  //       .catchError((e) => myEither = Left(e.toString()));
+
+  //   return myEither;
+  // }
+
+  // read detail user
+  Future<Map<String, dynamic>> readDataUser() async {
+    DocumentSnapshot<Map<String, dynamic>> detailUser = await FirebaseFirestore
+        .instance
+        .collection(userCollection)
+        .doc(FirebaseAuth.instance.currentUser!.uid.toString())
+        .get();
+
+    print(">>> detail: ${detailUser.data()!["role"]}");
+
+    return detailUser.data() ?? {};
+  }
 
   Future<Either<String, String>> saveUserData(
     RoleUsers roleUsers,
+    // bool isOwner,
   ) async {
     late Either<String, String> myEither;
-    // String companyID = await mySharedP.getCompanyID();
+    // String companyID = (roleUsers.name == RoleUsers.owner.name)
+    //     ? await mySharedP.getCompanyID()
+    // : FirebaseAuth.instance.currentUser!.uid.toString();
+    String companyID = await mySharedP.getCompanyID();
+
     await FirebaseFirestore.instance
-        .collection('users')
+        .collection(userCollection)
+        // .doc(companyID)
+        // .collection(listUserCollection)
         .doc(FirebaseAuth.instance.currentUser!.uid.toString())
         .set({
-          "companyID": FirebaseAuth.instance.currentUser!.uid.toString(),
+          "companyID": companyID,
           "userID": FirebaseAuth.instance.currentUser!.uid.toString(),
           "email": FirebaseAuth.instance.currentUser!.email.toString(),
           "firstname": "",
@@ -34,10 +91,10 @@ class UserService {
         .then((value) => myEither = const Right("Save User Successfully!"))
         .catchError((e) => myEither = Left(e.toString()));
 
-    if (roleUsers.name == RoleUsers.owner.name) {
-      mySharedP
-          .saveCompanyID(FirebaseAuth.instance.currentUser!.uid.toString());
-    }
+    // if (roleUsers.name == RoleUsers.owner.name) {
+    //   mySharedP
+    //       .saveCompanyID(FirebaseAuth.instance.currentUser!.uid.toString());
+    // }
 
     return myEither;
   }

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/module/auth/bloc/auth_bloc.dart';
+import 'package:posapplication/module/auth/login/controller/login_controller.dart';
 
 import 'package:posapplication/shared/constants/constatns.dart';
 import 'package:posapplication/shared/utils/validator/validator.dart';
 
-import '../../../shared/routes/app_routes.dart';
-import '../../../shared/widgets/custom_widgets.dart';
+import '../../../../shared/routes/app_routes.dart';
+import '../../../../shared/widgets/custom_widgets.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  LoginController controller = LoginController();
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -28,7 +30,11 @@ class _LoginScreenState extends State<LoginScreen> {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is SuccessLoginUser) {
-              Navigator.pop(context);
+              print(state.result);
+              // String role = state.result['role'];
+              // String nav = controller.accessMenuByRole(role);
+              // Navigator.pushNamedAndRemoveUntil(context, nav, (route) => false);
+
               // CustomWidgets.showMessageAlertWithF(
               //     context,
               //     state.result,
@@ -56,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: <Widget>[
                       Container(
-                        margin: EdgeInsets.only(top: 50),
+                        margin: const EdgeInsets.only(top: 50),
                         color: Colors.amber,
                         alignment: Alignment.center,
                         child: Column(
@@ -147,13 +153,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Text("Belum menjadi anggota?"),
+                          const Text("Belum menjadi anggota?"),
                           TextButton(
                               onPressed: () {
                                 Navigator.pushNamed(
                                     context, AppRoutes.register);
                               },
-                              child: Text("Daftar sekarang")),
+                              child: const Text("Daftar sekarang")),
                         ],
                       )
                     ],
