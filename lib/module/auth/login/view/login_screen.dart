@@ -30,7 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is SuccessLoginUser) {
-              print(state.result);
+              Navigator.pushNamedAndRemoveUntil(
+                  context, AppRoutes.ownerBottomNav, (route) => false);
               // String role = state.result['role'];
               // String nav = controller.accessMenuByRole(role);
               // Navigator.pushNamedAndRemoveUntil(context, nav, (route) => false);
@@ -124,12 +125,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                           color: Colors.red)))),
                           child: const Text("LOGIN"),
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              BlocProvider.of<AuthBloc>(context).add(
-                                  LoginUserEvent(
-                                      email: emailController.text,
-                                      password: passwordController.text));
-                            }
+                            // if (_formKey.currentState!.validate()) {
+                            // BlocProvider.of<AuthBloc>(context).add(
+                            //     LoginUserEvent(
+                            //         email: emailController.text,
+                            //         password: passwordController.text));
+
+                            // }
+
+                            BlocProvider.of<AuthBloc>(context).add(
+                                LoginUserEvent(
+                                    email: "owner@mail.com",
+                                    password: "123123"));
                           },
                         ),
                       ),
