@@ -28,14 +28,14 @@ class FailureAddProfileCompany extends FailureOwner {
 }
 
 class SuccessAddProfileCompany extends OwnerState {
-  String status;
+  ProfileModel dataProfile;
 
   SuccessAddProfileCompany({
-    required this.status,
+    required this.dataProfile,
   });
 
   @override
-  List<Object> get props => [status];
+  List<Object> get props => [dataProfile];
 }
 
 // profile company end

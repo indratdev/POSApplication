@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:posapplication/module/owner/owner_profile/view/owner_profile_screen.dart';
+
+import '../../owner_profile/view/owner_profile_info_screen.dart';
 
 class OwnerSettingsScreen extends StatefulWidget {
   const OwnerSettingsScreen({super.key});
@@ -31,7 +32,7 @@ class _OwnerSettingsScreenState extends State<OwnerSettingsScreen> {
                 onTap: () {
                   PersistentNavBarNavigator.pushNewScreen(
                     context,
-                    screen: OwnerProfileScreen(),
+                    screen: OwnerProfileInfoScreen(),
                     withNavBar: false,
                     pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );

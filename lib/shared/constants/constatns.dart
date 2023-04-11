@@ -6,6 +6,7 @@ const googleLogo = 'assets/logos/googleLogo.webp';
 const successImage = 'assets/images/success.webp';
 const failedImage = 'assets/images/failed.webp';
 const warningImage = 'assets/images/warning.webp';
+const noDataImage = 'assets/images/nodata_image.webp';
 
 // sizebox
 const SizedBox sbWidth10 = SizedBox(width: 10);

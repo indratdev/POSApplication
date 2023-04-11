@@ -1,12 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:posapplication/module/auth/bloc/auth_bloc.dart';
 import 'package:posapplication/module/owner/bloc/owner_bloc.dart';
+import 'package:posapplication/service/hive_service/hive_init.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // firebase init
   await Firebase.initializeApp(
       options: const FirebaseOptions(
     apiKey: "AIzaSyAI0UrENx1W1jyFlLRDl_YSZSr4mBrabEQ",
@@ -14,6 +18,9 @@ Future<void> main() async {
     messagingSenderId: "738882296645",
     projectId: "posapplication-f36fa",
   ));
+
+  // init hive
+  await HiveData.init();
   runApp(const MyApp());
 }
 

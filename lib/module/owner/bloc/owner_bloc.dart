@@ -17,7 +17,7 @@ class OwnerBloc extends Bloc<OwnerEvent, OwnerState> {
         var result = await controller.addProfileCompany(profileData);
         result.fold(
           (l) => emit(FailureAddProfileCompany(messageError: l)),
-          (data) => emit(SuccessAddProfileCompany(status: data)),
+          (data) => emit(SuccessAddProfileCompany(dataProfile: data)),
         );
       } catch (e) {
         print(e.toString());

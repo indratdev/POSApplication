@@ -1,12 +1,31 @@
-class ProfileModel {
-  String companyID;
-  String bussinessName;
-  String bussinessType;
-  String bussinessCountry;
-  String bussinessCurrency;
-  String bussinessAddress;
-  String bussinessPhone;
-  String bussinessPhoto;
+import 'dart:convert';
+
+import 'package:hive/hive.dart';
+part 'profile_model.g.dart';
+
+ProfileModel userModelFromJson(String str) =>
+    ProfileModel.fromJson(json.decode(str));
+
+String userModelToJson(ProfileModel data) => json.encode(data.toJson());
+
+@HiveType(typeId: 1)
+class ProfileModel extends HiveObject {
+  @HiveField(0)
+  String? companyID;
+  @HiveField(1)
+  String? bussinessName;
+  @HiveField(2)
+  String? bussinessType;
+  @HiveField(3)
+  String? bussinessCountry;
+  @HiveField(4)
+  String? bussinessCurrency;
+  @HiveField(5)
+  String? bussinessAddress;
+  @HiveField(6)
+  String? bussinessPhone;
+  @HiveField(7)
+  String? bussinessPhoto;
 
   ProfileModel({
     this.companyID = "",
