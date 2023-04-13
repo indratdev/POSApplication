@@ -1,4 +1,6 @@
 import 'package:flutter/widgets.dart';
+import 'package:posapplication/module/Users/user_dashboard/view/user_dashboard_screen.dart';
+import 'package:posapplication/module/Users/user_manage/view/user_manage_screen.dart';
 import 'package:posapplication/module/auth/cover/coverauth_screen.dart';
 import 'package:posapplication/module/auth/forgot_password/forgot_password_screen.dart';
 import 'package:posapplication/module/auth/login/view/login_screen.dart';
@@ -23,6 +25,10 @@ class AppRoutes {
   static const String ownerProfileInfo = '/owner/settings/profileInfo';
   static const String ownerProfile = '/owner/settings/profile';
 
+  // user management
+  static const String userDashboard = "/userDashboard";
+  static const String userManage = "/userManage";
+
   Map<String, WidgetBuilder> getRoutes = {
     first: (_) => CoverAuthScreen(),
     login: (_) => LoginScreen(),
@@ -33,5 +39,7 @@ class AppRoutes {
     ownerSettings: (_) => OwnerSettingsScreen(),
     ownerProfileInfo: (_) => OwnerProfileInfoScreen(),
     ownerProfile: (_) => OwnerProfileScreen(isUpdate: false),
+    userDashboard: (_) => UserDashboardScreen(),
+    userManage: (_) => UserManageScreen(),
   };
 }
