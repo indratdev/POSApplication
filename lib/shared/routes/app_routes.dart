@@ -32,6 +32,6 @@ class AppRoutes {
     ownerDashboard: (_) => OwnerDashboardScreen(),
     ownerSettings: (_) => OwnerSettingsScreen(),
     ownerProfileInfo: (_) => OwnerProfileInfoScreen(),
-    ownerProfile: (_) => OwnerProfileScreen(),
+    ownerProfile: (_) => OwnerProfileScreen(isUpdate: false),
   };
 }

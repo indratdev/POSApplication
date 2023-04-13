@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:posapplication/model/profile_model.dart';
 import 'package:posapplication/service/hive_service/hive_service.dart';
 import 'package:posapplication/service/profile_service/profle_service.dart';
@@ -7,8 +8,12 @@ class ProfileController {
   final ProfileService profileServices = ProfileService();
   final HiveService hiveService = HiveService();
 
-  // final String companyProfileBox = "companyProfile";
+  // check profile box already open ?
+  Future<Box> isBoxProfileAlreadyOpen() async {
+    return await hiveService.isBoxProfileAlreadyOpen();
+  }
 
+  // add profile company
   Future<Either<String, ProfileModel>> addProfileCompany(
       ProfileModel profile) async {
     return await profileServices.saveProfile(profile);
@@ -19,7 +24,6 @@ class ProfileController {
   }
 
   Future<bool> isExistkBoxCompanyProfile() async {
-    // return await Hive.boxExists(companyProfileBox);
     return await hiveService.isExistkBoxCompanyProfile();
   }
 
@@ -27,6 +31,20 @@ class ProfileController {
   setProfileCompanytoBox(ProfileModel data) {
     hiveService.addProfileToHive(data);
   }
+
+  // update profile company
+  updateProfileCompanyToBox(ProfileModel data) async {
+    await hiveService.updateProfileCompanyToBox(data);
+  }
+
+  // Future<Either<String, ProfileModel>> updateProfileCompany(
+  //     ProfileModel profile) async {
+  //   return await profileServices.saveProfile(profile);
+  // }
+
+  // testUpdate(ProfileModel profileModel) async {
+  //   await hiveService.testUpdate(profileModel);
+  // }
 
   readProfileCompanyFromBox() async {
     await hiveService.readProfileCompanyFromBox();

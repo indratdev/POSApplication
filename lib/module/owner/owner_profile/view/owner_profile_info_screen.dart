@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:posapplication/model/profile_model.dart';
+import 'package:posapplication/module/owner/owner_profile/controller/profile_controller.dart';
 import 'package:posapplication/module/owner/owner_profile/view/widgets/profile_widget.dart';
-import 'package:posapplication/service/hive_service/hive_init.dart';
 
 import '../../../../service/hive_service/hive_service.dart';
 
@@ -14,11 +14,14 @@ class OwnerProfileInfoScreen extends StatefulWidget {
 }
 
 class _OwnerProfileInfoScreenState extends State<OwnerProfileInfoScreen> {
+  final ProfileController controller = ProfileController();
   late final Box box;
   // bool hasDataProfile = false;
 
   @override
   void dispose() {
+    print(">> dispose run OwnerProfileInfoScreen");
+
     Hive.close();
     super.dispose();
   }
@@ -33,12 +36,8 @@ class _OwnerProfileInfoScreenState extends State<OwnerProfileInfoScreen> {
   // }
 
   Future<Box> openBoxProfile() async {
-    var resultBox =
-        await Hive.openBox<ProfileModel>(HiveService.companyProfileBox);
-    // print("result :: ${resultBox.values.isEmpty}");
+    var resultBox = await controller.isBoxProfileAlreadyOpen();
     box = resultBox;
-
-    // (box.values.isNotEmpty) ? hasDataProfile = true : hasDataProfile = false;
     return resultBox;
   }
 

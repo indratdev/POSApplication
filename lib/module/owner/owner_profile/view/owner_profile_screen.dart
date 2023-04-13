@@ -5,13 +5,21 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:posapplication/model/profile_model.dart';
 import 'package:posapplication/module/owner/bloc/owner_bloc.dart';
 import 'package:posapplication/module/owner/owner_profile/controller/profile_controller.dart';
-import 'package:posapplication/service/hive_service/hive_init.dart';
+
 import 'package:posapplication/service/hive_service/hive_service.dart';
+import 'package:posapplication/shared/routes/app_routes.dart';
 import 'package:posapplication/shared/utils/validator/validator.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
 
 class OwnerProfileScreen extends StatefulWidget {
-  const OwnerProfileScreen({super.key});
+  bool isUpdate;
+  ProfileModel? profileModel = ProfileModel(bussinessName: "unknown");
+
+  OwnerProfileScreen({
+    super.key,
+    required this.isUpdate,
+    this.profileModel,
+  });
 
   @override
   State<OwnerProfileScreen> createState() => _OwnerProfileScreenState();
@@ -25,27 +33,46 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
   TextEditingController bussinessCountryController = TextEditingController();
   TextEditingController bussinessCurrencyController = TextEditingController();
   final ProfileController controller = ProfileController();
+  final HiveService hiveService = HiveService();
   final _formKeyProfile = GlobalKey<FormState>();
 
   String selectedValue = "";
-  bool isUpdate = false;
   late final Box box;
 
   @override
   void initState() {
-    // isExistProfile();
-    openBoxx();
     super.initState();
+    Hive.close();
+    openBoxx();
+    initTextfield();
+  }
+
+  initTextfield() {
+    if (widget.profileModel?.companyID != "") {
+      bussinessNameController = TextEditingController(
+          text: widget.profileModel?.bussinessName.toString());
+      bussinessTypeController = TextEditingController(
+          text: widget.profileModel?.bussinessType.toString());
+      bussinessAddressController = TextEditingController(
+          text: widget.profileModel?.bussinessAddress.toString());
+      bussinessPhoneController = TextEditingController(
+          text: widget.profileModel?.bussinessPhone.toString());
+      bussinessCountryController = TextEditingController(
+          text: widget.profileModel?.bussinessCountry.toString());
+      bussinessCurrencyController = TextEditingController(
+          text: widget.profileModel?.bussinessCurrency.toString());
+    }
   }
 
   openBoxx() async {
-    // box = await Hive.openBox("company_profile");
-    bool status = Hive.isBoxOpen(HiveService.companyProfileBox);
-    (status)
-        ? box = Hive.box<ProfileModel>(HiveService.companyProfileBox)
-        // Hive.lazyBox(HiveService.companyProfileBox) as Box
-        // .box(HiveService.companyProfileBox)
-        : box = await Hive.openBox(HiveService.companyProfileBox);
+    // bool status = Hive.isBoxOpen(HiveService.companyProfileBox);
+    // print("=====> status : $status");
+    // (status)
+    //     ? box = Hive.box<ProfileModel>(HiveService.companyProfileBox)
+    //     : box = await Hive.openBox(HiveService.companyProfileBox);
+    final result = await hiveService.isBoxProfileAlreadyOpen();
+    print(">>> result : ${result}");
+    box = result;
   }
 
   // setProfileBox(ProfileModel data) {
@@ -71,27 +98,38 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
 
   _addData() {
     // Storing key-value pair
-    box.put(
-        'profile_key',
-        ProfileModel(
-          bussinessName: bussinessNameController.text,
-          bussinessAddress: bussinessAddressController.text,
-          bussinessCountry: bussinessCountryController.text,
-          bussinessCurrency: bussinessCurrencyController.text,
-          bussinessPhone: bussinessPhoneController.text,
-          bussinessPhoto: "",
-          bussinessType: bussinessTypeController.text,
-          companyID: "companyID-123",
-        ));
+    // box.put(
+    //     'profile_key',
+    //     ProfileModel(
+    //       bussinessName: bussinessNameController.text,
+    //       bussinessAddress: bussinessAddressController.text,
+    //       bussinessCountry: bussinessCountryController.text,
+    //       bussinessCurrency: bussinessCurrencyController.text,
+    //       bussinessPhone: bussinessPhoneController.text,
+    //       bussinessPhoto: "",
+    //       bussinessType: bussinessTypeController.text,
+    //       companyID: "companyID-123",
+    //     ));
+    var data = ProfileModel(
+      bussinessName: bussinessNameController.text,
+      bussinessAddress: bussinessAddressController.text,
+      bussinessCountry: bussinessCountryController.text,
+      bussinessCurrency: bussinessCurrencyController.text,
+      bussinessPhone: bussinessPhoneController.text,
+      bussinessPhoto: "",
+      bussinessType: bussinessTypeController.text,
+      companyID: "companyID-123",
+    );
+    hiveService.addProfileToHive(data);
     print('Info added to box!');
   }
 
   @override
   Widget build(BuildContext context) {
-    print(isUpdate);
+    print("model :: ${widget.isUpdate}");
     return Scaffold(
       appBar: AppBar(
-        title: Text("Profile Company"),
+        title: const Text("PROFILE USAHA"),
         centerTitle: true,
         actions: [
           IconButton(
@@ -113,20 +151,43 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
       body: SingleChildScrollView(
         child: BlocConsumer<OwnerBloc, OwnerState>(
           listener: (context, state) {
-            if (state is LoadingAddProfileCompany) {
+            if (state is LoadingAddProfileCompany ||
+                state is LoadingUpdateProfileCompany) {
               CustomWidgets.showLoadingWidgetContainer(context);
             }
+
             if (state is FailureAddProfileCompany) {
               Navigator.pop(context);
+
               CustomWidgets.showMessageAlertBasic(
                   context, state.messageError.toString(), false);
             }
-            if (state is SuccessAddProfileCompany) {
+            if (state is FailureUpdateProfileCompany) {
               Navigator.pop(context);
+
+              CustomWidgets.showMessageAlertBasic(
+                  context, state.messageError.toString(), false);
+            }
+
+            if (state is SuccessUpdateProfileCompany) {
+              print("SuccessUpdateProfileCompany Running....");
+              Navigator.of(context)
+                ..pop()
+                ..pop();
+              var result = state.dataProfile;
+              // controller.setProfileCompanytoBox(result);
+              controller.updateProfileCompanyToBox(result);
+
+              Navigator.popAndPushNamed(context, AppRoutes.ownerProfileInfo);
+            }
+            if (state is SuccessAddProfileCompany) {
+              print("SuccessAddProfileCompany Running....");
+              Navigator.of(context)
+                ..pop()
+                ..pop();
               var result = state.dataProfile;
               controller.setProfileCompanytoBox(result);
-              CustomWidgets.showMessageAlertBasic(
-                  context, "Profile berhasil disimpan", true);
+              Navigator.popAndPushNamed(context, AppRoutes.ownerProfileInfo);
             }
           },
           builder: (context, state) {
@@ -234,16 +295,17 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: Text("Batal")),
+                                child: const Text("BATAL")),
                           )),
-                          SizedBox(width: 10),
-                          (isUpdate)
+                          const SizedBox(width: 10),
+                          (widget.isUpdate)
+                              // UPDATE
                               ? Expanded(
                                   child: SizedBox(
                                   height:
                                       MediaQuery.of(context).size.height / 16,
                                   child: ElevatedButton(
-                                    child: Text("Update"),
+                                    child: const Text("UPDATE"),
                                     onPressed: () {
                                       if (_formKeyProfile.currentState!
                                           .validate()) {
@@ -262,48 +324,49 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
                                               bussinessTypeController.text,
                                         );
 
-                                        // BlocProvider.of<OwnerBloc>(context).add(
-                                        //     AddProfileCompanyEvent(
-                                        //         profileModel: datas));
+                                        BlocProvider.of<OwnerBloc>(context).add(
+                                            UpdateProfileCompanyEvent(
+                                                profileModel: datas));
 
                                         print("update");
                                       }
                                     },
                                   ),
                                 ))
+                              // ADD NEW
                               : Expanded(
                                   child: SizedBox(
                                   height:
                                       MediaQuery.of(context).size.height / 16,
                                   child: ElevatedButton(
-                                    child: Text("Simpan"),
-                                    onPressed: _addData,
-                                    //   onPressed: () {
-                                    //     if (_formKeyProfile.currentState!
-                                    //         .validate()) {
-                                    //       var datas = ProfileModel(
-                                    //         bussinessName:
-                                    //             bussinessNameController.text,
-                                    //         bussinessAddress:
-                                    //             bussinessAddressController.text,
-                                    //         bussinessCountry:
-                                    //             bussinessCountryController.text,
-                                    //         bussinessCurrency:
-                                    //             bussinessCurrencyController.text,
-                                    //         bussinessPhone:
-                                    //             bussinessPhoneController.text,
-                                    //         bussinessType:
-                                    //             bussinessTypeController.text,
-                                    //       );
+                                    child: Text("SIMPAN"),
+                                    // onPressed: _addData,
+                                    onPressed: () {
+                                      if (_formKeyProfile.currentState!
+                                          .validate()) {
+                                        var datas = ProfileModel(
+                                          bussinessName:
+                                              bussinessNameController.text,
+                                          bussinessAddress:
+                                              bussinessAddressController.text,
+                                          bussinessCountry:
+                                              bussinessCountryController.text,
+                                          bussinessCurrency:
+                                              bussinessCurrencyController.text,
+                                          bussinessPhone:
+                                              bussinessPhoneController.text,
+                                          bussinessType:
+                                              bussinessTypeController.text,
+                                        );
 
-                                    //       BlocProvider.of<OwnerBloc>(context).add(
-                                    //           AddProfileCompanyEvent(
-                                    //               profileModel: datas));
+                                        BlocProvider.of<OwnerBloc>(context).add(
+                                            AddProfileCompanyEvent(
+                                                profileModel: datas));
 
-                                    //       print(bussinessNameController.text);
-                                    //       print("ok");
-                                    //     }
-                                    //   },
+                                        print(bussinessNameController.text);
+                                        print("ok");
+                                      }
+                                    },
                                   ),
                                 )),
                         ],

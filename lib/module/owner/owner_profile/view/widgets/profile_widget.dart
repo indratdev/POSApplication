@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:posapplication/model/profile_model.dart';
-import 'package:posapplication/shared/routes/app_routes.dart';
+import 'package:posapplication/module/owner/owner_profile/controller/profile_controller.dart';
+import 'package:posapplication/module/owner/owner_profile/view/owner_profile_screen.dart';
 
 import '../../../../../shared/constants/constatns.dart';
 
@@ -28,90 +29,122 @@ class _ProfileWidgetState extends State<ProfileWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("PROFILE"),
-        centerTitle: true,
-        actions: [
-          TextButton(
-            // icon: (isUpdate == true)
-            //     ? const Icon(Icons.edit, color: Colors.white)
-            //     : const Icon(Icons.add, color: Colors.white),
-            child: Text(
-              (widget.isUpdate == true) ? "UBAH" : "TAMBAH",
-              style: const TextStyle(color: Colors.white),
-            ),
-            onPressed: () {
-              (widget.isUpdate)
-                  ? Navigator.pushNamed(context, AppRoutes.ownerProfile)
-                  : Navigator.pushNamed(
+    return WillPopScope(
+      onWillPop: () async {
+        Hive.close();
+
+        Navigator.of(context).pop();
+
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("PROFILE"),
+          centerTitle: true,
+          actions: [
+            TextButton(
+              child: Text(
+                (widget.isUpdate) ? "UBAH" : "TAMBAH",
+                style: const TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                if (widget.isUpdate) {
+                  // ProfileController controller = ProfileController();
+                  // var data = ProfileModel(
+                  //   bussinessName: "Bakso yuk 2",
+                  //   bussinessAddress: "dasdas",
+                  //   bussinessCountry: "Switzerland Franc",
+                  //   bussinessCurrency: "CHF",
+                  //   bussinessPhone: "02100998877",
+                  //   bussinessPhoto: "",
+                  //   bussinessType: "Restoran",
+                  //   companyID: "3BnGWuFviVPRRNfYqsS5aVa0xIm1",
+                  // );
+                  // // controller.updateProfileCompanyToBox(data);
+
+                  // controller.testUpdate(data);
+                  // Navigator.pop(context);
+
+                  Navigator.push(
                       context,
-                      AppRoutes
-                          .ownerProfile); // yg bawah buat update tapi bleum
-            },
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(13),
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              CircleAvatar(
-                backgroundImage: (widget.isUpdate)
-                    ? AssetImage(warningImage)
-                    : AssetImage(noDataImage),
-                // backgroundColor: Colors.blue,
-                radius: MediaQuery.of(context).size.width / 5,
-                backgroundColor: Colors.blue,
-              ),
-              Text(
-                (widget.isUpdate)
-                    ? widget.profileModel?.bussinessName.toString() ?? ""
-                    : "-",
-              ),
-              Text(
-                (widget.isUpdate)
-                    ? widget.profileModel?.bussinessPhone.toString() ?? ""
-                    : "-",
-              ),
-              SizedBox(height: 50),
-              ListTile(
-                title: Text("Tipe Perusahaan"),
-                subtitle: Text(
+                      MaterialPageRoute(
+                        builder: (context) => OwnerProfileScreen(
+                            isUpdate: true, profileModel: widget.profileModel),
+                      )); // update
+                } else {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            OwnerProfileScreen(isUpdate: false),
+                      )); // add
+                }
+              },
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(13),
+            width: double.infinity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                CircleAvatar(
+                  backgroundImage: (widget.isUpdate)
+                      ? AssetImage(warningImage)
+                      : AssetImage(noDataImage),
+                  // backgroundColor: Colors.blue,
+                  radius: MediaQuery.of(context).size.width / 5,
+                  backgroundColor: Colors.blue,
+                ),
+                Text(
                   (widget.isUpdate)
-                      ? widget.profileModel?.bussinessType.toString() ?? ""
+                      ? widget.profileModel?.bussinessName.toString() ?? ""
                       : "-",
                 ),
-              ),
-              ListTile(
-                title: Text("Negara"),
-                subtitle: Text(
+                Text(
                   (widget.isUpdate)
-                      ? widget.profileModel?.bussinessCountry.toString() ?? ""
+                      ? widget.profileModel?.bussinessPhone.toString() ?? ""
                       : "-",
                 ),
-              ),
-              ListTile(
-                title: Text("Mata Uang"),
-                subtitle: Text(
-                  (widget.isUpdate)
-                      ? widget.profileModel?.bussinessCurrency.toString() ?? ""
-                      : "-",
+                SizedBox(height: 50),
+                ListTile(
+                  title: Text("Tipe Perusahaan"),
+                  subtitle: Text(
+                    (widget.isUpdate)
+                        ? widget.profileModel?.bussinessType.toString() ?? ""
+                        : "-",
+                  ),
                 ),
-              ),
-              ListTile(
-                title: Text("Alamat"),
-                subtitle: Text(
-                  (widget.isUpdate)
-                      ? widget.profileModel?.bussinessAddress.toString() ?? ""
-                      : "-",
+                ListTile(
+                  title: Text("Negara"),
+                  subtitle: Text(
+                    (widget.isUpdate)
+                        ? widget.profileModel?.bussinessCountry.toString() ?? ""
+                        : "-",
+                  ),
                 ),
-              ),
-            ],
+                ListTile(
+                  title: Text("Mata Uang"),
+                  subtitle: Text(
+                    (widget.isUpdate)
+                        ? widget.profileModel?.bussinessCurrency.toString() ??
+                            ""
+                        : "-",
+                  ),
+                ),
+                ListTile(
+                  title: Text("Alamat"),
+                  subtitle: Text(
+                    (widget.isUpdate)
+                        ? widget.profileModel?.bussinessAddress.toString() ?? ""
+                        : "-",
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

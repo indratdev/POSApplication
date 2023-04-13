@@ -24,5 +24,21 @@ class OwnerBloc extends Bloc<OwnerEvent, OwnerState> {
         emit(FailureAddProfileCompany(messageError: e.toString()));
       }
     });
+
+    // update
+    on<UpdateProfileCompanyEvent>((event, emit) async {
+      emit(LoadingUpdateProfileCompany());
+      try {
+        var profileData = event.profileModel;
+        var result = await controller.addProfileCompany(profileData);
+        result.fold(
+          (l) => emit(FailureUpdateProfileCompany(messageError: l)),
+          (data) => emit(SuccessUpdateProfileCompany(dataProfile: data)),
+        );
+      } catch (e) {
+        print(e.toString());
+        emit(FailureUpdateProfileCompany(messageError: e.toString()));
+      }
+    });
   }
 }

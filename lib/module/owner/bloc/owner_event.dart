@@ -14,3 +14,12 @@ class AddProfileCompanyEvent extends OwnerEvent {
     required this.profileModel,
   });
 }
+
+// update profile company
+class UpdateProfileCompanyEvent extends OwnerEvent {
+  ProfileModel profileModel;
+
+  UpdateProfileCompanyEvent({
+    required this.profileModel,
+  });
+}

@@ -20,7 +20,7 @@ class FailureOwner extends OwnerState {
   List<Object> get props => [messageError];
 }
 
-// profile company
+// add profile company
 class LoadingAddProfileCompany extends OwnerState {}
 
 class FailureAddProfileCompany extends FailureOwner {
@@ -38,5 +38,24 @@ class SuccessAddProfileCompany extends OwnerState {
   List<Object> get props => [dataProfile];
 }
 
-// profile company end
+// add profile company end
 
+// update profile company
+class LoadingUpdateProfileCompany extends OwnerState {}
+
+class FailureUpdateProfileCompany extends FailureOwner {
+  FailureUpdateProfileCompany({required super.messageError});
+}
+
+class SuccessUpdateProfileCompany extends OwnerState {
+  ProfileModel dataProfile;
+
+  SuccessUpdateProfileCompany({
+    required this.dataProfile,
+  });
+
+  @override
+  List<Object> get props => [dataProfile];
+}
+
+// update profile company end
