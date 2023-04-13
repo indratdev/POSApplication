@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:posapplication/model/profile_model.dart';
 import 'package:posapplication/service/hive_service/boxes.dart';
@@ -10,13 +12,19 @@ class HiveService {
   Future<Box<dynamic>> isBoxProfileAlreadyOpen() async {
     late Box box;
     bool status = Hive.isBoxOpen(companyProfileBox);
-    // var boxx = Hive.box('company_profile');
-    print(">>>>> status : $status");
+    print(">>> start isBoxProfileAlreadyOpen : $status");
 
-    (status)
-        // ? box = Hive.box<ProfileModel>(HiveService.companyProfileBox)
-        ? box = Hive.box<ProfileModel>(companyProfileBox)
-        : box = await Hive.openBox(HiveService.companyProfileBox);
+    // (status)
+    //     // ? box = Hive.box<ProfileModel>(HiveService.companyProfileBox)
+    //     ? box = Hive.box<ProfileModel>(companyProfileBox)
+    //     : box = await Hive.openBox(HiveService.companyProfileBox);
+    if (status == false) {
+      box = await Hive.openBox(HiveService.companyProfileBox);
+    }
+
+    box = Hive.box(companyProfileBox);
+
+    print(">>> end isBoxProfileAlreadyOpen : ${box.values}");
 
     return box;
   }
@@ -28,7 +36,14 @@ class HiveService {
   // To add User To hive
   addProfileToHive(ProfileModel profile) async {
     // await profileBox.add(profile);
-    await profileBox.put(companyProfileKey, profile);
+    // await profileBox.put(companyProfileKey, profile);
+
+    // new
+    // check box already open ?
+    print(">>> start addProfileToHive");
+    Box box = await isBoxProfileAlreadyOpen();
+    await box.put(companyProfileKey, profile);
+    print(">>> end addProfileToHive");
   }
 
   // read Proffile
@@ -41,19 +56,23 @@ class HiveService {
   updateProfileCompanyToBox(ProfileModel profileModel) async {
     // await profileBox.put(companyProfileKey, profile);
     try {
+      // final box = await isBoxProfileAlreadyOpen();
+      // final ProfileModel? profile = box.get(companyProfileKey);
+      // profile?.bussinessAddress = profileModel.bussinessAddress ?? "";
+      // profile?.bussinessCountry = profileModel.bussinessAddress ?? "";
+      // profile?.bussinessCurrency = profileModel.bussinessCurrency ?? "";
+      // profile?.bussinessName = profileModel.bussinessName ?? "";
+      // profile?.bussinessPhone = profileModel.bussinessPhone ?? "";
+      // profile?.bussinessType = profileModel.bussinessType ?? "";
+      // profile?.companyID = profileModel.companyID ?? "";
+      // await profileBox.put(companyProfileKey, profile);
+      // box.close();
+
+      // new
       final box = await isBoxProfileAlreadyOpen();
-      final ProfileModel? profile = box.get(companyProfileKey);
-      profile?.bussinessAddress = profileModel.bussinessAddress ?? "";
-      profile?.bussinessCountry = profileModel.bussinessAddress ?? "";
-      profile?.bussinessCurrency = profileModel.bussinessCurrency ?? "";
-      profile?.bussinessName = profileModel.bussinessName ?? "";
-      profile?.bussinessPhone = profileModel.bussinessPhone ?? "";
-      profile?.bussinessType = profileModel.bussinessType ?? "";
-      profile?.companyID = profileModel.companyID ?? "";
-      await profileBox.put(companyProfileKey, profile);
-      box.close();
+      await box.put(companyProfileKey, profileModel);
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
     }
   }
 

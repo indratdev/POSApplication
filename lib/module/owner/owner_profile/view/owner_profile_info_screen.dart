@@ -21,7 +21,6 @@ class _OwnerProfileInfoScreenState extends State<OwnerProfileInfoScreen> {
   @override
   void dispose() {
     print(">> dispose run OwnerProfileInfoScreen");
-
     Hive.close();
     super.dispose();
   }
@@ -62,7 +61,7 @@ class _OwnerProfileInfoScreenState extends State<OwnerProfileInfoScreen> {
               appBar: AppBar(),
               body: Center(
                 heightFactor: MediaQuery.of(context).size.height,
-                child: Text("Ada Kesalahan, Mohon Ulangin Kembali"),
+                child: const Text("Ada Kesalahan, Mohon Ulangin Kembali"),
               ),
             );
           }

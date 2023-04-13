@@ -42,7 +42,6 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
   @override
   void initState() {
     super.initState();
-    Hive.close();
     openBoxx();
     initTextfield();
   }
@@ -64,15 +63,26 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
     }
   }
 
-  openBoxx() async {
-    // bool status = Hive.isBoxOpen(HiveService.companyProfileBox);
-    // print("=====> status : $status");
-    // (status)
-    //     ? box = Hive.box<ProfileModel>(HiveService.companyProfileBox)
-    //     : box = await Hive.openBox(HiveService.companyProfileBox);
-    final result = await hiveService.isBoxProfileAlreadyOpen();
-    print(">>> result : ${result}");
-    box = result;
+  // openBoxx() async {
+  //   print(">>> start openBoxx");
+  //   bool status = Hive.isBoxOpen(HiveService.companyProfileBox);
+  //   print(">>> status openBoxx : ${status}");
+  //   (status)
+  //       ? box = Hive.box<ProfileModel>(HiveService.companyProfileBox)
+  //       : box = await Hive.openBox(HiveService.companyProfileBox);
+  //   // final result = await hiveService.isBoxProfileAlreadyOpen();
+  //   // print(">>> result : ${result}");
+  //   // box = result;
+  //   print(">>> end status Box : ${box.values}");
+  // }
+  Future<Box> openBoxx() async {
+    // trial
+    print(">>> start openBoxx");
+    var resultBox = await controller.isBoxProfileAlreadyOpen();
+    print(">>> status openBoxx : ${resultBox.values}");
+    box = resultBox;
+    print(">>> end status Box : ${box.values}");
+    return resultBox;
   }
 
   // setProfileBox(ProfileModel data) {
@@ -126,7 +136,6 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("model :: ${widget.isUpdate}");
     return Scaffold(
       appBar: AppBar(
         title: const Text("PROFILE USAHA"),
@@ -179,6 +188,8 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
               controller.updateProfileCompanyToBox(result);
 
               Navigator.popAndPushNamed(context, AppRoutes.ownerProfileInfo);
+              CustomWidgets.showMessageAlertBasic(
+                  context, "Profile Usaha Berhasil di Perbaharui", true);
             }
             if (state is SuccessAddProfileCompany) {
               print("SuccessAddProfileCompany Running....");
@@ -188,6 +199,8 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
               var result = state.dataProfile;
               controller.setProfileCompanytoBox(result);
               Navigator.popAndPushNamed(context, AppRoutes.ownerProfileInfo);
+              CustomWidgets.showMessageAlertBasic(
+                  context, "Profile Usaha Berhasil ditambahkan", true);
             }
           },
           builder: (context, state) {
