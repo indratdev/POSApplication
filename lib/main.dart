@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:posapplication/module/Users/bloc/users_bloc.dart';
 
 import 'package:posapplication/module/auth/bloc/auth_bloc.dart';
 import 'package:posapplication/module/owner/bloc/owner_bloc.dart';
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => OwnerBloc(),
+        ),
+        BlocProvider(
+          create: (context) => UsersBloc(),
         ),
       ],
       child: MaterialApp(

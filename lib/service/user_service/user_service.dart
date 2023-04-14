@@ -64,6 +64,26 @@ class UserService {
     return detailUser.data() ?? {};
   }
 
+  // read all user
+
+  readAllUser() async {
+    // String companyID = await mySharedP.getCompanyID();
+
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection(userCollection)
+        .where('companyID',
+            isEqualTo: "3BnGWuFviVPRRNfYqsS5aVa0xIm1") // masih salah
+        .where('role', isNotEqualTo: RoleUsers.owner.name.toString())
+        .get();
+    List<DocumentSnapshot> documents = querySnapshot.docs;
+    // print(documents);
+    for (var element in documents) {
+      print(element.data());
+    }
+
+    // return detailUser.data() ?? {};
+  }
+
   Future<Either<String, String>> saveUserData(
     RoleUsers roleUsers,
     // bool isOwner,

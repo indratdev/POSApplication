@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:posapplication/module/Users/bloc/users_bloc.dart';
 import 'package:posapplication/module/Users/user_dashboard/view/user_dashboard_screen.dart';
 
 import '../../owner_profile/view/owner_profile_info_screen.dart';
@@ -57,11 +59,11 @@ class MenuSettingListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(menu),
-      trailing: Icon(Icons.arrow_forward_ios),
+      trailing: const Icon(Icons.arrow_forward_ios),
       onTap: () {
         PersistentNavBarNavigator.pushNewScreen(
           context,
-          screen: screenToOpen, //OwnerProfileInfoScreen(),
+          screen: screenToOpen,
           withNavBar: false,
           pageTransitionAnimation: PageTransitionAnimation.cupertino,
         );
