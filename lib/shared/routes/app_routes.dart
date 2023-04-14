@@ -5,8 +5,8 @@ import 'package:posapplication/module/auth/cover/coverauth_screen.dart';
 import 'package:posapplication/module/auth/forgot_password/forgot_password_screen.dart';
 import 'package:posapplication/module/auth/login/view/login_screen.dart';
 import 'package:posapplication/module/auth/register/register_Screen.dart';
-import 'package:posapplication/module/owner/owner_bottomnav/owner_bottomnav_screen.dart';
-import 'package:posapplication/module/owner/owner_dashboard/owner_dashboard_screen.dart';
+import 'package:posapplication/module/owner/owner_bottomnav/view/owner_bottomnav_screen.dart';
+import 'package:posapplication/module/owner/owner_dashboard/view/owner_dashboard_screen.dart';
 import 'package:posapplication/module/owner/owner_profile/view/owner_profile_info_screen.dart';
 import 'package:posapplication/module/owner/owner_profile/view/owner_profile_screen.dart';
 

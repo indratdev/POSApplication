@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:posapplication/module/owner/owner_dashboard/owner_dashboard_screen.dart';
+import 'package:posapplication/module/owner/owner_dashboard/view/owner_dashboard_screen.dart';
 import 'package:posapplication/module/owner/owner_settings/view/owner_settings_screen.dart';
+
+import '../controller/owner_bottomnav_controller.dart';
 
 class OwnerBottomNavigationScreen extends StatefulWidget {
   const OwnerBottomNavigationScreen({super.key});
@@ -14,14 +16,22 @@ class OwnerBottomNavigationScreen extends StatefulWidget {
 
 class _OwnerBottomNavigationScreenState
     extends State<OwnerBottomNavigationScreen> {
-  PersistentTabController _controller = PersistentTabController();
+  PersistentTabController _tabController = PersistentTabController();
+  final OwnerBottomNavController controller = OwnerBottomNavController();
+
+  @override
+  void initState() {
+    super.initState();
+    controller
+        .checkProfileBoxAndFirebase(); // check is profile box or firebase already exist
+  }
 
   @override
   Widget build(BuildContext context) {
-    _controller = PersistentTabController(initialIndex: 0);
+    _tabController = PersistentTabController(initialIndex: 0);
     return PersistentTabView(
       context,
-      controller: _controller,
+      controller: _tabController,
       screens: _buildScreens(),
       items: _navBarsItems(),
       confineInSafeArea: true,
@@ -75,7 +85,6 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
       title: ("Settings"),
       activeColorPrimary: CupertinoColors.activeBlue,
       inactiveColorPrimary: CupertinoColors.systemGrey,
-      
     ),
   ];
 }

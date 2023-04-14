@@ -13,7 +13,6 @@ class HiveService {
     late Box box;
     bool status = Hive.isBoxOpen(companyProfileBox);
     print(">>> start isBoxProfileAlreadyOpen : $status");
-
     // (status)
     //     // ? box = Hive.box<ProfileModel>(HiveService.companyProfileBox)
     //     ? box = Hive.box<ProfileModel>(companyProfileBox)
@@ -21,16 +20,20 @@ class HiveService {
     if (status == false) {
       box = await Hive.openBox(HiveService.companyProfileBox);
     }
-
     box = Hive.box(companyProfileBox);
-
     print(">>> end isBoxProfileAlreadyOpen : ${box.values}");
-
     return box;
   }
 
   Future<bool> isExistkBoxCompanyProfile() async {
     return await Hive.boxExists(companyProfileBox);
+  }
+
+  Future<bool> isExistCompanyProfileFromBox() async {
+    late Box box;
+    box = await isBoxProfileAlreadyOpen();
+    var data = await box.get(companyProfileKey);
+    return (data != null) ? true : false;
   }
 
   // To add User To hive
@@ -48,7 +51,10 @@ class HiveService {
 
   // read Proffile
   readProfileCompanyFromBox() async {
-    var aaa = await profileBox.get(companyProfileBox);
+    late Box box;
+    box = await isBoxProfileAlreadyOpen();
+    // var aaa = await profileBox.get(companyProfileBox);
+    var aaa = await box.get(companyProfileBox);
     print(aaa);
   }
 
