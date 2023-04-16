@@ -40,11 +40,12 @@ class HiveService {
   }
 
   // read Profile
-  Future<String> readProfileCompanyFromBox() async {
+  Future<String> readProfileCompanyIDFromBox() async {
     late Box box;
     box = await isBoxProfileAlreadyOpen();
 
     ProfileModel model = await box.get(companyProfileKey) as ProfileModel;
+    print(model.companyID.toString());
     return model.companyID.toString();
   }
 

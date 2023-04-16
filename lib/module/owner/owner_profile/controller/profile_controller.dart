@@ -47,6 +47,6 @@ class ProfileController {
   // }
 
   readProfileCompanyFromBox() async {
-    await hiveService.readProfileCompanyFromBox();
+    await hiveService.readProfileCompanyIDFromBox();
   }
 }

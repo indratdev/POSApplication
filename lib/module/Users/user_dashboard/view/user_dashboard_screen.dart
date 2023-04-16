@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/module/Users/bloc/users_bloc.dart';
+import 'package:posapplication/module/Users/user_dashboard/controller/user_dashboard_controller.dart';
 import 'package:posapplication/service/user_service/user_service.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
 
@@ -13,10 +14,9 @@ class UserDashboardScreen extends StatefulWidget {
 }
 
 class _UserDashboardScreenState extends State<UserDashboardScreen> {
+  final UserDashboardController controller = UserDashboardController();
   @override
   void initState() {
-    // BlocProvider.of<UsersBloc>(context).add(GetAllUsersEvent());
-    // UserService().readAllUser();
     super.initState();
   }
 
@@ -42,7 +42,7 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection(UserService.userCollection)
-            .where('companyID', isEqualTo: "3BnGWuFviVPRRNfYqsS5aVa0xIm1")
+            .where('companyID', isEqualTo: controller.readCompanyID())
             .where('role', isNotEqualTo: RoleUsers.owner.name.toString())
             .snapshots(),
         builder: (context, snapshot) {
@@ -50,7 +50,15 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
           return ListView.builder(
             itemCount: datas?.length ?? 0,
             itemBuilder: (context, index) {
-              return Text(datas?[index].data()["email"] ?? "");
+              var data = datas?[index].data();
+              // return Text(datas?[index].data()["email"] ?? "");
+              return ListTile(
+                title: Text(data?["email"] ?? ""),
+                // subtitle: Text(data?["firstname"] ?? "" + data?["lastname"] ?? ""),
+                subtitle: Text(
+                    "${data?["firstname"] ?? ""} ${data?["lastname"] ?? ""} "),
+                trailing: Text(data?["role"] ?? ""),
+              );
             },
           );
         },
