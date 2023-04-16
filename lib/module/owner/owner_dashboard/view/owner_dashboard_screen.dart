@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:posapplication/module/owner/owner_dashboard/controller/owner_dashboard_controller.dart';
+import 'package:posapplication/service/hive_service/hive_service.dart';
 
 class OwnerDashboardScreen extends StatefulWidget {
   const OwnerDashboardScreen({super.key});
@@ -33,7 +34,7 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
           IconButton(
             onPressed: () => logout(),
             icon: Icon(Icons.logout_outlined),
-          )
+          ),
         ],
       ),
     );

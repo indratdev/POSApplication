@@ -9,19 +9,14 @@ class HiveService {
   static const String companyProfileKey = "profile_key";
   static Box profileBox = Boxes.getTask();
 
+  // check
   Future<Box<dynamic>> isBoxProfileAlreadyOpen() async {
     late Box box;
     bool status = Hive.isBoxOpen(companyProfileBox);
-    print(">>> start isBoxProfileAlreadyOpen : $status");
-    // (status)
-    //     // ? box = Hive.box<ProfileModel>(HiveService.companyProfileBox)
-    //     ? box = Hive.box<ProfileModel>(companyProfileBox)
-    //     : box = await Hive.openBox(HiveService.companyProfileBox);
     if (status == false) {
-      box = await Hive.openBox(HiveService.companyProfileBox);
+      box = await Hive.openBox(companyProfileBox);
     }
     box = Hive.box(companyProfileBox);
-    print(">>> end isBoxProfileAlreadyOpen : ${box.values}");
     return box;
   }
 
@@ -36,26 +31,21 @@ class HiveService {
     return (data != null) ? true : false;
   }
 
-  // To add User To hive
-  addProfileToHive(ProfileModel profile) async {
-    // await profileBox.add(profile);
-    // await profileBox.put(companyProfileKey, profile);
+  // end check
 
-    // new
-    // check box already open ?
-    print(">>> start addProfileToHive");
+  // add profile
+  addProfileToHive(ProfileModel profile) async {
     Box box = await isBoxProfileAlreadyOpen();
     await box.put(companyProfileKey, profile);
-    print(">>> end addProfileToHive");
   }
 
-  // read Proffile
-  readProfileCompanyFromBox() async {
+  // read Profile
+  Future<String> readProfileCompanyFromBox() async {
     late Box box;
     box = await isBoxProfileAlreadyOpen();
-    // var aaa = await profileBox.get(companyProfileBox);
-    var aaa = await box.get(companyProfileBox);
-    print(aaa);
+
+    ProfileModel model = await box.get(companyProfileKey) as ProfileModel;
+    return model.companyID.toString();
   }
 
   // update
@@ -88,6 +78,9 @@ class HiveService {
       profileBox.delete(companyProfileKey);
     }
   }
+
+  // save companyID
+  saveCompanyID() {}
 
   //test
 //   testUpdate(ProfileModel profileModel) async {
