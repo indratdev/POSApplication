@@ -16,6 +16,7 @@ class OwnerSettingsScreen extends StatefulWidget {
 class _OwnerSettingsScreenState extends State<OwnerSettingsScreen> {
   @override
   Widget build(BuildContext context) {
+    // final usersBloc = BlocProvider.of<UsersBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Pengaturan"),
@@ -23,7 +24,7 @@ class _OwnerSettingsScreenState extends State<OwnerSettingsScreen> {
       ),
       body: ListView.separated(
         separatorBuilder: (context, index) =>
-            Divider(height: 20, thickness: 0.8, color: Colors.black),
+            const Divider(height: 20, thickness: 0.8, color: Colors.black),
         shrinkWrap: true,
         itemCount: 1,
         itemBuilder: (context, index) {
@@ -36,6 +37,8 @@ class _OwnerSettingsScreenState extends State<OwnerSettingsScreen> {
               MenuSettingListTile(
                 menu: "User Management",
                 screenToOpen: UserDashboardScreen(),
+                bloc: BlocProvider.of<UsersBloc>(context),
+                eventToCall: GetAllUsersEvent(),
               )
             ],
           );
@@ -48,11 +51,15 @@ class _OwnerSettingsScreenState extends State<OwnerSettingsScreen> {
 class MenuSettingListTile extends StatelessWidget {
   String menu;
   Widget screenToOpen;
+  Bloc? bloc;
+  Object? eventToCall;
 
   MenuSettingListTile({
     super.key,
     required this.menu,
     required this.screenToOpen,
+    this.bloc,
+    this.eventToCall,
   });
 
   @override
@@ -61,6 +68,9 @@ class MenuSettingListTile extends StatelessWidget {
       title: Text(menu),
       trailing: const Icon(Icons.arrow_forward_ios),
       onTap: () {
+        if (bloc != null) {
+          bloc!.add(eventToCall);
+        }
         PersistentNavBarNavigator.pushNewScreen(
           context,
           screen: screenToOpen,

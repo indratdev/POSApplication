@@ -28,6 +28,15 @@ class FailureGetAllUser extends FailureUsers {
   FailureGetAllUser({required super.messageError});
 }
 
-class SuccessGetAllUser extends UsersState {}
+class SuccessGetAllUser extends UsersState {
+  List<UsersModel> resultModel;
+
+  SuccessGetAllUser({
+    required this.resultModel,
+  });
+
+  @override
+  List<Object> get props => [resultModel];
+}
 
 // END Get all users

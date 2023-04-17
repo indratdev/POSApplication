@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:posapplication/model/users_model.dart';
 import 'package:posapplication/shared/utils/shared_preferences/myshared_preferences.dart';
 
 enum RoleUsers {
@@ -65,24 +66,37 @@ class UserService {
   }
 
   // read all user
-
-  readAllUser() async {
-    // String companyID = await mySharedP.getCompanyID();
-
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+  Future<List<UsersModel>> readAllUser(String companyID) async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore
+        .instance
         .collection(userCollection)
-        .where('companyID',
-            isEqualTo: "3BnGWuFviVPRRNfYqsS5aVa0xIm1") // masih salah
+        .where('companyID', isEqualTo: companyID)
         .where('role', isNotEqualTo: RoleUsers.owner.name.toString())
         .get();
-    List<DocumentSnapshot> documents = querySnapshot.docs;
-    // print(documents);
-    for (var element in documents) {
-      print(element.data());
-    }
 
-    // return detailUser.data() ?? {};
+    var data = querySnapshot.docs
+        .map((e) => UsersModel.fromDocumentSnapshot(e))
+        .toList();
+    return data;
   }
+
+  // readAllUser() async {
+  //   // String companyID = await mySharedP.getCompanyID();
+
+  //   QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+  //       .collection(userCollection)
+  //       .where('companyID',
+  //           isEqualTo: "3BnGWuFviVPRRNfYqsS5aVa0xIm1") // masih salah
+  //       .where('role', isNotEqualTo: RoleUsers.owner.name.toString())
+  //       .get();
+  //   List<DocumentSnapshot> documents = querySnapshot.docs;
+  //   // print(documents);
+  //   for (var element in documents) {
+  //     print(element.data());
+  //   }
+
+  //   // return detailUser.data() ?? {};
+  // }
 
   Future<Either<String, String>> saveUserData(
     RoleUsers roleUsers,
