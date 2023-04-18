@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/module/auth/bloc/auth_bloc.dart';
-import 'package:posapplication/module/auth/login/controller/login_controller.dart';
+import 'package:posapplication/module/owner/bloc/owner_bloc.dart';
 
 import 'package:posapplication/shared/constants/constatns.dart';
 import 'package:posapplication/shared/utils/validator/validator.dart';
@@ -17,7 +17,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  LoginController controller = LoginController();
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -30,18 +29,10 @@ class _LoginScreenState extends State<LoginScreen> {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is SuccessLoginUser) {
+              // BlocProvider.of<OwnerBloc>(context)
+              //     .add(CheckProfileBoxAndFirebaseEvent());
               Navigator.pushNamedAndRemoveUntil(
                   context, AppRoutes.ownerBottomNav, (route) => false);
-              // String role = state.result['role'];
-              // String nav = controller.accessMenuByRole(role);
-              // Navigator.pushNamedAndRemoveUntil(context, nav, (route) => false);
-
-              // CustomWidgets.showMessageAlertWithF(
-              //     context,
-              //     state.result,
-              //     true,
-              //     () => Navigator.pushNamedAndRemoveUntil(
-              //         context, AppRoutes.first, (route) => false));
             }
 
             if (state is FailureLoginUser) {

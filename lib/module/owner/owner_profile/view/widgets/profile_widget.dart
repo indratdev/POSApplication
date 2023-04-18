@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:posapplication/model/profile_model.dart';
 import 'package:posapplication/module/owner/owner_profile/view/owner_profile_screen.dart';
 
+import '../../../../../data/model/profile_model.dart';
 import '../../../../../shared/constants/constatns.dart';
 
 class ProfileWidget extends StatefulWidget {

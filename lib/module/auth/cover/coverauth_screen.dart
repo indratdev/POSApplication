@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
 import 'package:posapplication/shared/utils/shared_preferences/myshared_preferences.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CoverAuthScreen extends StatefulWidget {
   const CoverAuthScreen({super.key});

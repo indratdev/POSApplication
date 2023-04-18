@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:posapplication/module/Users/bloc/users_bloc.dart';
 import 'package:posapplication/module/Users/user_dashboard/view/user_dashboard_screen.dart';
+import 'package:posapplication/module/owner/bloc/owner_bloc.dart';
 
 import '../../owner_profile/view/owner_profile_info_screen.dart';
 
@@ -33,6 +34,8 @@ class _OwnerSettingsScreenState extends State<OwnerSettingsScreen> {
               MenuSettingListTile(
                 menu: "Profile",
                 screenToOpen: OwnerProfileInfoScreen(),
+                bloc: BlocProvider.of<OwnerBloc>(context),
+                eventToCall: OpenBoxProfileEvent(),
               ),
               MenuSettingListTile(
                 menu: "User Management",

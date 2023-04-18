@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:posapplication/service/user_service/user_service.dart';
+import 'package:posapplication/data/service/user_service/user_service.dart';
 import 'package:posapplication/shared/utils/failure/authexception_handler.dart';
 
-import '../../shared/utils/failure/exception.dart';
-import '../../shared/utils/failure/failure.dart';
-import '../../shared/utils/shared_preferences/myshared_preferences.dart';
+import '../../../shared/utils/failure/exception.dart';
+import '../../../shared/utils/failure/failure.dart';
+import '../../../shared/utils/shared_preferences/myshared_preferences.dart';
 import '../signInSignUp.dart';
 
 class AuthService {
@@ -133,7 +133,7 @@ class AuthService {
   }
 
   // log out
-  static void signOut() {
+  void signOut() {
     _auth.signOut();
   }
 }

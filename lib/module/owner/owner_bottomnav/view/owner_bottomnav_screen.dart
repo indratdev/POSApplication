@@ -4,8 +4,6 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:posapplication/module/owner/owner_dashboard/view/owner_dashboard_screen.dart';
 import 'package:posapplication/module/owner/owner_settings/view/owner_settings_screen.dart';
 
-import '../controller/owner_bottomnav_controller.dart';
-
 class OwnerBottomNavigationScreen extends StatefulWidget {
   const OwnerBottomNavigationScreen({super.key});
 
@@ -17,13 +15,13 @@ class OwnerBottomNavigationScreen extends StatefulWidget {
 class _OwnerBottomNavigationScreenState
     extends State<OwnerBottomNavigationScreen> {
   PersistentTabController _tabController = PersistentTabController();
-  final OwnerBottomNavController controller = OwnerBottomNavController();
+  // final OwnerBottomNavController controller = OwnerBottomNavController();
 
   @override
   void initState() {
     super.initState();
-    controller
-        .checkProfileBoxAndFirebase(); // check is profile box or firebase already exist
+    // controller
+    //     .checkProfileBoxAndFirebase(); // check is profile box or firebase already exist
   }
 
   @override
@@ -48,12 +46,12 @@ class _OwnerBottomNavigationScreenState
       ),
       popAllScreensOnTapOfSelectedTab: true,
       popActionScreens: PopActionScreensType.all,
-      itemAnimationProperties: ItemAnimationProperties(
+      itemAnimationProperties: const ItemAnimationProperties(
         // Navigation Bar's items animation properties.
         duration: Duration(milliseconds: 200),
         curve: Curves.ease,
       ),
-      screenTransitionAnimation: ScreenTransitionAnimation(
+      screenTransitionAnimation: const ScreenTransitionAnimation(
         // Screen transition animation on change of selected tab.
         animateTabTransition: true,
         curve: Curves.ease,

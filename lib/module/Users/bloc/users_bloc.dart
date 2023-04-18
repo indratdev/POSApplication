@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:posapplication/model/users_model.dart';
 import 'package:posapplication/module/Users/user_dashboard/controller/user_dashboard_controller.dart';
+
+import '../../../data/model/users_model.dart';
 
 part 'users_event.dart';
 part 'users_state.dart';

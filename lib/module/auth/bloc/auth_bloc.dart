@@ -2,9 +2,9 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:posapplication/service/auth_service/auth_service.dart';
-import 'package:posapplication/service/signInSignUp.dart';
-import 'package:posapplication/service/user_service/user_service.dart';
+import 'package:posapplication/data/service/auth_service/auth_service.dart';
+import 'package:posapplication/data/service/signInSignUp.dart';
+import 'package:posapplication/data/service/user_service/user_service.dart';
 import 'package:posapplication/shared/utils/shared_preferences/myshared_preferences.dart';
 
 part 'auth_event.dart';

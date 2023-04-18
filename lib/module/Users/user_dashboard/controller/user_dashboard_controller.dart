@@ -1,6 +1,7 @@
-import 'package:posapplication/model/users_model.dart';
-import 'package:posapplication/service/hive_service/hive_service.dart';
-import 'package:posapplication/service/user_service/user_service.dart';
+import 'package:posapplication/data/service/hive_service/hive_service.dart';
+import 'package:posapplication/data/service/user_service/user_service.dart';
+
+import '../../../../data/model/users_model.dart';
 
 class UserDashboardController {
   final UserService userService = UserService();

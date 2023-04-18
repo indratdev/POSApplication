@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:posapplication/model/users_model.dart';
 import 'package:posapplication/shared/utils/shared_preferences/myshared_preferences.dart';
+
+import '../../model/users_model.dart';
 
 enum RoleUsers {
   owner,

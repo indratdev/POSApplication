@@ -1,6 +1,8 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:posapplication/model/profile_model.dart';
-import 'package:posapplication/service/hive_service/hive_init.dart';
+
+import 'package:posapplication/data/service/hive_service/hive_init.dart';
+
+import '../../model/profile_model.dart';
 
 class Boxes {
   HiveData hiveData = HiveData();

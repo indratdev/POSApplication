@@ -5,7 +5,7 @@ import 'package:posapplication/module/Users/bloc/users_bloc.dart';
 
 import 'package:posapplication/module/auth/bloc/auth_bloc.dart';
 import 'package:posapplication/module/owner/bloc/owner_bloc.dart';
-import 'package:posapplication/service/hive_service/hive_init.dart';
+import 'package:posapplication/data/service/hive_service/hive_init.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
 
 Future<void> main() async {

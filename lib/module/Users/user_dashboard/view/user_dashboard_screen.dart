@@ -1,11 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:posapplication/model/users_model.dart';
+
 import 'package:posapplication/module/Users/bloc/users_bloc.dart';
 import 'package:posapplication/module/Users/user_dashboard/controller/user_dashboard_controller.dart';
-import 'package:posapplication/service/user_service/user_service.dart';
+
 import 'package:posapplication/shared/routes/app_routes.dart';
+
+import '../../../../data/model/users_model.dart';
 
 class UserDashboardScreen extends StatefulWidget {
   const UserDashboardScreen({super.key});

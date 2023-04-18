@@ -59,3 +59,23 @@ class SuccessUpdateProfileCompany extends OwnerState {
 }
 
 // update profile company end
+
+// read profile company
+class LoadingReadProfileCompany extends OwnerState {}
+
+class FailureReadProfileCompany extends FailureOwner {
+  FailureReadProfileCompany({required super.messageError});
+}
+
+class SuccessReadProfileCompany extends OwnerState {
+  Box dataBox;
+
+  SuccessReadProfileCompany({
+    required this.dataBox,
+  });
+
+  @override
+  List<Object> get props => [dataBox];
+}
+
+// read profile company end

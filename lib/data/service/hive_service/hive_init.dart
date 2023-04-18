@@ -1,6 +1,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
-import 'package:posapplication/model/profile_model.dart';
+
+import '../../model/profile_model.dart';
 
 class HiveData {
   static init() async {

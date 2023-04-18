@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:posapplication/model/profile_model.dart';
 import 'package:posapplication/module/owner/bloc/owner_bloc.dart';
 import 'package:posapplication/module/owner/owner_profile/controller/profile_controller.dart';
 
-import 'package:posapplication/service/hive_service/hive_service.dart';
+import 'package:posapplication/data/service/hive_service/hive_service.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
 import 'package:posapplication/shared/utils/validator/validator.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
+
+import '../../../../data/model/profile_model.dart';
 
 class OwnerProfileScreen extends StatefulWidget {
   bool isUpdate;
@@ -204,8 +205,7 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
             }
           },
           builder: (context, state) {
-            return 
-            Padding(
+            return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Form(
                 key: _formKeyProfile,

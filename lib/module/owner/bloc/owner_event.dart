@@ -23,3 +23,9 @@ class UpdateProfileCompanyEvent extends OwnerEvent {
     required this.profileModel,
   });
 }
+
+class CheckProfileBoxAndFirebaseEvent extends OwnerEvent {}
+
+class LogoutEvent extends OwnerEvent {}
+
+class OpenBoxProfileEvent extends OwnerEvent {}
