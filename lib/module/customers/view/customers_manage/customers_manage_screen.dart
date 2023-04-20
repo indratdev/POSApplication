@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/customers_model.dart';
 
 import 'package:posapplication/module/customers/bloc/customers_bloc.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import '../../../../shared/utils/general_function.dart';
 import '../../../../shared/utils/validator/validator.dart';
 import '../../../../shared/widgets/custom_widgets.dart';
@@ -165,6 +166,17 @@ class _CustomersManageScreenState extends State<CustomersManageScreen> {
                     (widget.isUpdate)
                         ? Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: QrImage(
+                              data:
+                                  widget.customersModel!.customerID.toString(),
+                              version: QrVersions.auto,
+                              size: MediaQuery.of(context).size.width / 2.5,
+                              gapless: false,
+                            ))
+                        : const SizedBox(),
+                    (widget.isUpdate)
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
                             child: TextFormField(
                               initialValue: GeneralFunction().hideSeveralUserID(
                                   widget.customersModel!.customerID.toString()),
@@ -208,41 +220,42 @@ class _CustomersManageScreenState extends State<CustomersManageScreen> {
                       ),
                     ),
                     Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text("Jenis Kelamin"),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  Radio(
-                                    value: GenderEnum.male.name.toString(),
-                                    groupValue: selectedGender,
-                                    onChanged: (val) {
-                                      selectedGender = val!;
-                                      setState(() {});
-                                    },
-                                  ),
-                                  const Text('Laki - laki'),
-                                  Radio(
-                                    value: GenderEnum.female.name.toString(),
-                                    groupValue: selectedGender,
-                                    onChanged: (val) {
-                                      selectedGender = val!;
-                                      setState(() {});
-                                    },
-                                  ),
-                                  const Text('Perempaun'),
-                                ],
-                              ),
-                            ],
-                          ),
-                        )),
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text("Jenis Kelamin"),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Radio(
+                                  value: GenderEnum.male.name.toString(),
+                                  groupValue: selectedGender,
+                                  onChanged: (val) {
+                                    selectedGender = val!;
+                                    setState(() {});
+                                  },
+                                ),
+                                const Text('Laki - laki'),
+                                Radio(
+                                  value: GenderEnum.female.name.toString(),
+                                  groupValue: selectedGender,
+                                  onChanged: (val) {
+                                    selectedGender = val!;
+                                    setState(() {});
+                                  },
+                                ),
+                                const Text('Perempaun'),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 0),
                       child: TextFormField(
                         // validator: (value) => Validator.rule(value, required: true),
                         controller: addressController,
