@@ -34,63 +34,64 @@ class CustomWidgets {
         });
   }
 
-  // static showConfirmationDelete(
-  //     BuildContext context, String content, void Function()? voidCallback) {
-  //   return showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return Dialog(
-  //           shape: RoundedRectangleBorder(
-  //               borderRadius: BorderRadius.circular(20.0)), //this right here
-  //           child: SizedBox(
-  //             height: MediaQuery.of(context).size.height / 3,
-  //             child: Padding(
-  //               padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
-  //               child: Column(
-  //                 mainAxisAlignment: MainAxisAlignment.center,
-  //                 crossAxisAlignment: CrossAxisAlignment.center,
-  //                 children: [
-  //                   CircleAvatar(
-  //                     radius: MediaQuery.of(context).size.width / 8,
-  //                     foregroundColor: Colors.transparent,
-  //                     child: Image.asset(warningImage),
-  //                   ),
-  //                   SB_Height20,
-  //                   Text(content),
-  //                   SB_Height20,
-  //                   Row(
-  //                     mainAxisAlignment: MainAxisAlignment.center,
-  //                     crossAxisAlignment: CrossAxisAlignment.center,
-  //                     children: [
-  //                       ElevatedButton(
-  //                         onPressed: () => Navigator.pop(context),
-  //                         style: ElevatedButton.styleFrom(
-  //                           backgroundColor: Colors.white,
-  //                         ),
-  //                         child: Text('cancel'.tr(),
-  //                             style: const TextStyle(color: Colors.black)),
-  //                       ),
-  //                       const SizedBox(width: 20),
-  //                       ElevatedButton(
-  //                         style: ElevatedButton.styleFrom(
-  //                             backgroundColor: lightBlue),
-  //                         onPressed: voidCallback,
-  //                         child: const Text("OK"),
-  //                       ),
-  //                     ],
-  //                   )
-  //                   // SizedBox(
-  //                   //     width: MediaQuery.of(context).size.width / 2,
-  //                   //     child: ElevatedButton(
-  //                   //         onPressed: () => Navigator.pop(context),
-  //                   //         child: const Text("OK")))
-  //                 ],
-  //               ),
-  //             ),
-  //           ),
-  //         );
-  //       });
-  // }
+  static showConfirmationDelete(
+      BuildContext context, String content, void Function()? voidCallback) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)), //this right here
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height / 3,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      radius: MediaQuery.of(context).size.width / 8,
+                      foregroundColor: Colors.transparent,
+                      child: Image.asset(warningImage),
+                    ),
+                    sbHeight20,
+                    Text(content),
+                    sbHeight20,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () => Navigator.pop(context),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                          ),
+                          child: Text("BATAL",
+                              style: const TextStyle(color: Colors.black)),
+                        ),
+                        const SizedBox(width: 20),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              // backgroundColor: lightBlue
+                              ),
+                          onPressed: voidCallback,
+                          child: const Text("OK"),
+                        ),
+                      ],
+                    )
+                    // SizedBox(
+                    //     width: MediaQuery.of(context).size.width / 2,
+                    //     child: ElevatedButton(
+                    //         onPressed: () => Navigator.pop(context),
+                    //         child: const Text("OK")))
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
 
   // static showConfirmationDelete2(
   //     BuildContext context, String content, void Function()? voidCallback) {

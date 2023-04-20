@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:posapplication/module/Users/bloc/users_bloc.dart';
-import 'package:posapplication/module/Users/user_dashboard/controller/user_dashboard_controller.dart';
+import 'package:posapplication/module/Users/user_manage/view/user_manage_screen.dart';
 
 import 'package:posapplication/shared/routes/app_routes.dart';
 
@@ -16,7 +16,7 @@ class UserDashboardScreen extends StatefulWidget {
 }
 
 class _UserDashboardScreenState extends State<UserDashboardScreen> {
-  final UserDashboardController controller = UserDashboardController();
+  // final UserDashboardController controller = UserDashboardController();
   @override
   void initState() {
     super.initState();
@@ -43,14 +43,29 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
         builder: (context, state) {
           if (state is SuccessGetAllUser) {
             List<UsersModel> listUsers = state.resultModel;
+
+            if (listUsers.isEmpty) {
+              return const Center(
+                child: Text("Belum Ada Pengguna yang Didaftarkan"),
+              );
+            }
+
             return ListView.builder(
               itemCount: listUsers.length,
               itemBuilder: (context, index) {
                 UsersModel data = listUsers[index];
-                return ListTile(
-                  title: Text(data.email),
-                  subtitle: Text("${data.firstname} ${data.lastname}"),
-                  trailing: Text(data.role.toString()),
+                return InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          UserManageScreen(isUpdate: true, userModel: data),
+                    ));
+                  },
+                  child: ListTile(
+                    title: Text(data.email ?? ""),
+                    subtitle: Text("${data.firstname} ${data.lastname}"),
+                    trailing: Text(data.role.toString()),
+                  ),
                 );
               },
             );

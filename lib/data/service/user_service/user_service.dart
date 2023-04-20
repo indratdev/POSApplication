@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:posapplication/data/model/customers_model.dart';
 import 'package:posapplication/shared/utils/shared_preferences/myshared_preferences.dart';
 
 import '../../model/users_model.dart';
@@ -16,6 +17,7 @@ enum RoleUsers {
 class UserService {
   final MySharedPreferences mySharedP = MySharedPreferences();
   static const String userCollection = "users";
+  static const String customersCollection = "customers";
   static const String listUserCollection = "list_user";
 
   getCompanyID(RoleUsers roleUsers) async {
@@ -81,6 +83,21 @@ class UserService {
     return data;
   }
 
+  // read all customers
+  Future<List<CustomersModel>> readAllCustomers(String companyID) async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await FirebaseFirestore.instance
+            .collection(customersCollection)
+            .where('companyID', isEqualTo: companyID)
+            // .where('role', isNotEqualTo: RoleUsers.owner.name.toString())
+            .get();
+
+    var data = querySnapshot.docs
+        .map((e) => CustomersModel.fromDocumentSnapshot(e))
+        .toList();
+    return data;
+  }
+
   // readAllUser() async {
   //   // String companyID = await mySharedP.getCompanyID();
 
@@ -130,6 +147,153 @@ class UserService {
     //   mySharedP
     //       .saveCompanyID(FirebaseAuth.instance.currentUser!.uid.toString());
     // }
+
+    return myEither;
+  }
+
+  Future<Either<String, String>> saveNewUser(
+    User newUser,
+    UsersModel userModel,
+    String companyID,
+  ) async {
+    late Either<String, String> myEither;
+
+    // String companyID = await mySharedP.getCompanyID();
+
+    await FirebaseFirestore.instance
+        .collection(userCollection)
+        // .doc(companyID)
+        // .collection(listUserCollection)
+        .doc(newUser.uid.toString())
+        .set({
+          "companyID": companyID,
+          "userID": newUser.uid.toString(),
+          "email": newUser.email.toString(),
+          "firstname": userModel.firstname.toString(),
+          "lastname": userModel.lastname.toString(),
+          "role": userModel.role.toString(),
+          "photo": userModel.photo.toString(),
+        })
+        .then((value) => myEither = const Right("Save User Successfully!"))
+        .catchError((e) => myEither = Left(e.toString()));
+
+    return myEither;
+  }
+
+  // String? documentID;
+  // String? companyID;
+
+  // add new customer
+  Future<Either<String, String>> saveNewCustomer(
+    // User newUser,
+    CustomersModel customerModel,
+    String companyID,
+    String uniqueID,
+  ) async {
+    late Either<String, String> myEither;
+
+    await FirebaseFirestore.instance
+        .collection(customersCollection)
+        .doc(uniqueID)
+        .set({
+          "companyID": companyID,
+          "customerID": uniqueID,
+          "email": customerModel.email.toString(),
+          "fullname": customerModel.fullname.toString(),
+          "address": customerModel.address.toString(),
+          "gender": customerModel.gender.toString(),
+          "phoneNumber": customerModel.phoneNumber.toString(),
+          "point": 0,
+        })
+        .then((value) => myEither = const Right("Save Customers Successfully!"))
+        .catchError((e) => myEither = Left(e.toString()));
+
+    return myEither;
+  }
+
+  // update user
+  Future<Either<String, String>> updateUser(
+    // User newUser,
+    UsersModel userModel,
+    // String companyID,
+  ) async {
+    late Either<String, String> myEither;
+
+    // String companyID = await mySharedP.getCompanyID();
+
+    await FirebaseFirestore.instance
+        .collection(userCollection)
+        // .doc(companyID)
+        // .collection(listUserCollection)
+        .doc(userModel.documentID.toString())
+        .set({
+          "companyID": userModel.companyID.toString(),
+          "userID": userModel.userID.toString(),
+          "email": userModel.email.toString(),
+          "firstname": userModel.firstname.toString(),
+          "lastname": userModel.lastname.toString(),
+          "role": userModel.role.toString(),
+          "photo": userModel.photo.toString(),
+        })
+        .then((value) => myEither = const Right("Update User Successfully!"))
+        .catchError((e) => myEither = Left(e.toString()));
+
+    return myEither;
+  }
+
+  // update customer
+  Future<Either<String, String>> updateCustomer(
+    CustomersModel customerModel,
+    // String companyID,
+  ) async {
+    late Either<String, String> myEither;
+
+    await FirebaseFirestore.instance
+        .collection(customersCollection)
+        .doc(customerModel.customerID.toString())
+        .update({
+          // "companyID": companyID,
+          // "customerID": uniqueID,
+          "email": customerModel.email.toString(),
+          "fullname": customerModel.fullname.toString(),
+          "address": customerModel.address.toString(),
+          "gender": customerModel.gender.toString(),
+          "phoneNumber": customerModel.phoneNumber.toString(),
+          // "point": 0,
+        })
+        .then(
+            (value) => myEither = const Right("Update Customer Successfully!"))
+        .catchError((e) => myEither = Left(e.toString()));
+
+    return myEither;
+  }
+
+  // delete user
+  Future<Either<String, String>> deleteUser(
+    String documentID,
+  ) async {
+    late Either<String, String> myEither;
+    await FirebaseFirestore.instance
+        .collection(userCollection)
+        .doc(documentID)
+        .delete()
+        .then((value) => myEither = const Right("Delete User Successfully!"))
+        .catchError((e) => myEither = Left(e.toString()));
+
+    return myEither;
+  }
+
+  // delete customer
+  Future<Either<String, String>> deleteCustomer(
+    String documentID,
+  ) async {
+    late Either<String, String> myEither;
+    await FirebaseFirestore.instance
+        .collection(customersCollection)
+        .doc(documentID)
+        .delete()
+        .then((value) => myEither = const Right("Delete User Successfully!"))
+        .catchError((e) => myEither = Left(e.toString()));
 
     return myEither;
   }

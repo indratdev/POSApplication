@@ -180,25 +180,25 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
             }
 
             if (state is SuccessUpdateProfileCompany) {
-              print("SuccessUpdateProfileCompany Running....");
               Navigator.of(context)
                 ..pop()
                 ..pop();
               var result = state.dataProfile;
-              // controller.setProfileCompanytoBox(result);
+
               controller.updateProfileCompanyToBox(result);
 
+              BlocProvider.of<OwnerBloc>(context).add(OpenBoxProfileEvent());
               Navigator.popAndPushNamed(context, AppRoutes.ownerProfileInfo);
               CustomWidgets.showMessageAlertBasic(
                   context, "Profile Usaha Berhasil di Perbaharui", true);
             }
             if (state is SuccessAddProfileCompany) {
-              print("SuccessAddProfileCompany Running....");
               Navigator.of(context)
                 ..pop()
                 ..pop();
               var result = state.dataProfile;
               controller.setProfileCompanytoBox(result);
+              BlocProvider.of<OwnerBloc>(context).add(OpenBoxProfileEvent());
               Navigator.popAndPushNamed(context, AppRoutes.ownerProfileInfo);
               CustomWidgets.showMessageAlertBasic(
                   context, "Profile Usaha Berhasil ditambahkan", true);

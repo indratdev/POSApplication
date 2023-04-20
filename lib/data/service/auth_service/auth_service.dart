@@ -52,6 +52,35 @@ class AuthService {
     }
   }
 
+  // register new user
+  Future<Either<Failure, SignInSignUpResult>> registerNewUser(
+      String email, String role) async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: "password123",
+      );
+      var result = userCredential.user;
+
+      return Right(SignInSignUpResult(
+          user: result,
+          message: "Pendaftaran User Baru Berhasil \n Silahkan Login"));
+    } on FirebaseAuthException catch (e) {
+      String message = "";
+      if (e.code == 'weak-password') {
+        message = "The password provided is too weak.";
+      } else if (e.code == 'email-already-in-use') {
+        message = "The account already exists for that email.";
+      }
+      return Left(GeneralFailure(message));
+    } on ServerException {
+      return const Left(ServerFailure(''));
+    } on SocketException {
+      return const Left(ConnectionFailure('Failed to connect to the database'));
+    }
+  }
+
   // sign in
   static Future<Either<String, SignInSignUpResult>> signInWithEmail({
     required String email,

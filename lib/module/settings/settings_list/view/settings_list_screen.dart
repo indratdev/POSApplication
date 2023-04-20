@@ -3,24 +3,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:posapplication/module/Users/bloc/users_bloc.dart';
 import 'package:posapplication/module/Users/user_dashboard/view/user_dashboard_screen.dart';
+import 'package:posapplication/module/customers/bloc/customers_bloc.dart';
+import 'package:posapplication/module/customers/view/customers_dashboard/customers_dashboard_screen.dart';
 import 'package:posapplication/module/owner/bloc/owner_bloc.dart';
 
-import '../../owner_profile/view/owner_profile_info_screen.dart';
+import '../../../owner/owner_profile/view/owner_profile_info_screen.dart';
 
-class OwnerSettingsScreen extends StatefulWidget {
-  const OwnerSettingsScreen({super.key});
+class SettingsListScreen extends StatefulWidget {
+  const SettingsListScreen({super.key});
 
   @override
-  State<OwnerSettingsScreen> createState() => _OwnerSettingsScreenState();
+  State<SettingsListScreen> createState() => _SettingsListScreenState();
 }
 
-class _OwnerSettingsScreenState extends State<OwnerSettingsScreen> {
+class _SettingsListScreenState extends State<SettingsListScreen> {
   @override
   Widget build(BuildContext context) {
     // final usersBloc = BlocProvider.of<UsersBloc>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pengaturan"),
+        title: const Text("Pengaturan"),
         centerTitle: true,
       ),
       body: ListView.separated(
@@ -42,7 +44,13 @@ class _OwnerSettingsScreenState extends State<OwnerSettingsScreen> {
                 screenToOpen: UserDashboardScreen(),
                 bloc: BlocProvider.of<UsersBloc>(context),
                 eventToCall: GetAllUsersEvent(),
-              )
+              ),
+              MenuSettingListTile(
+                menu: "Customers Management",
+                screenToOpen: CustomersDashboardScreen(),
+                bloc: BlocProvider.of<CustomersBloc>(context),
+                eventToCall: GetAllCustomersEvent(),
+              ),
             ],
           );
         },

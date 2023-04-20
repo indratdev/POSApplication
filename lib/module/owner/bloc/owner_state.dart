@@ -57,25 +57,23 @@ class SuccessUpdateProfileCompany extends OwnerState {
   @override
   List<Object> get props => [dataProfile];
 }
-
 // update profile company end
 
-// read profile company
-class LoadingReadProfileCompany extends OwnerState {}
+// open box profile company
+class LoadingOpenBoxProfileCompany extends OwnerState {}
 
-class FailureReadProfileCompany extends FailureOwner {
-  FailureReadProfileCompany({required super.messageError});
+class FailureOpenBoxProfileCompany extends FailureOwner {
+  FailureOpenBoxProfileCompany({required super.messageError});
 }
 
-class SuccessReadProfileCompany extends OwnerState {
+class SuccessOpenBoxProfileCompany extends OwnerState {
   Box dataBox;
 
-  SuccessReadProfileCompany({
+  SuccessOpenBoxProfileCompany({
     required this.dataBox,
   });
 
   @override
   List<Object> get props => [dataBox];
 }
-
-// read profile company end
+// open box profile company end

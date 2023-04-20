@@ -59,15 +59,15 @@ class OwnerBloc extends Bloc<OwnerEvent, OwnerState> {
 
     // open box profile
     on<OpenBoxProfileEvent>((event, emit) async {
-      emit(LoadingReadProfileCompany());
+      emit(LoadingOpenBoxProfileCompany());
       try {
         print("runnnn OpenBoxProfileEvent ...");
         Box resultBox = await ownerRepository.isBoxProfileAlreadyOpen();
-        print(resultBox.values.first);
-        emit(SuccessReadProfileCompany(dataBox: resultBox));
+        // print(resultBox.values.first);
+        emit(SuccessOpenBoxProfileCompany(dataBox: resultBox));
       } catch (e) {
         log(e.toString());
-        emit(FailureReadProfileCompany(messageError: e.toString()));
+        emit(FailureOpenBoxProfileCompany(messageError: e.toString()));
       }
     });
 
