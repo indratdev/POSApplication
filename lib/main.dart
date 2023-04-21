@@ -1,12 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:posapplication/module/Users/bloc/users_bloc.dart';
 
-import 'package:posapplication/module/auth/bloc/auth_bloc.dart';
-import 'package:posapplication/module/customers/bloc/customers_bloc.dart';
-import 'package:posapplication/module/owner/bloc/owner_bloc.dart';
 import 'package:posapplication/data/service/hive_service/hive_init.dart';
+import 'package:posapplication/module/export.dart';
+
 import 'package:posapplication/shared/routes/app_routes.dart';
 
 Future<void> main() async {
@@ -44,6 +42,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => CustomersBloc(),
+        ),
+        BlocProvider(
+          create: (context) => TablesBloc(),
         ),
       ],
       child: MaterialApp(

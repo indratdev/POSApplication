@@ -22,4 +22,17 @@ class GeneralFunction {
     var subUserID = userID.substring(0, 10);
     return "$subUserID-xxxx.xxx.xxx";
   }
+
+  // generate table id
+  String generateUniqueTableID() {
+    var uuid = const Uuid().v1();
+    var id = uuid.replaceAll("-", "");
+
+    return "tbl$id";
+  }
+
+  String hideSeveralTableID(String tableID) {
+    var subTableID = tableID.substring(0, 12);
+    return "$subTableID-xxxx.xxx.xxx";
+  }
 }

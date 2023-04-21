@@ -6,8 +6,10 @@ import 'package:posapplication/module/Users/user_dashboard/view/user_dashboard_s
 import 'package:posapplication/module/customers/bloc/customers_bloc.dart';
 import 'package:posapplication/module/customers/view/customers_dashboard/customers_dashboard_screen.dart';
 import 'package:posapplication/module/owner/bloc/owner_bloc.dart';
+import 'package:posapplication/module/tables/bloc/tables_bloc.dart';
 
 import '../../../owner/owner_profile/view/owner_profile_info_screen.dart';
+import '../../../tables/views/tables_dashboard_screen.dart';
 
 class SettingsListScreen extends StatefulWidget {
   const SettingsListScreen({super.key});
@@ -50,6 +52,12 @@ class _SettingsListScreenState extends State<SettingsListScreen> {
                 screenToOpen: CustomersDashboardScreen(),
                 bloc: BlocProvider.of<CustomersBloc>(context),
                 eventToCall: GetAllCustomersEvent(),
+              ),
+              MenuSettingListTile(
+                menu: "Table Management",
+                screenToOpen: TablesDashboardScreen(),
+                bloc: BlocProvider.of<TablesBloc>(context),
+                eventToCall: GetAllTablesEvent(),
               ),
             ],
           );

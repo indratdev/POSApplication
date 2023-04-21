@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:posapplication/data/model/customers_model.dart';
 import 'package:posapplication/shared/utils/shared_preferences/myshared_preferences.dart';
 
+import '../../model/tables_model.dart';
 import '../../model/users_model.dart';
 
 enum RoleUsers {
@@ -17,8 +18,9 @@ enum RoleUsers {
 class UserService {
   final MySharedPreferences mySharedP = MySharedPreferences();
   static const String userCollection = "users";
-  static const String customersCollection = "customers";
   static const String listUserCollection = "list_user";
+  static const String customersCollection = "customers";
+  static const String tablesCollection = "tables";
 
   getCompanyID(RoleUsers roleUsers) async {
     String companyID = "";
@@ -94,6 +96,21 @@ class UserService {
 
     var data = querySnapshot.docs
         .map((e) => CustomersModel.fromDocumentSnapshot(e))
+        .toList();
+    return data;
+  }
+
+  // read all table
+  Future<List<TablesModel>> readAllTables(String companyID) async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await FirebaseFirestore.instance
+            .collection(tablesCollection)
+            .where('companyID', isEqualTo: companyID)
+            // .where('role', isNotEqualTo: RoleUsers.owner.name.toString())
+            .get();
+
+    var data = querySnapshot.docs
+        .map((e) => TablesModel.fromDocumentSnapshot(e))
         .toList();
     return data;
   }
@@ -180,6 +197,31 @@ class UserService {
     return myEither;
   }
 
+  // save new table
+  Future<Either<String, String>> saveNewTable(
+    TablesModel tableModel,
+    String companyID,
+    String tableID,
+  ) async {
+    late Either<String, String> myEither;
+
+    await FirebaseFirestore.instance
+        .collection(tablesCollection)
+        .doc(tableID)
+        .set({
+          "companyID": companyID,
+          "tableID": tableID,
+          "tableNo": tableModel.tableNo.toString(),
+          "size": tableModel.size,
+          "shape": tableModel.shape.toString(),
+          "tableName": tableModel.tableName.toString(),
+        })
+        .then((value) => myEither = const Right("Save Table Successfully!"))
+        .catchError((e) => myEither = Left(e.toString()));
+
+    return myEither;
+  }
+
   // String? documentID;
   // String? companyID;
 
@@ -226,7 +268,7 @@ class UserService {
         // .doc(companyID)
         // .collection(listUserCollection)
         .doc(userModel.documentID.toString())
-        .set({
+        .update({
           "companyID": userModel.companyID.toString(),
           "userID": userModel.userID.toString(),
           "email": userModel.email.toString(),
@@ -268,6 +310,42 @@ class UserService {
     return myEither;
   }
 
+  // update user
+  Future<Either<String, String>> updateTable(
+    // User newUser,
+    TablesModel tableModel,
+    // String companyID,
+  ) async {
+    late Either<String, String> myEither;
+
+    // String companyID = await mySharedP.getCompanyID();
+
+    await FirebaseFirestore.instance
+        .collection(tablesCollection)
+        // .doc(companyID)
+        // .collection(listUserCollection)
+        .doc(tableModel.tableID)
+        .update({
+          // "companyID": userModel.companyID.toString(),
+          // "userID": userModel.userID.toString(),
+          // "email": userModel.email.toString(),
+          // "firstname": userModel.firstname.toString(),
+          // "lastname": userModel.lastname.toString(),
+          // "role": userModel.role.toString(),
+          // "photo": userModel.photo.toString(),
+          "companyID": tableModel.companyID.toString(),
+          "tableID": tableModel.tableID.toString(),
+          "tableNo": tableModel.tableNo.toString(),
+          "size": tableModel.size,
+          "shape": tableModel.shape.toString(),
+          "tableName": tableModel.tableName.toString(),
+        })
+        .then((value) => myEither = const Right("Update Table Successfully!"))
+        .catchError((e) => myEither = Left(e.toString()));
+
+    return myEither;
+  }
+
   // delete user
   Future<Either<String, String>> deleteUser(
     String documentID,
@@ -293,6 +371,21 @@ class UserService {
         .doc(documentID)
         .delete()
         .then((value) => myEither = const Right("Delete User Successfully!"))
+        .catchError((e) => myEither = Left(e.toString()));
+
+    return myEither;
+  }
+
+  // delete user
+  Future<Either<String, String>> deleteTable(
+    String documentID,
+  ) async {
+    late Either<String, String> myEither;
+    await FirebaseFirestore.instance
+        .collection(tablesCollection)
+        .doc(documentID)
+        .delete()
+        .then((value) => myEither = const Right("Delete Table Successfully!"))
         .catchError((e) => myEither = Left(e.toString()));
 
     return myEither;
