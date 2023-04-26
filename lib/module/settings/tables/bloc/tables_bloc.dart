@@ -6,10 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/domain/table_repository.dart';
 import 'package:posapplication/shared/utils/general_function.dart';
 
-import '../../../data/model/tables_model.dart';
-import '../../../data/service/user_service/user_service.dart';
-import '../../../domain/auth_repository.dart';
-import '../../../domain/user_repository.dart';
+import '../../../../data/model/tables_model.dart';
+import '../../../../data/service/user_service/user_service.dart';
+import '../../../../domain/auth_repository.dart';
+import '../../../../domain/user_repository.dart';
 
 part 'tables_event.dart';
 part 'tables_state.dart';

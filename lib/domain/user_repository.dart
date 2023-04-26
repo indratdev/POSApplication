@@ -16,6 +16,11 @@ class UserRepository {
     return await hiveService.readProfileCompanyIDFromBox();
   }
 
+// read company Name from Box/Hive
+  Future<String> readCompanyName() async {
+    return await hiveService.readProfileCompanyNameFromBox();
+  }
+
   // read list users from firebase
   Future<List<UsersModel>> readAllUser() async {
     String companyID = await readCompanyID();

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:posapplication/data/model/customers_model.dart';
 import 'package:posapplication/shared/utils/shared_preferences/myshared_preferences.dart';
 
+import '../../model/category_model.dart';
 import '../../model/tables_model.dart';
 import '../../model/users_model.dart';
 
@@ -21,6 +22,7 @@ class UserService {
   static const String listUserCollection = "list_user";
   static const String customersCollection = "customers";
   static const String tablesCollection = "tables";
+  static const String categoryCollection = "categories";
 
   getCompanyID(RoleUsers roleUsers) async {
     String companyID = "";
@@ -111,6 +113,20 @@ class UserService {
 
     var data = querySnapshot.docs
         .map((e) => TablesModel.fromDocumentSnapshot(e))
+        .toList();
+    return data;
+  }
+
+  // read all category
+  Future<List<CategoryModel>> readAllCategory(String companyID) async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore
+        .instance
+        .collection(categoryCollection)
+        .where('companyID', isEqualTo: companyID)
+        .get();
+
+    var data = querySnapshot.docs
+        .map((e) => CategoryModel.fromDocumentSnapshot(e))
         .toList();
     return data;
   }
@@ -222,6 +238,28 @@ class UserService {
     return myEither;
   }
 
+  // save new category
+  Future<Either<String, String>> saveNewCategory(
+    CategoryModel categoryModel,
+    String companyID,
+    String categoryID,
+  ) async {
+    late Either<String, String> myEither;
+
+    await FirebaseFirestore.instance
+        .collection(categoryCollection)
+        .doc(categoryID)
+        .set({
+          "companyID": companyID,
+          "categoryID": categoryID,
+          "categoryName": categoryModel.categoryName.toString(),
+        })
+        .then((value) => myEither = const Right("Save Category Successfully!"))
+        .catchError((e) => myEither = Left(e.toString()));
+
+    return myEither;
+  }
+
   // String? documentID;
   // String? companyID;
 
@@ -310,7 +348,7 @@ class UserService {
     return myEither;
   }
 
-  // update user
+  // update table
   Future<Either<String, String>> updateTable(
     // User newUser,
     TablesModel tableModel,
@@ -341,6 +379,27 @@ class UserService {
           "tableName": tableModel.tableName.toString(),
         })
         .then((value) => myEither = const Right("Update Table Successfully!"))
+        .catchError((e) => myEither = Left(e.toString()));
+
+    return myEither;
+  }
+
+  // update category
+  Future<Either<String, String>> updateCategory(
+    CategoryModel categoryModel,
+  ) async {
+    late Either<String, String> myEither;
+
+    await FirebaseFirestore.instance
+        .collection(categoryCollection)
+        .doc(categoryModel.categoryID)
+        .update({
+          "companyID": categoryModel.companyID,
+          "categoryID": categoryModel.categoryID,
+          "categoryName": categoryModel.categoryName.toString(),
+        })
+        .then(
+            (value) => myEither = const Right("Update Category Successfully!"))
         .catchError((e) => myEither = Left(e.toString()));
 
     return myEither;
@@ -386,6 +445,22 @@ class UserService {
         .doc(documentID)
         .delete()
         .then((value) => myEither = const Right("Delete Table Successfully!"))
+        .catchError((e) => myEither = Left(e.toString()));
+
+    return myEither;
+  }
+
+  // delete category
+  Future<Either<String, String>> deleteCategory(
+    String documentID,
+  ) async {
+    late Either<String, String> myEither;
+    await FirebaseFirestore.instance
+        .collection(categoryCollection)
+        .doc(documentID)
+        .delete()
+        .then(
+            (value) => myEither = const Right("Delete Category Successfully!"))
         .catchError((e) => myEither = Left(e.toString()));
 
     return myEither;

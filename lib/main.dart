@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/service/hive_service/hive_init.dart';
 import 'package:posapplication/module/export.dart';
 
+
 import 'package:posapplication/shared/routes/app_routes.dart';
 
 Future<void> main() async {
@@ -45,6 +46,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => TablesBloc(),
+        ),
+        BlocProvider(
+          create: (context) => SettingsBloc(),
         ),
       ],
       child: MaterialApp(

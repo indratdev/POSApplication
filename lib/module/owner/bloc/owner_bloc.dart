@@ -62,7 +62,17 @@ class OwnerBloc extends Bloc<OwnerEvent, OwnerState> {
       emit(LoadingOpenBoxProfileCompany());
       try {
         print("runnnn OpenBoxProfileEvent ...");
-        Box resultBox = await ownerRepository.isBoxProfileAlreadyOpen();
+        Box resultBox;
+        resultBox = await ownerRepository.isBoxProfileAlreadyOpen();
+
+        // if empty, check from firebase
+        if (resultBox.isEmpty) {
+          print(">>> check from firebase");
+          // read profile company
+          await ownerRepository.readProfileCompany();
+          // read box again after read from firebase
+          resultBox = await ownerRepository.isBoxProfileAlreadyOpen();
+        }
         // print(resultBox.values.first);
         emit(SuccessOpenBoxProfileCompany(dataBox: resultBox));
       } catch (e) {

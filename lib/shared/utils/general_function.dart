@@ -31,6 +31,15 @@ class GeneralFunction {
     return "tbl$id";
   }
 
+  // generate general id
+  String generateUniqueGeneralID(String uniqueName) {
+    var uuid = const Uuid().v1();
+    var id = uuid.replaceAll("-", "");
+    String name = uniqueName + id;
+
+    return name;
+  }
+
   String hideSeveralTableID(String tableID) {
     var subTableID = tableID.substring(0, 12);
     return "$subTableID-xxxx.xxx.xxx";

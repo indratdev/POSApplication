@@ -1,4 +1,6 @@
 import 'package:flutter/widgets.dart';
+import 'package:posapplication/module/settings/category/view/category_dashboard_screen.dart';
+import 'package:posapplication/module/settings/category/view/category_management_screen.dart';
 
 import '../../module/export.dart';
 import '../../module/settings/settings_list/view/settings_list_screen.dart';
@@ -31,6 +33,10 @@ class AppRoutes {
   static const String tablesDashboard = "/tablesDashboard";
   static const String tablesManagement = "/tablesManage";
 
+  // category
+  static const String categoryDashboard = "/categoryDashboard";
+  static const String categoryManagement = "/categoryManage";
+
   Map<String, WidgetBuilder> getRoutes = {
     first: (_) => CoverAuthScreen(),
     login: (_) => LoginScreen(),
@@ -47,5 +53,7 @@ class AppRoutes {
     customersManage: (_) => CustomersManageScreen(),
     tablesDashboard: (_) => TablesDashboardScreen(),
     tablesManagement: (_) => TablesManageScreen(),
+    categoryDashboard: (_) => CategoryDashboardScreen(),
+    categoryManagement: (_) => CategoryManagementScreen(),
   };
 }

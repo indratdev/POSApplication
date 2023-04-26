@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:posapplication/module/owner/bloc/owner_bloc.dart';
 // import 'package:posapplication/module/owner/owner_profile/controller/profile_controller.dart';
 import 'package:posapplication/module/owner/owner_profile/view/widgets/profile_widget.dart';

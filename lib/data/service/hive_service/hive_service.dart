@@ -17,7 +17,9 @@ class HiveService {
     if (status == false) {
       box = await Hive.openBox(companyProfileBox);
     }
+
     box = Hive.box(companyProfileBox);
+    
     return box;
   }
 
@@ -49,6 +51,17 @@ class HiveService {
 
     ProfileModel model = await box.get(companyProfileKey) as ProfileModel;
     return model.companyID.toString();
+  }
+
+  // readProfileCompanyNameFromBox
+  Future<String> readProfileCompanyNameFromBox() async {
+    late Box box;
+    box = await isBoxProfileAlreadyOpen();
+
+    ProfileModel model = await box.get(companyProfileKey) as ProfileModel;
+    String name = model.companyID.toString();
+    name = name.replaceAll(" ", "");
+    return name;
   }
 
   // END READ

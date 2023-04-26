@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/tables_model.dart';
 import 'package:posapplication/module/export.dart';
-import 'package:posapplication/module/tables/bloc/tables_bloc.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
 
 class TablesDashboardScreen extends StatefulWidget {

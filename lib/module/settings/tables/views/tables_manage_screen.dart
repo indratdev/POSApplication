@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../data/service/user_service/user_service.dart';
 import '../../../../shared/utils/validator/validator.dart';
-import '../../../data/model/tables_model.dart';
-import '../../../shared/utils/general_function.dart';
-import '../../../shared/widgets/custom_widgets.dart';
+import '../../../../data/model/tables_model.dart';
+import '../../../../shared/utils/general_function.dart';
+import '../../../../shared/widgets/custom_widgets.dart';
 import '../bloc/tables_bloc.dart';
 
 class TablesManageScreen extends StatefulWidget {
