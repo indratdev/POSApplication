@@ -95,3 +95,83 @@ class SuccessDeleteCategory extends SettingsState {
   List<Object> get props => [result];
 }
 // END update Tables
+
+// ------------------------- items
+
+// Get all items
+class LoadingGetAllItems extends SettingsState {}
+
+class FailureGetAllItems extends FailureSettings {
+  FailureGetAllItems({required super.messageError});
+}
+
+class SuccessGetAllItems extends SettingsState {
+  List<ItemsModel> resultModel;
+
+  SuccessGetAllItems({
+    required this.resultModel,
+  });
+
+  @override
+  List<Object> get props => [resultModel];
+}
+// END Get all Tables
+
+// Add new Table
+class LoadingAddNewItems extends SettingsState {}
+
+class FailureAddNewItems extends FailureSettings {
+  FailureAddNewItems({required super.messageError});
+}
+
+class SuccessAddNewItems extends SettingsState {
+  String result;
+
+  SuccessAddNewItems({
+    required this.result,
+  });
+
+  @override
+  List<Object> get props => [result];
+}
+// END Get all Tables
+
+// update Tables
+class LoadingUpdateItems extends SettingsState {}
+
+class FailureUpdateItems extends FailureSettings {
+  FailureUpdateItems({required super.messageError});
+}
+
+class SuccessUpdateItems extends SettingsState {
+  String result;
+
+  SuccessUpdateItems({
+    required this.result,
+  });
+
+  @override
+  List<Object> get props => [result];
+}
+// END update Tables
+
+// delete Tables
+class LoadingDeleteItems extends SettingsState {}
+
+class FailureDeleteItems extends FailureSettings {
+  FailureDeleteItems({required super.messageError});
+}
+
+class SuccessDeleteItems extends SettingsState {
+  String result;
+
+  SuccessDeleteItems({
+    required this.result,
+  });
+
+  @override
+  List<Object> get props => [result];
+}
+// END update Tables
+
+// ------------------------- end items

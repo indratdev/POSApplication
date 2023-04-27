@@ -5,6 +5,7 @@ import 'package:posapplication/data/model/customers_model.dart';
 import 'package:posapplication/shared/utils/shared_preferences/myshared_preferences.dart';
 
 import '../../model/category_model.dart';
+import '../../model/items_model.dart';
 import '../../model/tables_model.dart';
 import '../../model/users_model.dart';
 
@@ -23,6 +24,7 @@ class UserService {
   static const String customersCollection = "customers";
   static const String tablesCollection = "tables";
   static const String categoryCollection = "categories";
+  static const String itemsCollection = "items";
 
   getCompanyID(RoleUsers roleUsers) async {
     String companyID = "";
@@ -127,6 +129,20 @@ class UserService {
 
     var data = querySnapshot.docs
         .map((e) => CategoryModel.fromDocumentSnapshot(e))
+        .toList();
+    return data;
+  }
+
+  // read all items
+  Future<List<ItemsModel>> readAllItems(String companyID) async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore
+        .instance
+        .collection(itemsCollection)
+        .where('companyID', isEqualTo: companyID)
+        .get();
+
+    var data = querySnapshot.docs
+        .map((e) => ItemsModel.fromDocumentSnapshot(e))
         .toList();
     return data;
   }

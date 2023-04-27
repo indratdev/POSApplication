@@ -7,6 +7,7 @@ abstract class SettingsEvent extends Equatable {
   List<Object> get props => [];
 }
 
+// category
 class GetAllCategoryEvent extends SettingsEvent {}
 
 class AddNewCategoryEvent extends SettingsEvent {
@@ -32,3 +33,34 @@ class deleteCategoryEvent extends SettingsEvent {
     required this.documentID,
   });
 }
+
+// end category
+
+// items
+class GetAllItemsEvent extends SettingsEvent {}
+
+class AddNewItemsEvent extends SettingsEvent {
+  ItemsModel itemsModel;
+
+  AddNewItemsEvent({
+    required this.itemsModel,
+  });
+}
+
+class UpdateItemsEvent extends SettingsEvent {
+  ItemsModel itemsModel;
+
+  UpdateItemsEvent({
+    required this.itemsModel,
+  });
+}
+
+class deleteItemsEvent extends SettingsEvent {
+  String documentID;
+
+  deleteItemsEvent({
+    required this.documentID,
+  });
+}
+
+// end items

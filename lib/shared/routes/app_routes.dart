@@ -37,6 +37,10 @@ class AppRoutes {
   static const String categoryDashboard = "/categoryDashboard";
   static const String categoryManagement = "/categoryManage";
 
+  // items
+  static const String itemsDashboard = "/itemsDashboard";
+  static const String itemsManagement = "/itemsManage";
+
   Map<String, WidgetBuilder> getRoutes = {
     first: (_) => CoverAuthScreen(),
     login: (_) => LoginScreen(),
@@ -55,5 +59,7 @@ class AppRoutes {
     tablesManagement: (_) => TablesManageScreen(),
     categoryDashboard: (_) => CategoryDashboardScreen(),
     categoryManagement: (_) => CategoryManagementScreen(),
+    itemsDashboard: (_) => ItemsDashboardScreen(),
+    itemsManagement: (_) => ItemsManagementScreen(),
   };
 }

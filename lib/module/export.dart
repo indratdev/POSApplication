@@ -19,3 +19,5 @@ export 'package:posapplication/module/owner/owner_profile/view/owner_profile_inf
 export 'package:posapplication/module/owner/owner_profile/view/owner_profile_screen.dart';
 export 'package:posapplication/module/settings/tables/views/tables_dashboard_screen.dart';
 export 'package:posapplication/module/settings/tables/views/tables_manage_screen.dart';
+export 'package:posapplication/module/settings/items/items_dashboard_screen.dart';
+export 'package:posapplication/module/settings/items/items_management_screen.dart';

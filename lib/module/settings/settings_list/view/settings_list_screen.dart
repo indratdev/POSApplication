@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:posapplication/module/Users/bloc/users_bloc.dart';
-import 'package:posapplication/module/Users/user_dashboard/view/user_dashboard_screen.dart';
-import 'package:posapplication/module/customers/bloc/customers_bloc.dart';
-import 'package:posapplication/module/customers/view/customers_dashboard/customers_dashboard_screen.dart';
-import 'package:posapplication/module/owner/bloc/owner_bloc.dart';
+// import 'package:posapplication/module/Users/bloc/users_bloc.dart';
+// import 'package:posapplication/module/Users/user_dashboard/view/user_dashboard_screen.dart';
+// import 'package:posapplication/module/customers/bloc/customers_bloc.dart';
+// import 'package:posapplication/module/customers/view/customers_dashboard/customers_dashboard_screen.dart';
+// import 'package:posapplication/module/owner/bloc/owner_bloc.dart';
 import 'package:posapplication/module/settings/category/view/category_dashboard_screen.dart';
 import 'package:posapplication/module/settings/settings_list/view/settings_widget.dart';
-import 'package:posapplication/module/settings/tables/bloc/tables_bloc.dart';
+// import 'package:posapplication/module/settings/tables/bloc/tables_bloc.dart';
 
-import '../../../owner/owner_profile/view/owner_profile_info_screen.dart';
-import '../../bloc/settings_bloc.dart';
-import '../../tables/views/tables_dashboard_screen.dart';
+import '../../../../module/export.dart';
+
+// import '../../../owner/owner_profile/view/owner_profile_info_screen.dart';
+// import '../../bloc/settings_bloc.dart';
+// import '../../tables/views/tables_dashboard_screen.dart';
 
 class SettingsListScreen extends StatefulWidget {
   const SettingsListScreen({super.key});
@@ -71,6 +72,13 @@ class _SettingsListScreenState extends State<SettingsListScreen> {
             screenToOpen: CategoryDashboardScreen(),
             bloc: BlocProvider.of<SettingsBloc>(context),
             eventToCall: GetAllCategoryEvent(),
+          ),
+          SettingsWidget(
+            menu: "Manajemen Item / Barang",
+            iconName: Icons.category,
+            screenToOpen: ItemsDashboardScreen(),
+            bloc: BlocProvider.of<SettingsBloc>(context),
+            eventToCall: GetAllItemsEvent(),
           ),
         ],
       ),
