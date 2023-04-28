@@ -35,15 +35,16 @@ class _ItemsManagementScreenState extends State<ItemsManagementScreen> {
 
   // CategoryModel selectedCategory = CategoryModel(companyID: "", categoryID: "");
   List<CategoryModel> listCategory = [];
+  String? _selectedValue;
+
   // String _selectedValue = "";
-  String _selectedValue = "Pilih Kategori";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     fillDatatableModel();
-    getAllCategory();
+    // getAllCategory();
   }
 
   fillDatatableModel() {
@@ -56,34 +57,30 @@ class _ItemsManagementScreenState extends State<ItemsManagementScreen> {
     }
   }
 
-  // Future<List<CategoryModel>>
-  getAllCategory() async {
-    print(">>> runn getAllCategory");
+  Future<List<CategoryModel>> getAllCategory() async {
     String companyID = await UserRepository().readCompanyID();
-    print(">>> runn companyID : ${companyID}");
+
     List<CategoryModel> result =
         await CategoryRepository().readAllCategory(companyID);
-    print(">>> runn companyID : ${result.first.categoryName}");
-    // List<CategoryModel> result = [
-    //   CategoryModel(
-    //       companyID: "companyID",
-    //       categoryID: "categoryID",
-    //       categoryName: "test 1"),
-    //   CategoryModel(
-    //       companyID: "companyID",
-    //       categoryID: "categoryID",
-    //       categoryName: "test 2")
-    // ];
+
     listCategory = result;
-    _selectedValue = listCategory.first.categoryName.toString();
+    // _selectedValue = listCategory.first.categoryName.toString();
+    // _selectedValue = result.first.categoryName.toString();
 
-    print(">>> listCategory legnht ::   ${listCategory.length}");
+    return result;
+  }
 
-    // listCategory.map((e) {
-    //   print(">>> list : ${e.categoryName}");
-    // });
+  Future<List<CategoryModel>> getAllCategory2() async {
+    String companyID = await UserRepository().readCompanyID();
 
-    // return result;
+    List<CategoryModel> result =
+        await CategoryRepository().readAllCategory(companyID);
+
+    // listCategory = result;
+    // _selectedValue = listCategory.first.categoryName.toString();
+    // _selectedValue = result.first.categoryName.toString();
+
+    return result;
   }
 
   addOrUpdateCategory({required bool isUpdate}) {
@@ -116,6 +113,8 @@ class _ItemsManagementScreenState extends State<ItemsManagementScreen> {
   @override
   Widget build(BuildContext context) {
     print("isupdate : ${widget.isUpdate}");
+
+    print(">>>@ _slected :: ${_selectedValue}");
 
     return Scaffold(
       appBar: AppBar(
@@ -185,11 +184,22 @@ class _ItemsManagementScreenState extends State<ItemsManagementScreen> {
             });
           }
         },
+
         // builder: (context, state) {
-        // if (state is SuccessGetAllCategory) {
-        //   listCategory = state.resultModel;
-        //   print(listCategory);
-        // }
+        //   print(">>> state : ${state}");
+        //   if (state is FailureGetAllCategory) {
+        //     return Center(
+        //         child: Text("Silahkan Daftarkan Kategori Terlebih dahulu"));
+        //   }
+        //   if (state is LoadingGetAllCategory) {
+        //     return Center(child: CircularProgressIndicator.adaptive());
+        //   }
+
+        //   if (state is SuccessGetAllCategory) {
+        //     listCategory = state.resultModel;
+        //     _selectedValue = listCategory.first.categoryName;
+        //     print(listCategory);
+
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Form(
@@ -225,85 +235,88 @@ class _ItemsManagementScreenState extends State<ItemsManagementScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: DropdownButton(
-                      value: _selectedValue,
-                      isExpanded: true,
-                      items: listCategory.map((item) {
-                        return DropdownMenuItem(
-                            value: item.categoryName,
-                            child: Text(
-                              item.categoryName.toString(),
-                            ));
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedValue = value!;
-                        });
+                    child: FutureBuilder<List<CategoryModel>>(
+                      future: getAllCategory(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        }
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          if (snapshot.hasData) {
+                            List<CategoryModel>? allData = snapshot.data;
+
+                            if (allData!.isEmpty) {
+                              return Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "Belum ada List Kategori, Silahkan daftarkan dahulu !",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              );
+                              // CustomWidgets.showMessageAlertWithF(
+                              //     context,
+                              //     "Belum ada List Kategori, Silahkan daftarkan dahulu !",
+                              //     false, () {
+                              //   GeneralFunction.navigationBackOneStep(context);
+                              // });
+                            } else {
+                              return DropdownButton(
+                                hint: const Text("Pilih Kategori"),
+                                value: _selectedValue,
+                                isExpanded: true,
+                                items: allData.map((item) {
+                                  return DropdownMenuItem(
+                                      value: item.categoryName,
+                                      child: Text(
+                                        item.categoryName.toString(),
+                                      ));
+                                }).toList(),
+                                onChanged: (value) {
+                                  // _selectedValue = value!;
+                                  // setState(() {});
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) {
+                                    setState(() {
+                                      _selectedValue = value!;
+                                    });
+                                  });
+                                },
+                              );
+                            }
+                          }
+
+                          if (snapshot.hasError) {
+                            return Text("hasError : ${snapshot.error}");
+                          }
+                        }
+                        return const Text("loading....");
                       },
                     ),
-                    // FutureBuilder<List<CategoryModel>>(
-                    //   future: getAllCategory(),
-                    //   builder: (context, snapshot) {
-                    //     if (snapshot.hasData) {
-                    //       List<CategoryModel>? datas = snapshot.data;
-                    //       return
-                    //       DropdownButtonFormField<String>(
-                    //         value: _selectedValue,
-                    //         items: datas!.map((CategoryModel value) {
-                    //           return DropdownMenuItem<String>(
-                    //             value: "value.categoryName",
-                    //             child: Text("value.categoryName"),
-                    //           );
-                    //         }).toList(),
-                    //         onChanged: (value) {
-                    //           setState(() {
-                    //             _selectedValue = value!;
-                    //           });
-                    //         },
-                    //       );
-                    //     } else if (snapshot.hasError) {
-                    //       return Text("${snapshot.error}");
-                    //     }
-
-                    //     return CircularProgressIndicator();
-                    //   },
-                    // )
-
-                    // FutureBuilder<List<CategoryModel>>(
-                    //   // future: Future.delayed(Duration(seconds: 2)),
-                    //   future: getAllCategory(),
-                    //   builder: (context, snapshot) {
-                    //     if (snapshot.connectionState ==
-                    //         ConnectionState.done) {
-                    //       List<CategoryModel> data = snapshot.data!;
-                    //       return DropdownButtonFormField(
-                    //         value: selectedCategory,
-                    //         items: data.map((value) {
-                    //           return DropdownMenuItem(
-                    //             value: value,
-                    //             child: Text(value.categoryName),
-                    //           );
-                    //         }).toList(),
-                    //         onChanged: (value) {
-                    //           setState(() {
-                    //             selectedCategory = value!;
-                    //           });
-                    //         },
-                    //         decoration: InputDecoration(
-                    //           labelText: 'Select an option',
-                    //           border: OutlineInputBorder(),
-                    //         ),
-                    //         hint: Text('Please select an option'),
-                    //       );
-                    //     } else {
-                    //       SizedBox();
-                    //     }
-                    //     return Center(
-                    //       child: CircularProgressIndicator(),
-                    //     );
-                    //   },
-                    // ),
                   ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(vertical: 10),
+                  //   child: DropdownButton(
+                  //     value: _selectedValue,
+                  //     isExpanded: true,
+                  //     items: listCategory.map((item) {
+                  //       return DropdownMenuItem(
+                  //           value: item.categoryName,
+                  //           child: Text(
+                  //             item.categoryName.toString(),
+                  //           ));
+                  //     }).toList(),
+                  //     onChanged: (value) {
+                  //       setState(() {
+                  //         _selectedValue = value!;
+                  //         print(">>> _selectedValue : ${_selectedValue}");
+                  //       });
+                  //     },
+                  //   ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: TextFormField(
@@ -421,7 +434,11 @@ class _ItemsManagementScreenState extends State<ItemsManagementScreen> {
               ),
             ),
           ),
-        ),
+        )
+
+        // }
+        // return SizedBox();
+        ,
       ),
     );
   }
