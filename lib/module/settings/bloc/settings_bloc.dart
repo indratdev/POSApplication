@@ -89,6 +89,13 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       }
     });
 
+    // selected category
+    on<SelectedCategoryEvent>((event, emit) {
+      emit(SuccessSelectedCategory(result: event.categoryModel));
+    });
+
+    // end selected category
+
     // ------- items
     on<GetAllItemsEvent>((event, emit) async {
       emit(LoadingGetAllItems());

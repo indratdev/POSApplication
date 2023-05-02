@@ -24,7 +24,7 @@ class _ItemsDashboardScreenState extends State<ItemsDashboardScreen> {
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.pushNamed(context, AppRoutes.itemsManagement);
-            // context.read<SettingsBloc>().add(GetAllCategoryEvent());
+            context.read<SettingsBloc>().add(GetAllCategoryEvent());
           },
           child: Icon(Icons.add)),
       body: BlocBuilder<SettingsBloc, SettingsState>(

@@ -34,6 +34,14 @@ class deleteCategoryEvent extends SettingsEvent {
   });
 }
 
+class SelectedCategoryEvent extends SettingsEvent {
+  CategoryModel categoryModel;
+
+  SelectedCategoryEvent({
+    required this.categoryModel,
+  });
+}
+
 // end category
 
 // items

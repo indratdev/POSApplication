@@ -27,6 +27,8 @@ class FailureGetAllCategory extends FailureSettings {
   FailureGetAllCategory({required super.messageError});
 }
 
+class SuccessGetAllCategoryWithNoData extends SettingsState {}
+
 class SuccessGetAllCategory extends SettingsState {
   List<CategoryModel> resultModel;
 
@@ -172,6 +174,26 @@ class SuccessDeleteItems extends SettingsState {
   @override
   List<Object> get props => [result];
 }
+// END delte Tables
+
+// selected Tables
+// class LoadingUpdateItems extends SettingsState {}
+
+// class FailureUpdateItems extends FailureSettings {
+//   FailureUpdateItems({required super.messageError});
+// }
+
+class SuccessSelectedCategory extends SettingsState {
+  CategoryModel result;
+
+  SuccessSelectedCategory({
+    required this.result,
+  });
+
+  @override
+  List<Object> get props => [result];
+}
 // END update Tables
+
 
 // ------------------------- end items

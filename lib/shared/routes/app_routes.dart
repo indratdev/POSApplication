@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:posapplication/module/settings/category/view/category_dashboard_screen.dart';
 import 'package:posapplication/module/settings/category/view/category_management_screen.dart';
+import 'package:posapplication/module/settings/category/view/category_selected_screen.dart';
 
 import '../../module/export.dart';
 import '../../module/settings/settings_list/view/settings_list_screen.dart';
@@ -36,6 +37,7 @@ class AppRoutes {
   // category
   static const String categoryDashboard = "/categoryDashboard";
   static const String categoryManagement = "/categoryManage";
+  static const String categorySelected = "/categorySelected";
 
   // items
   static const String itemsDashboard = "/itemsDashboard";
@@ -59,6 +61,7 @@ class AppRoutes {
     tablesManagement: (_) => TablesManageScreen(),
     categoryDashboard: (_) => CategoryDashboardScreen(),
     categoryManagement: (_) => CategoryManagementScreen(),
+    categorySelected: (_) => CategorySelectedScreen(),
     itemsDashboard: (_) => ItemsDashboardScreen(),
     itemsManagement: (_) => ItemsManagementScreen(),
   };
