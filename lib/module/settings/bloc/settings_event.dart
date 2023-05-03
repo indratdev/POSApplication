@@ -64,10 +64,10 @@ class UpdateItemsEvent extends SettingsEvent {
 }
 
 class deleteItemsEvent extends SettingsEvent {
-  String documentID;
+  String itemID;
 
   deleteItemsEvent({
-    required this.documentID,
+    required this.itemID,
   });
 }
 

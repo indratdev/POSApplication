@@ -56,8 +56,8 @@ class _ItemsDashboardScreenState extends State<ItemsDashboardScreen> {
                     );
                   },
                   child: ListTile(
-                    title: Text("Nama items"),
-                    subtitle: Text(data.itemName.toString()),
+                    title: Text(data.itemName.toString()),
+                    // subtitle: Text(data.itemName.toString()),
                     // trailing: Text(data.tableName.toString()),
                   ),
                 );

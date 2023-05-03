@@ -31,6 +31,14 @@ class GeneralFunction {
     return "tbl$id";
   }
 
+  // generate item id
+  String generateUniqueItemID() {
+    var uuid = const Uuid().v1();
+    var id = uuid.replaceAll("-", "");
+
+    return "item$id";
+  }
+
   // generate general id
   String generateUniqueGeneralID(String uniqueName) {
     var uuid = const Uuid().v1();

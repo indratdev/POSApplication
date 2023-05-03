@@ -75,10 +75,10 @@ class _CategorySelectedScreenState extends State<CategorySelectedScreen> {
                   },
                   child: ListTile(
                     tileColor: (selectedIndex == index)
-                        ? Colors.blue
+                        ? Colors.amber
                         : Colors.transparent,
-                    title: Text("Nama Kategori"),
-                    subtitle: Text(data.categoryName.toString()),
+                    title: Text(data.categoryName.toString()),
+                    // subtitle: Text(data.categoryName.toString()),
                     // trailing: Text(data.tableName.toString()),
                   ),
                 );

@@ -7,6 +7,7 @@ import 'package:posapplication/shared/widgets/custom_widgets.dart';
 import '../../../data/model/category_model.dart';
 import '../../../data/model/items_model.dart';
 import '../../../shared/utils/general_function.dart';
+import '../../../shared/utils/sell_category_enum.dart';
 import '../../../shared/utils/validator/validator.dart';
 
 class ItemsManagementScreen extends StatefulWidget {
@@ -31,7 +32,59 @@ class _ItemsManagementScreenState extends State<ItemsManagementScreen> {
   TextEditingController priceController = TextEditingController();
   CategoryModel selectedCategory = CategoryModel(
       companyID: "", categoryID: "", categoryName: "Pilih Kategori");
-  String selectedSellBy = "price";
+  SellCategoryBy selectedSellBy = SellCategoryBy.unit;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fillDataItemModel();
+  }
+
+  fillDataItemModel() {
+    // kalau dia update data, akan isi data yang lama ke textfield
+    if (widget.isUpdate == true) {
+      itemsNameController.text = widget.itemsModel?.itemName.toString() ?? "";
+      selectedCategory.categoryName =
+          widget.itemsModel?.categoryName.toString() ?? "";
+      selectedSellBy =
+          convertToEnum(widget.itemsModel?.sellBy.toString() ?? "");
+
+      priceController.text = widget.itemsModel?.sellPrice.toString() ?? "0";
+    } else {
+      return;
+    }
+  }
+
+  addOrUpdateItems(String itemID, {required bool isUpdate}) {
+    if (_formKeyItemsManage.currentState!.validate()) {
+      ItemsModel data = ItemsModel(
+        companyID: (widget.isUpdate)
+            ? widget.itemsModel!.companyID
+            : selectedCategory.companyID,
+        categoryID: (widget.isUpdate)
+            ? widget.itemsModel!.categoryID
+            : selectedCategory.categoryID,
+        itemID: (widget.isUpdate) ? widget.itemsModel!.itemID : itemID,
+        itemName: itemsNameController.text,
+        categoryName: selectedCategory.categoryName,
+        sellBy: selectedSellBy.name.toString(),
+        sellPrice: double.tryParse(priceController.text) ?? 0,
+        itemPhoto: "",
+      );
+
+      (isUpdate)
+          ? context.read<SettingsBloc>().add(UpdateItemsEvent(itemsModel: data))
+          : context
+              .read<SettingsBloc>()
+              .add(AddNewItemsEvent(itemsModel: data));
+    }
+  }
+
+  deleteItems(String itemID) {
+    BlocProvider.of<SettingsBloc>(context)
+        .add(deleteItemsEvent(itemID: itemID));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,149 +96,242 @@ class _ItemsManagementScreenState extends State<ItemsManagementScreen> {
           (widget.isUpdate)
               ? IconButton(
                   onPressed: () {
-                    // CustomWidgets.showConfirmationDelete(
-                    //     context, "Apakah Anda Yakin Hapus User Ini ?", () {
-                    //   deleteCategory(widget.itemsModel!.categoryID.toString());
-                    //   Navigator.pop(context);
-                    // });
+                    CustomWidgets.showConfirmationDelete(
+                        context, "Apakah Anda Yakin Hapus User Ini ?", () {
+                      deleteItems(widget.itemsModel!.itemID.toString());
+                      Navigator.pop(context);
+                    });
                   },
-                  icon: Icon(Icons.delete_forever))
-              : SizedBox()
+                  icon: const Icon(Icons.delete_forever))
+              : const SizedBox()
         ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: BlocListener<SettingsBloc, SettingsState>(
+        child: BlocConsumer<SettingsBloc, SettingsState>(
           listener: (context, state) {
+            // add new item
+            if (state is LoadingAddNewItems) {
+              CustomWidgets.showLoadingWidget();
+            }
+            if (state is FailureAddNewItems) {
+              CustomWidgets.showMessageAlertBasic(
+                  context, state.messageError.toString(), false);
+            }
+            if (state is SuccessAddNewItems) {
+              CustomWidgets.showMessageAlertWithF(context, state.result, true,
+                  () {
+                context.read<SettingsBloc>().add(GetAllItemsEvent());
+                GeneralFunction.navigationBackTwoStep(context);
+              });
+            }
+            // end add new
+
+            // update item
+            if (state is LoadingUpdateItems) {
+              CustomWidgets.showLoadingWidget();
+            }
+            if (state is FailureUpdateItems) {
+              CustomWidgets.showMessageAlertBasic(
+                  context, state.messageError.toString(), false);
+            }
+            if (state is SuccessUpdateItems) {
+              CustomWidgets.showMessageAlertWithF(context, state.result, true,
+                  () {
+                context.read<SettingsBloc>().add(GetAllItemsEvent());
+                GeneralFunction.navigationBackTwoStep(context);
+              });
+            }
+            // end update item
+
+            // delete item
+            if (state is LoadingDeleteItems) {
+              CustomWidgets.showLoadingWidget();
+            }
+            if (state is FailureDeleteItems) {
+              CustomWidgets.showMessageAlertBasic(
+                  context, state.messageError.toString(), false);
+            }
+            if (state is SuccessDeleteItems) {
+              CustomWidgets.showMessageAlertWithF(context, state.result, true,
+                  () {
+                context.read<SettingsBloc>().add(GetAllItemsEvent());
+                GeneralFunction.navigationBackTwoStep(context);
+              });
+            }
+            // end delete item
+
             if (state is SuccessSelectedCategory) {
               selectedCategory = state.result;
             }
           },
-          child: Form(
-            key: _formKeyItemsManage,
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: TextFormField(
-                      validator: (value) =>
-                          Validator.rule(value, required: true),
-                      controller: itemsNameController,
-                      decoration: const InputDecoration(
-                        label: Text("Nama Item / Barang"),
+          builder: (context, state) {
+            if (state is SuccessSelectedCategory) {
+              selectedCategory = state.result;
+            }
+
+            return Form(
+              key: _formKeyItemsManage,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: TextFormField(
+                        validator: (value) =>
+                            Validator.rule(value, required: true),
+                        controller: itemsNameController,
+                        decoration: const InputDecoration(
+                          label: Text("Nama Item / Barang"),
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context, AppRoutes.categorySelected);
-                      },
-                      child: ListTile(
-                        minLeadingWidth: 0,
-                        title: Text(selectedCategory.categoryName),
-                        trailing: Icon(Icons.arrow_drop_down),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: InkWell(
+                        onTap: () {
+                          context
+                              .read<SettingsBloc>()
+                              .add(GetAllCategoryEvent());
+                          Navigator.pushNamed(
+                              context, AppRoutes.categorySelected);
+                        },
+                        child: ListTile(
+                          minLeadingWidth: 0,
+                          title: Text(selectedCategory.categoryName),
+                          trailing: const Icon(Icons.arrow_drop_down),
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              child: RadioListTile(
+                                title: const Text("Satuan"),
+                                value: SellCategoryBy.unit,
+                                groupValue: selectedSellBy,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedSellBy = value!;
+                                  });
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              child: RadioListTile(
+                                title: const Text("Pecahan (Kg)"),
+                                value: SellCategoryBy.fractionkg,
+                                groupValue: selectedSellBy,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedSellBy = value!;
+                                  });
+                                },
+                              ),
+                            )
+                          ],
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: TextFormField(
+                        validator: (value) =>
+                            Validator.rule(value, required: true),
+                        controller: priceController,
+                        decoration: const InputDecoration(
+                          label: Text("Harga"),
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 12, 8, 12),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Expanded(
-                            child: RadioListTile(
-                              title: Text("by Harga"),
-                              value: "price",
-                              groupValue: selectedSellBy,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedSellBy = value!;
-                                });
-                              },
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height / 16,
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: Colors.red,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("BATAL")),
                             ),
                           ),
-                          Expanded(
-                            child: RadioListTile(
-                              title: Text("by KG"),
-                              value: "kg",
-                              groupValue: selectedSellBy,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedSellBy = value!;
-                                });
-                              },
-                            ),
-                          )
+                          const SizedBox(width: 10),
+                          (widget.isUpdate)
+                              // UPDATE DATA
+                              ? Expanded(
+                                  child: SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.height / 16,
+                                    child: ElevatedButton(
+                                      child: const Text("UPDATE"),
+                                      onPressed: () {
+                                        addOrUpdateItems("", isUpdate: true);
+
+                                        // print("update");
+                                        // addOrUpdateCategory(isUpdate: true);
+                                      },
+                                    ),
+                                  ),
+                                )
+                              // ADD NEW DATA
+                              : Expanded(
+                                  child: SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.height / 16,
+                                    child: ElevatedButton(
+                                      child: Text("SIMPAN"),
+                                      onPressed: () {
+                                        String itemID = GeneralFunction()
+                                            .generateUniqueItemID();
+
+                                        addOrUpdateItems(itemID,
+                                            isUpdate: false);
+
+                                        // if (_formKeyItemsManage.currentState!
+                                        //     .validate()) {
+                                        //   print("validasi ok");
+
+                                        //   ItemsModel data = ItemsModel(
+                                        //     companyID:
+                                        //         selectedCategory.companyID,
+                                        //     categoryID:
+                                        //         selectedCategory.categoryID,
+                                        //     itemID: itemID,
+                                        //     itemName: itemsNameController.text,
+                                        //     categoryName:
+                                        //         selectedCategory.categoryName,
+                                        //     sellBy:
+                                        //         selectedSellBy.name.toString(),
+                                        //     sellPrice: double.tryParse(
+                                        //             priceController.text) ??
+                                        //         0,
+                                        //     itemPhoto: "",
+                                        //   );
+
+                                        //   context.read<SettingsBloc>().add(
+                                        //       AddNewItemsEvent(
+                                        //           itemsModel: data));
+                                      },
+                                    ),
+                                  ),
+                                ),
                         ],
-                      )),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: TextFormField(
-                      validator: (value) =>
-                          Validator.rule(value, required: true),
-                      controller: priceController,
-                      decoration: const InputDecoration(
-                        label: Text("Harga"),
                       ),
-                      onTap: () {},
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 12, 8, 12),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: SizedBox(
-                            height: MediaQuery.of(context).size.height / 16,
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  foregroundColor: Colors.red,
-                                ),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text("BATAL")),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        (widget.isUpdate)
-                            // UPDATE DATA
-                            ? Expanded(
-                                child: SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height / 16,
-                                  child: ElevatedButton(
-                                    child: const Text("UPDATE"),
-                                    onPressed: () {
-                                      print("update");
-                                      // addOrUpdateCategory(isUpdate: true);
-                                    },
-                                  ),
-                                ),
-                              )
-                            // ADD NEW DATA
-                            : Expanded(
-                                child: SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height / 16,
-                                  child: ElevatedButton(
-                                    child: Text("SIMPAN"),
-                                    onPressed: () {},
-                                  ),
-                                ),
-                              ),
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );

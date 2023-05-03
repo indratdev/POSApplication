@@ -111,56 +111,50 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       }
     });
 
-    // // // add new category
-    // on<AddNewCategoryEvent>((event, emit) async {
-    //   try {
-    //     emit(LoadingAddNewCategory());
+    // // add new item
+    on<AddNewItemsEvent>((event, emit) async {
+      try {
+        emit(LoadingAddNewItems());
 
-    //     String companyID = await userRepository.readCompanyID();
-    //     String companyName = await userRepository.readCompanyName();
-    //     String tableID = generalFunction.generateUniqueGeneralID(companyName);
-    //     CategoryModel data = event.categoryModel;
+        Either<String, String> result =
+            await itemsRepository.createNewItem(event.itemsModel);
 
-    //     Either<String, String> result = await categoryRepository
-    //         .createNewCategory(data, companyID, tableID);
-    //     result.fold((l) => emit(FailureAddNewCategory(messageError: l)),
-    //         (r) => emit(SuccessAddNewCategory(result: r)));
-    //   } catch (e) {
-    //     log(e.toString());
-    //     emit(FailureAddNewCategory(messageError: e.toString()));
-    //   }
-    // });
+        result.fold((l) => emit(FailureAddNewItems(messageError: l)),
+            (r) => emit(SuccessAddNewItems(result: r)));
+      } catch (e) {
+        log(e.toString());
+        emit(FailureAddNewItems(messageError: e.toString()));
+      }
+    });
 
-    // // update category
-    // on<UpdateCategoryEvent>((event, emit) async {
-    //   emit(LoadingUpdateCategory());
-    //   try {
-    //     // insert data auth user ke users collection
-    //     Either<String, String> result =
-    //         await categoryRepository.updateCategory(event.categoryModel);
-    //     result.fold(
-    //         (l) => emit(FailureUpdateCategory(messageError: l.toString())),
-    //         (r) => emit(SuccessUpdateCategory(result: r)));
-    //   } catch (e) {
-    //     log(e.toString());
-    //     emit(FailureUpdateCategory(messageError: e.toString()));
-    //   }
-    // });
+    // update items
+    on<UpdateItemsEvent>((event, emit) async {
+      emit(LoadingUpdateItems());
+      try {
+        // insert data auth user ke users collection
+        Either<String, String> result =
+            await itemsRepository.updateItems(event.itemsModel);
+        result.fold((l) => emit(FailureUpdateItems(messageError: l.toString())),
+            (r) => emit(SuccessUpdateItems(result: r)));
+      } catch (e) {
+        log(e.toString());
+        emit(FailureUpdateItems(messageError: e.toString()));
+      }
+    });
 
-    // // delete category
-    // on<deleteCategoryEvent>((event, emit) async {
-    //   emit(LoadingDeleteCategory());
-    //   try {
-    //     Either<String, String> result =
-    //         await categoryRepository.deleteCategory(event.documentID);
-    //     result.fold(
-    //         (l) => emit(FailureDeleteCategory(messageError: l.toString())),
-    //         (r) => emit(SuccessDeleteCategory(result: r)));
-    //   } catch (e) {
-    //     log(e.toString());
-    //     emit(FailureDeleteCategory(messageError: e.toString()));
-    //   }
-    // });
+    // delete items
+    on<deleteItemsEvent>((event, emit) async {
+      emit(LoadingDeleteItems());
+      try {
+        Either<String, String> result =
+            await itemsRepository.deleteItems(event.itemID);
+        result.fold((l) => emit(FailureDeleteItems(messageError: l.toString())),
+            (r) => emit(SuccessDeleteItems(result: r)));
+      } catch (e) {
+        log(e.toString());
+        emit(FailureDeleteItems(messageError: e.toString()));
+      }
+    });
     // ------- end items
   }
 }

@@ -1,11 +1,6 @@
 import 'package:posapplication/data/model/category_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-enum SellCategoryBy {
-  unit,
-  fraction,
-}
-
 class ItemsModel extends CategoryModel {
   String itemID;
   String itemName;

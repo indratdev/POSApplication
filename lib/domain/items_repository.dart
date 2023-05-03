@@ -1,15 +1,17 @@
 import 'package:dartz/dartz.dart';
+import 'package:posapplication/data/service/user_service/user_service.dart';
 
 import '../data/model/items_model.dart';
 import '../data/service/hive_service/hive_service.dart';
-import '../data/service/user_service/user_service.dart';
+import '../data/service/item_service/item_service.dart';
 
 class ItemsRepository {
   final UserService userService = UserService();
+  final ItemsService itemsService = ItemsService();
   final HiveService hiveService = HiveService();
 
   // READ
-  // read list category from firebase
+  // read list items from firebase
   Future<List<ItemsModel>> readAllItems(String companyID) async {
     List<ItemsModel> result = await userService.readAllItems(companyID);
     return result;
@@ -24,12 +26,10 @@ class ItemsRepository {
 //   // END READ
 
   // --------- CREATE
-  // category
-  // Future<Either<String, String>> createNewCategory(
-  //     CategoryModel categoryModel, String companyID, String categoryID) async {
-  //   return await userService.saveNewCategory(
-  //       categoryModel, companyID, categoryID);
-  // }
+  // item
+  Future<Either<String, String>> createNewItem(ItemsModel itemModel) async {
+    return await itemsService.saveNewItem(itemModel);
+  }
 
 //   // customer
 //   Future<Either<String, String>> createNewCustomer(
@@ -41,10 +41,9 @@ class ItemsRepository {
 //   // END CREATE
 
   // -------------- UPDATE
-  // Future<Either<String, String>> updateCategory(
-  //     CategoryModel categoryModel) async {
-  //   return await userService.updateCategory(categoryModel);
-  // }
+  Future<Either<String, String>> updateItems(ItemsModel itemsModel) async {
+    return await itemsService.updateItems(itemsModel);
+  }
 
 //   // update customer
 //   Future<Either<String, String>> updateCustomer(
@@ -54,9 +53,9 @@ class ItemsRepository {
 //   // --------------  END UPDATE
 
   // DELETE
-  // Future<Either<String, String>> deleteCategory(String documentID) async {
-  //   return await userService.deleteCategory(documentID);
-  // }
+  Future<Either<String, String>> deleteItems(String itemID) async {
+    return await itemsService.deleteItems(itemID);
+  }
 
 //   Future<Either<String, String>> deleteCustomer(String customerID) async {
 //     return await userService.deleteCustomer(customerID);

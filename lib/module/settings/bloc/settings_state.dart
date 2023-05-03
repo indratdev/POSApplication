@@ -119,7 +119,7 @@ class SuccessGetAllItems extends SettingsState {
 }
 // END Get all Tables
 
-// Add new Table
+// add new items
 class LoadingAddNewItems extends SettingsState {}
 
 class FailureAddNewItems extends FailureSettings {
@@ -127,6 +127,7 @@ class FailureAddNewItems extends FailureSettings {
 }
 
 class SuccessAddNewItems extends SettingsState {
+  // List<ItemsModel> resultModel;
   String result;
 
   SuccessAddNewItems({
@@ -136,6 +137,25 @@ class SuccessAddNewItems extends SettingsState {
   @override
   List<Object> get props => [result];
 }
+// END add new Item
+
+// // Add new Table
+// class LoadingAddNewItems extends SettingsState {}
+
+// class FailureAddNewItems extends FailureSettings {
+//   FailureAddNewItems({required super.messageError});
+// }
+
+// class SuccessAddNewItems extends SettingsState {
+//   String result;
+
+//   SuccessAddNewItems({
+//     required this.result,
+//   });
+
+//   @override
+//   List<Object> get props => [result];
+// }
 // END Get all Tables
 
 // update Tables
