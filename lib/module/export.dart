@@ -4,6 +4,7 @@ export 'package:posapplication/module/customers/bloc/customers_bloc.dart';
 export 'package:posapplication/module/owner/bloc/owner_bloc.dart';
 export 'package:posapplication/module/settings/tables/bloc/tables_bloc.dart';
 export 'package:posapplication/module/settings/bloc/settings_bloc.dart';
+export 'package:posapplication/module/orders/bloc/orders_bloc.dart';
 
 export 'package:posapplication/module/Users/user_dashboard/view/user_dashboard_screen.dart';
 export 'package:posapplication/module/Users/user_manage/view/user_manage_screen.dart';
@@ -13,6 +14,7 @@ export 'package:posapplication/module/auth/login/view/login_screen.dart';
 export 'package:posapplication/module/auth/register/register_Screen.dart';
 export 'package:posapplication/module/customers/view/customers_dashboard/customers_dashboard_screen.dart';
 export 'package:posapplication/module/customers/view/customers_manage/customers_manage_screen.dart';
+export 'package:posapplication/module/customers/view/customers_selected_screen.dart';
 export 'package:posapplication/module/owner/owner_bottomnav/view/owner_bottomnav_screen.dart';
 export 'package:posapplication/module/owner/owner_dashboard/view/owner_dashboard_screen.dart';
 export 'package:posapplication/module/owner/owner_profile/view/owner_profile_info_screen.dart';
@@ -21,3 +23,8 @@ export 'package:posapplication/module/settings/tables/views/tables_dashboard_scr
 export 'package:posapplication/module/settings/tables/views/tables_manage_screen.dart';
 export 'package:posapplication/module/settings/items/items_dashboard_screen.dart';
 export 'package:posapplication/module/settings/items/items_management_screen.dart';
+
+export 'package:posapplication/module/settings/category/view/category_dashboard_screen.dart';
+export 'package:posapplication/module/settings/category/view/category_management_screen.dart';
+export 'package:posapplication/module/settings/category/view/category_selected_screen.dart';
+export '../../module/settings/settings_list/view/settings_list_screen.dart';

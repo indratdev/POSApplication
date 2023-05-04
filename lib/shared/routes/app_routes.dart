@@ -1,10 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:posapplication/module/settings/category/view/category_dashboard_screen.dart';
-import 'package:posapplication/module/settings/category/view/category_management_screen.dart';
-import 'package:posapplication/module/settings/category/view/category_selected_screen.dart';
+import 'package:posapplication/module/orders/orders_screen.dart';
 
 import '../../module/export.dart';
-import '../../module/settings/settings_list/view/settings_list_screen.dart';
 
 class AppRoutes {
   static const String first = '/';
@@ -29,6 +26,7 @@ class AppRoutes {
   // customer
   static const String customersDashboard = "/customersDashboard";
   static const String customersManage = "/customersManage";
+  static const String customerSelectedName = "/customersSelectedName";
 
   // tables
   static const String tablesDashboard = "/tablesDashboard";
@@ -42,6 +40,9 @@ class AppRoutes {
   // items
   static const String itemsDashboard = "/itemsDashboard";
   static const String itemsManagement = "/itemsManage";
+
+  // orders
+  static const String orders = "/orders";
 
   Map<String, WidgetBuilder> getRoutes = {
     first: (_) => CoverAuthScreen(),
@@ -57,6 +58,7 @@ class AppRoutes {
     settingList: (_) => SettingsListScreen(),
     customersDashboard: (_) => CustomersDashboardScreen(),
     customersManage: (_) => CustomersManageScreen(),
+    customerSelectedName: (_) => CustomersSelectedScreen(),
     tablesDashboard: (_) => TablesDashboardScreen(),
     tablesManagement: (_) => TablesManageScreen(),
     categoryDashboard: (_) => CategoryDashboardScreen(),
@@ -64,5 +66,6 @@ class AppRoutes {
     categorySelected: (_) => CategorySelectedScreen(),
     itemsDashboard: (_) => ItemsDashboardScreen(),
     itemsManagement: (_) => ItemsManagementScreen(),
+    orders: (_) => OrdersScreen(),
   };
 }

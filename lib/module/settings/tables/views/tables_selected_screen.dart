@@ -1,0 +1,65 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:posapplication/data/model/tables_model.dart';
+import 'package:posapplication/module/export.dart';
+import 'package:posapplication/shared/routes/app_routes.dart';
+
+class TablesSelectedScreen extends StatefulWidget {
+  const TablesSelectedScreen({super.key});
+
+  @override
+  State<TablesSelectedScreen> createState() => _TablesSelectedScreenState();
+}
+
+class _TablesSelectedScreenState extends State<TablesSelectedScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Tables Management"),
+        centerTitle: true,
+      ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, AppRoutes.tablesManagement);
+          },
+          child: Icon(Icons.add)),
+      body: BlocBuilder<TablesBloc, TablesState>(
+        builder: (context, state) {
+          if (state is SuccessGetAllTable) {
+            List<TablesModel> listTables = state.resultModel;
+
+            if (listTables.isEmpty) {
+              return const Center(
+                child: Text("Belum Ada Table yang Di Daftarkan"),
+              );
+            }
+
+            return ListView.builder(
+              itemCount: listTables.length,
+              itemBuilder: (context, index) {
+                TablesModel data = listTables[index];
+                print(">>>> data : $data");
+                return InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          TablesManageScreen(isUpdate: true, tableModel: data),
+                    ));
+                  },
+                  child: ListTile(
+                    title: Text("No. Meja : ${data.tableNo}"),
+                    subtitle: Text("Ukuran : ${data.size.toString()} "),
+                    trailing: Text(data.tableName.toString()),
+                  ),
+                );
+              },
+            );
+          } else {
+            return const SizedBox();
+          }
+        },
+      ),
+    );
+  }
+}

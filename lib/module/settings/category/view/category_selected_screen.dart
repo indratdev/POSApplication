@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/category_model.dart';
 import 'package:posapplication/module/export.dart';
-import 'package:posapplication/module/settings/category/view/category_management_screen.dart';
-import 'package:posapplication/shared/routes/app_routes.dart';
 
 class CategorySelectedScreen extends StatefulWidget {
   const CategorySelectedScreen({super.key});

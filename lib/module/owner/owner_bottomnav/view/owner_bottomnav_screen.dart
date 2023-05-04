@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:posapplication/module/orders/orders_screen.dart';
 import 'package:posapplication/module/owner/owner_dashboard/view/owner_dashboard_screen.dart';
 import 'package:posapplication/module/settings/settings_list/view/settings_list_screen.dart';
 
@@ -66,6 +67,7 @@ class _OwnerBottomNavigationScreenState
 List<Widget> _buildScreens() {
   return [
     OwnerDashboardScreen(),
+    OrdersScreen(),
     SettingsListScreen(),
   ];
 }
@@ -75,6 +77,12 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
     PersistentBottomNavBarItem(
       icon: Icon(CupertinoIcons.home),
       title: ("Dashboard"),
+      activeColorPrimary: CupertinoColors.activeBlue,
+      inactiveColorPrimary: CupertinoColors.systemGrey,
+    ),
+    PersistentBottomNavBarItem(
+      icon: Icon(CupertinoIcons.add),
+      title: ("Transaction"),
       activeColorPrimary: CupertinoColors.activeBlue,
       inactiveColorPrimary: CupertinoColors.systemGrey,
     ),

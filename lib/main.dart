@@ -49,6 +49,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => SettingsBloc(),
         ),
+        BlocProvider(
+          create: (context) => OrdersBloc(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

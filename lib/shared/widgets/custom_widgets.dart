@@ -231,6 +231,16 @@ class CustomWidgets {
         });
   }
 
+  static showSnackBarCustom(BuildContext context, String message) {
+    return ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 2),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
   // static showConfirmationWithF(
   //   BuildContext context,
   //   String content,
