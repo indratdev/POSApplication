@@ -17,6 +17,13 @@ class ItemsRepository {
     return result;
   }
 
+  Future<List<ItemsModel>> readItemsByCategoryID(
+      String companyID, String categoryID) async {
+    List<ItemsModel> result =
+        await userService.readItemsByCategoryID(companyID, categoryID);
+    return result;
+  }
+
 //   // read list customers from firebase
 //   Future<List<CustomersModel>> readAllCustomers() async {
 //     String companyID = await readCompanyID();

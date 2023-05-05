@@ -21,7 +21,6 @@ class FailureOrders extends OrdersState {
 }
 
 // selected customer
-
 class SuccessSelectedCustomer extends OrdersState {
   CustomersModel result;
 
@@ -34,3 +33,35 @@ class SuccessSelectedCustomer extends OrdersState {
 }
 
 // end selected customer
+
+// selected tables
+class SuccessSelectedTable extends OrdersState {
+  TablesModel result;
+
+  SuccessSelectedTable({
+    required this.result,
+  });
+
+  @override
+  List<Object> get props => [result];
+}
+// end selected customer
+
+// Get Item By Category
+class LoadingGetItemsByCategory extends OrdersState {}
+
+class FailureGetItemsByCategory extends FailureOrders {
+  FailureGetItemsByCategory({required super.messageError});
+}
+
+class SuccessGetItemsByCategory extends OrdersState {
+  List<ItemsModel> resultModel;
+
+  SuccessGetItemsByCategory({
+    required this.resultModel,
+  });
+
+  @override
+  List<Object> get props => [resultModel];
+}
+// END Get Item By Category

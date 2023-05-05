@@ -147,6 +147,22 @@ class UserService {
     return data;
   }
 
+  // read items by category ID
+  Future<List<ItemsModel>> readItemsByCategoryID(
+      String companyID, String categoryID) async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore
+        .instance
+        .collection(itemsCollection)
+        .where('companyID', isEqualTo: companyID)
+        .where('categoryID', isEqualTo: categoryID)
+        .get();
+
+    var data = querySnapshot.docs
+        .map((e) => ItemsModel.fromDocumentSnapshot(e))
+        .toList();
+    return data;
+  }
+
   // readAllUser() async {
   //   // String companyID = await mySharedP.getCompanyID();
 

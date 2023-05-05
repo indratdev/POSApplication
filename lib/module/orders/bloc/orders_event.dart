@@ -15,3 +15,20 @@ class SelectedCustomerEvent extends OrdersEvent {
     required this.customersModel,
   });
 }
+
+// select Table
+class SelectedTableEvent extends OrdersEvent {
+  TablesModel tablesModel;
+
+  SelectedTableEvent({
+    required this.tablesModel,
+  });
+}
+
+class GetItemByCategoryID extends OrdersEvent {
+  String categoryID;
+
+  GetItemByCategoryID({
+    required this.categoryID,
+  });
+}

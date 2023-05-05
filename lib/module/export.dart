@@ -23,8 +23,10 @@ export 'package:posapplication/module/settings/tables/views/tables_dashboard_scr
 export 'package:posapplication/module/settings/tables/views/tables_manage_screen.dart';
 export 'package:posapplication/module/settings/items/items_dashboard_screen.dart';
 export 'package:posapplication/module/settings/items/items_management_screen.dart';
-
 export 'package:posapplication/module/settings/category/view/category_dashboard_screen.dart';
 export 'package:posapplication/module/settings/category/view/category_management_screen.dart';
 export 'package:posapplication/module/settings/category/view/category_selected_screen.dart';
 export '../../module/settings/settings_list/view/settings_list_screen.dart';
+export 'package:posapplication/module/settings/tables/views/tables_selected_screen.dart';
+export 'package:posapplication/module/orders/orders_list_screen.dart';
+export 'package:posapplication/module/orders/orders_screen.dart';

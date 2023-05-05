@@ -5,6 +5,8 @@ import 'package:posapplication/data/model/tables_model.dart';
 import 'package:posapplication/module/export.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
 
+import '../../shared/routes/app_routes.dart';
+
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key});
 
@@ -31,10 +33,17 @@ class _OrdersScreenState extends State<OrdersScreen> {
               CustomWidgets.showSnackBarCustom(
                   context, "Pelanggan Berhasil Dipilih");
             }
+            if (state is SuccessSelectedTable) {
+              CustomWidgets.showSnackBarCustom(
+                  context, "Meja Berhasil Dipilih");
+            }
           },
           builder: (context, state) {
             if (state is SuccessSelectedCustomer) {
               selectedCustomer = state.result;
+            }
+            if (state is SuccessSelectedTable) {
+              selectedTable = state.result;
             }
             return Padding(
               padding: const EdgeInsets.all(8.0),
@@ -64,13 +73,37 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     // table
                     InkWell(
                       onTap: () {
-                        // context.read<SettingsBloc>().add(GetAllCategoryEvent());
-                        // Navigator.pushNamed(context, AppRoutes.categorySelected);
+                        BlocProvider.of<TablesBloc>(context)
+                            .add(GetAllTablesEvent()); // call bloc customer
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const TablesSelectedScreen(),
+                          ),
+                        );
                       },
                       child: ListTile(
                         minLeadingWidth: 0,
                         title: Text(
                             selectedTable?.tableName ?? "Silahkan Pilih Meja"),
+                        trailing: const Icon(Icons.arrow_drop_down),
+                      ),
+                    ),
+                    // order
+                    InkWell(
+                      onTap: () {
+                        BlocProvider.of<SettingsBloc>(context)
+                            .add(GetAllCategoryEvent()); // call bloc customer
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const OrdersListScreen(),
+                          ),
+                        );
+                      },
+                      child: ListTile(
+                        minLeadingWidth: 0,
+                        // title: Text(
+                        //     selectedTable?.tableName ?? "Silahkan Pilih Meja"),
+                        title: Text("Pilih Pesanan"),
                         trailing: const Icon(Icons.arrow_drop_down),
                       ),
                     ),
