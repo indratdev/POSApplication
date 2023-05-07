@@ -7,8 +7,6 @@ abstract class OrdersState extends Equatable {
   List<Object> get props => [];
 }
 
-class OrdersInitial extends OrdersState {}
-
 class FailureOrders extends OrdersState {
   String messageError;
 
@@ -19,6 +17,31 @@ class FailureOrders extends OrdersState {
   @override
   List<Object> get props => [messageError];
 }
+
+class OrdersInitial extends OrdersState {}
+
+// order initial
+
+class LoadingOrdersInitial extends OrdersState {}
+
+class FailureOrdersInitial extends FailureOrders {
+  FailureOrdersInitial({required super.messageError});
+}
+
+class SuccessOrdersInitial extends OrdersState {
+  List<CategoryModel> categoryModel;
+  List<ItemsModel> itemsModel;
+
+  SuccessOrdersInitial({
+    required this.categoryModel,
+    required this.itemsModel,
+  });
+
+  @override
+  List<Object> get props => [categoryModel, itemsModel];
+}
+
+//  end order initial
 
 // selected customer
 class SuccessSelectedCustomer extends OrdersState {
@@ -65,3 +88,45 @@ class SuccessGetItemsByCategory extends OrdersState {
   List<Object> get props => [resultModel];
 }
 // END Get Item By Category
+
+// change Category
+class LoadingChangeCategory extends OrdersState {}
+
+class FailureChangeCategory extends FailureOrders {
+  FailureChangeCategory({required super.messageError});
+}
+
+class SuccessChangeCategory extends OrdersState {
+  int index;
+  List<ItemsModel> resultModel;
+
+  SuccessChangeCategory({
+    required this.index,
+    required this.resultModel,
+  });
+
+  @override
+  List<Object> get props => [resultModel];
+}
+// END change Category
+
+// selected customer order
+class LoadingSelectedCustomerOrders extends OrdersState {}
+
+class FailureSelectedCustomerOrders extends FailureOrders {
+  FailureSelectedCustomerOrders({required super.messageError});
+}
+
+class SuccessSelectedCustomerOrders extends OrdersState {
+  List<ItemsModel> resultModel;
+  double totalOrdersPrice;
+
+  SuccessSelectedCustomerOrders({
+    required this.resultModel,
+    this.totalOrdersPrice = 0,
+  });
+
+  @override
+  List<Object> get props => [resultModel];
+}
+// END selected customer order

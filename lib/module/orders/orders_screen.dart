@@ -91,8 +91,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     // order
                     InkWell(
                       onTap: () {
-                        BlocProvider.of<SettingsBloc>(context)
-                            .add(GetAllCategoryEvent()); // call bloc customer
+                        BlocProvider.of<OrdersBloc>(context)
+                            .add(InitialOrderListEvent()); // call bloc customer
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => const OrdersListScreen(),

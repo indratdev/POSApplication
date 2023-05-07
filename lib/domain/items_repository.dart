@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:posapplication/data/service/user_service/user_service.dart';
 
+import '../data/model/category_model.dart';
 import '../data/model/items_model.dart';
 import '../data/service/hive_service/hive_service.dart';
 import '../data/service/item_service/item_service.dart';
@@ -21,6 +22,12 @@ class ItemsRepository {
       String companyID, String categoryID) async {
     List<ItemsModel> result =
         await userService.readItemsByCategoryID(companyID, categoryID);
+    return result;
+  }
+
+  // read all category
+  Future<List<CategoryModel>> readAllCategory(String companyID) async {
+    List<CategoryModel> result = await userService.readAllCategory(companyID);
     return result;
   }
 

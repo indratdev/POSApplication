@@ -7,6 +7,9 @@ abstract class OrdersEvent extends Equatable {
   List<Object> get props => [];
 }
 
+// initial order list
+class InitialOrderListEvent extends OrdersEvent {}
+
 // select Customer
 class SelectedCustomerEvent extends OrdersEvent {
   CustomersModel customersModel;
@@ -30,5 +33,29 @@ class GetItemByCategoryID extends OrdersEvent {
 
   GetItemByCategoryID({
     required this.categoryID,
+  });
+}
+
+class ChangeCategoryEvent extends OrdersEvent {
+  int index;
+  String categoryID;
+  List<ItemsModel> listItemModel;
+
+  ChangeCategoryEvent({
+    required this.index,
+    required this.categoryID,
+    required this.listItemModel,
+  });
+}
+
+class SelectedCustomerOrderEvent extends OrdersEvent {
+  bool isIncrement;
+  List<ItemsModel> allCustomerOrders;
+  ItemsModel selectedItemModel;
+
+  SelectedCustomerOrderEvent({
+    required this.isIncrement,
+    required this.allCustomerOrders,
+    required this.selectedItemModel,
   });
 }
