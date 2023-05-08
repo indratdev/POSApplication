@@ -6,19 +6,23 @@ class OrdersModel extends ItemsModel {
 
   OrdersModel({
     this.totalOrdersPrice = 0,
-    companyID = "",
-    categoryID = "",
-    itemID = "",
-    itemName = "",
-    categoryName = "",
-    itemPhoto = "",
-    sellBy = "",
-    sellPrice = "",
+    companyID,
+    categoryID,
+    itemID,
+    itemName,
+    categoryName,
+    itemPhoto,
+    sellBy,
+    sellPrice,
   }) : super(
           categoryID: categoryID,
           companyID: companyID,
           itemID: itemID,
           itemName: itemName,
+          itemPhoto: itemPhoto,
+          sellBy: sellBy,
+          sellPrice: sellPrice,
+          categoryName: categoryName,
         );
 
   factory OrdersModel.fromJson(Map<String, dynamic> json) => OrdersModel(
@@ -47,16 +51,14 @@ class OrdersModel extends ItemsModel {
 
   OrdersModel.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
       : totalOrdersPrice = doc.data()!["totalOrdersPrice"],
-        // itemID = doc.data()!["itemID"],
-        // itemName = doc.data()!["itemName"],
-        itemPhoto = doc.data()!["itemPhoto"],
-        sellBy = doc.data()!["sellBy"],
-        sellPrice = doc.data()!["sellPrice"],
         super(
           categoryID: doc.data()!["categoryID"],
           companyID: doc.data()!["companyID"],
           categoryName: doc.data()!["categoryName"],
           itemID: doc.data()!["itemID"],
           itemName: doc.data()!["itemName"],
+          itemPhoto: doc.data()!["itemPhoto"],
+          sellBy: doc.data()!["sellBy"],
+          sellPrice: doc.data()!["sellPrice"],
         );
 }
