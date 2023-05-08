@@ -59,3 +59,15 @@ class SelectedCustomerOrderEvent extends OrdersEvent {
     required this.selectedItemModel,
   });
 }
+
+class SelectedCustomerOrderEvent2 extends OrdersEvent {
+  bool isIncrement;
+  List<OrdersModel> allCustomerOrders;
+  ItemsModel selectedItemModel;
+
+  SelectedCustomerOrderEvent2({
+    required this.isIncrement,
+    required this.allCustomerOrders,
+    required this.selectedItemModel,
+  });
+}

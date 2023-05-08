@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:posapplication/data/model/orders_model.dart';
 import 'package:posapplication/data/model/tables_model.dart';
 
 import '../../../data/model/category_model.dart';
@@ -87,25 +88,109 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       }
     });
 
+    // // selected customer orders
+    // on<SelectedCustomerOrderEvent>((event, emit) {
+    //   emit(LoadingSelectedCustomerOrders());
+    //   try {
+    //     double totalOrderPrice = 0;
+    //     List<ItemsModel>? finalCustomerOrders = event.allCustomerOrders;
+
+    //     (event.isIncrement)
+    //         ? finalCustomerOrders.add(event.selectedItemModel)
+    //         : finalCustomerOrders.remove(event.selectedItemModel);
+
+    //     finalCustomerOrders.map((e) {
+    //       totalOrderPrice += e.sellPrice;
+    //     });
+
+    //     emit(SuccessSelectedCustomerOrders(
+    //       resultModel: finalCustomerOrders,
+    //       totalOrdersPrice: totalOrderPrice,
+    //     ));
+    //   } catch (e) {
+    //     log(e.toString());
+    //     emit(FailureSelectedCustomerOrders(messageError: e.toString()));
+    //   }
+    // });
     // selected customer orders
-    on<SelectedCustomerOrderEvent>((event, emit) {
-      emit(LoadingSelectedCustomerOrders());
+    on<SelectedCustomerOrderEvent2>((event, emit) {
+      // emit(LoadingSelectedCustomerOrders());
       try {
+        print("jalan");
         double totalOrderPrice = 0;
-        List<ItemsModel>? finalCustomerOrders = event.allCustomerOrders;
 
-        (event.isIncrement)
-            ? finalCustomerOrders.add(event.selectedItemModel)
-            : finalCustomerOrders.remove(event.selectedItemModel);
+        List<OrdersModel> allOrdersCustomer = event.allCustomerOrders;
+        OrdersModel? datas;
 
-        finalCustomerOrders.map((e) {
-          totalOrderPrice += e.sellPrice;
-        });
+        print(event.isIncrement);
 
-        emit(SuccessSelectedCustomerOrders(
-          resultModel: finalCustomerOrders,
-          totalOrdersPrice: totalOrderPrice,
-        ));
+        datas = OrdersModel(
+          orderID: '',
+          tableNo: '',
+          categoryID: event.selectedItemModel.categoryID,
+          categoryName: event.selectedItemModel.categoryName,
+          companyID: event.selectedItemModel.companyID,
+          itemID: event.selectedItemModel.itemID,
+          itemName: event.selectedItemModel.itemName,
+          itemPhoto: event.selectedItemModel.itemPhoto,
+          sellBy: event.selectedItemModel.sellBy,
+          sellPrice: event.selectedItemModel.sellPrice,
+          staffHandleBy: '',
+          totalOrdersPrice: 0,
+          itemCountOrder: 1,
+          status: StatusOrder.open.name.toString(),
+        );
+
+        if (event.isIncrement) {
+          allOrdersCustomer.add(datas);
+        } else {
+          allOrdersCustomer.remove(datas);
+        }
+
+        double hitungTotal(List<OrdersModel> listOrder) {
+          print(listOrder.length);
+          double totalOrdersPrice = 0;
+
+          // listOrder.map((e) {
+          //   totalOrderPrice += e.sellPrice;
+          // });
+          for (var element in listOrder) {
+            totalOrdersPrice += element.sellPrice;
+          }
+
+          print(">>> hitungTotal : ${totalOrdersPrice}");
+
+          return totalOrdersPrice;
+        }
+
+        updateTotalOrdersPrice(double totalPriceOrders) {
+          for (var element in allOrdersCustomer) {
+            element.sellPrice = totalPriceOrders;
+          }
+
+          print(">>>final price : ${allOrdersCustomer.first.sellPrice}");
+        }
+
+        //calculate total price orders
+        double totalPrice = hitungTotal(allOrdersCustomer);
+
+        //update totalprice orders
+        updateTotalOrdersPrice(totalPrice);
+
+        // List<ItemsModel>? finalCustomerOrders = event.allCustomerOrders;
+
+        // (event.isIncrement)
+        //     ? finalCustomerOrders.add(event.selectedItemModel)
+        //     : finalCustomerOrders.remove(event.selectedItemModel);
+
+        // finalCustomerOrders.map((e) {
+        //   totalOrderPrice += e.sellPrice;
+        // });
+
+        // emit(SuccessSelectedCustomerOrders(
+        //   resultModel: finalCustomerOrders,
+        //   totalOrdersPrice: totalOrderPrice,
+        // ));
       } catch (e) {
         log(e.toString());
         emit(FailureSelectedCustomerOrders(messageError: e.toString()));

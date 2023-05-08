@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/export_model.dart';
+import 'package:posapplication/data/model/orders_model.dart';
 import 'package:posapplication/module/export.dart';
 
 class OrdersListScreen extends StatefulWidget {
@@ -21,7 +22,8 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
   ItemsModel? selectedItems;
   int selectedIndexCategory = 0;
 
-  List<ItemsModel> selectedOrderCustomer = [];
+  // List<ItemsModel> selectedOrderCustomer = [];
+  List<OrdersModel> selectedOrderCustomer = [];
 
   fillSelectedItemList(String categoryID) {
     selectedListItem =
@@ -49,9 +51,9 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
             selectedListItem = state.resultModel;
           }
 
-          if (state is SuccessSelectedCustomerOrders) {
-            selectedOrderCustomer = state.resultModel;
-          }
+          // if (state is SuccessSelectedCustomerOrders) {
+          //   selectedOrderCustomer = state.resultModel;
+          // }
 
           return Column(
             children: [
@@ -107,14 +109,21 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                       leading: IconButton(
                         onPressed: () {
                           // selectedOrderCustomer.remove(data);
+                          // context
+                          //     .read<OrdersBloc>()
+                          //     .add(SelectedCustomerOrderEvent(
+                          //       isIncrement: false,
+                          //       allCustomerOrders: selectedOrderCustomer,
+                          //       selectedItemModel: data,
+                          //     ));
+                          // setState(() {});
                           context
                               .read<OrdersBloc>()
-                              .add(SelectedCustomerOrderEvent(
+                              .add(SelectedCustomerOrderEvent2(
                                 isIncrement: false,
                                 allCustomerOrders: selectedOrderCustomer,
                                 selectedItemModel: data,
                               ));
-                          // setState(() {});
                         },
                         icon: Icon(Icons.remove_circle),
                       ),
@@ -124,9 +133,17 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                           // print(">>> selected : ${data.itemName}");
                           // selectedOrderCustomer.add(data);
                           // setState(() {});
+                          // context
+                          //     .read<OrdersBloc>()
+                          //     .add(SelectedCustomerOrderEvent(
+                          //       isIncrement: true,
+                          //       allCustomerOrders: selectedOrderCustomer,
+                          //       selectedItemModel: data,
+                          //     ));
+                          // ===================
                           context
                               .read<OrdersBloc>()
-                              .add(SelectedCustomerOrderEvent(
+                              .add(SelectedCustomerOrderEvent2(
                                 isIncrement: true,
                                 allCustomerOrders: selectedOrderCustomer,
                                 selectedItemModel: data,
