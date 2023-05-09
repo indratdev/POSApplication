@@ -48,10 +48,34 @@ class ChangeCategoryEvent extends OrdersEvent {
   });
 }
 
+// class SelectedCustomerOrderEvent extends OrdersEvent {
+//   bool isIncrement;
+//   List<ItemsModel> allCustomerOrders;
+//   ItemsModel selectedItemModel;
+
+//   SelectedCustomerOrderEvent({
+//     required this.isIncrement,
+//     required this.allCustomerOrders,
+//     required this.selectedItemModel,
+//   });
+// }
+
+// class SelectedCustomerOrderEvent2 extends OrdersEvent {
+//   bool isIncrement;
+//   List<OrdersModel> allCustomerOrders;
+//   ItemsModel selectedItemModel;
+
+//   SelectedCustomerOrderEvent2({
+//     required this.isIncrement,
+//     required this.allCustomerOrders,
+//     required this.selectedItemModel,
+//   });
+// }
+
 class SelectedCustomerOrderEvent extends OrdersEvent {
   bool isIncrement;
-  List<ItemsModel> allCustomerOrders;
-  ItemsModel selectedItemModel;
+  List<OrdersModel> allCustomerOrders;
+  OrdersModel selectedItemModel;
 
   SelectedCustomerOrderEvent({
     required this.isIncrement,
@@ -60,26 +84,11 @@ class SelectedCustomerOrderEvent extends OrdersEvent {
   });
 }
 
-class SelectedCustomerOrderEvent2 extends OrdersEvent {
-  bool isIncrement;
-  List<OrdersModel> allCustomerOrders;
-  ItemsModel selectedItemModel;
+// select Table
+class FinalCustomerOrderEvent extends OrdersEvent {
+  List<OrdersModel> finalOrders;
 
-  SelectedCustomerOrderEvent2({
-    required this.isIncrement,
-    required this.allCustomerOrders,
-    required this.selectedItemModel,
-  });
-}
-
-class SelectedCustomerOrderEvent3 extends OrdersEvent {
-  bool isIncrement;
-  List<OrdersModel> allCustomerOrders;
-  OrdersModel selectedItemModel;
-
-  SelectedCustomerOrderEvent3({
-    required this.isIncrement,
-    required this.allCustomerOrders,
-    required this.selectedItemModel,
+  FinalCustomerOrderEvent({
+    required this.finalOrders,
   });
 }

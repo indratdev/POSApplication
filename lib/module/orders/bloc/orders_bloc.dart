@@ -197,7 +197,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     //   }
     // });
 
-    on<SelectedCustomerOrderEvent3>((event, emit) {
+    on<SelectedCustomerOrderEvent>((event, emit) {
       emit(LoadingSelectedCustomerOrders());
 
       try {
@@ -239,6 +239,16 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         ));
       } catch (e) {
         log(e.toString());
+      }
+    });
+
+    on<FinalCustomerOrderEvent>((event, emit) {
+      emit(LoadingSelectedFinalOrders());
+      try {
+        emit(SuccessSelectedFinalOrders(resultModel: event.finalOrders));
+      } catch (e) {
+        log(e.toString());
+        emit(FailureSelectedFinalOrders(messageError: e.toString()));
       }
     });
   }
