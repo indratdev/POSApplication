@@ -118,10 +118,23 @@ class FailureSelectedCustomerOrders extends FailureOrders {
 }
 
 class SuccessSelectedCustomerOrders extends OrdersState {
-  List<ItemsModel> resultModel;
+  List<OrdersModel> resultModel;
   double totalOrdersPrice;
 
   SuccessSelectedCustomerOrders({
+    required this.resultModel,
+    this.totalOrdersPrice = 0,
+  });
+
+  @override
+  List<Object> get props => [resultModel];
+}
+
+class SuccessSelectedCustomerOrders2 extends OrdersState {
+  List<ItemsModel> resultModel;
+  double totalOrdersPrice;
+
+  SuccessSelectedCustomerOrders2({
     required this.resultModel,
     this.totalOrdersPrice = 0,
   });

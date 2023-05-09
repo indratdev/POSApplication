@@ -113,87 +113,132 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     //   }
     // });
     // selected customer orders
-    on<SelectedCustomerOrderEvent2>((event, emit) {
-      // emit(LoadingSelectedCustomerOrders());
+    // on<SelectedCustomerOrderEvent2>((event, emit) {
+    //   // emit(LoadingSelectedCustomerOrders());
+    //   try {
+    //     print("jalan");
+    //     double totalOrderPrice = 0;
+
+    //     List<OrdersModel> allOrdersCustomer = event.allCustomerOrders;
+    //     OrdersModel? datas;
+
+    //     print(event.isIncrement);
+
+    //     datas = OrdersModel(
+    //       orderID: '',
+    //       tableNo: '',
+    //       categoryID: event.selectedItemModel.categoryID,
+    //       categoryName: event.selectedItemModel.categoryName,
+    //       companyID: event.selectedItemModel.companyID,
+    //       itemID: event.selectedItemModel.itemID,
+    //       itemName: event.selectedItemModel.itemName,
+    //       itemPhoto: event.selectedItemModel.itemPhoto,
+    //       sellBy: event.selectedItemModel.sellBy,
+    //       sellPrice: event.selectedItemModel.sellPrice,
+    //       staffHandleBy: '',
+    //       totalOrdersPrice: 0,
+    //       itemCountOrder: 1,
+    //       status: StatusOrder.open.name.toString(),
+    //     );
+
+    //     if (event.isIncrement) {
+    //       allOrdersCustomer.add(datas);
+    //     } else {
+    //       allOrdersCustomer.remove(datas);
+    //     }
+
+    //     double hitungTotal(List<OrdersModel> listOrder) {
+    //       print(listOrder.length);
+    //       double totalOrdersPrice = 0;
+
+    //       // listOrder.map((e) {
+    //       //   totalOrderPrice += e.sellPrice;
+    //       // });
+    //       for (var element in listOrder) {
+    //         totalOrdersPrice += element.sellPrice;
+    //       }
+
+    //       print(">>> hitungTotal : ${totalOrdersPrice}");
+
+    //       return totalOrdersPrice;
+    //     }
+
+    //     updateTotalOrdersPrice(double totalPriceOrders) {
+    //       for (var element in allOrdersCustomer) {
+    //         element.sellPrice = totalPriceOrders;
+    //       }
+
+    //       print(">>>final price : ${allOrdersCustomer.first.sellPrice}");
+    //     }
+
+    //     //calculate total price orders
+    //     double totalPrice = hitungTotal(allOrdersCustomer);
+
+    //     //update totalprice orders
+    //     updateTotalOrdersPrice(totalPrice);
+
+    //     // List<ItemsModel>? finalCustomerOrders = event.allCustomerOrders;
+
+    //     // (event.isIncrement)
+    //     //     ? finalCustomerOrders.add(event.selectedItemModel)
+    //     //     : finalCustomerOrders.remove(event.selectedItemModel);
+
+    //     // finalCustomerOrders.map((e) {
+    //     //   totalOrderPrice += e.sellPrice;
+    //     // });
+
+    //     // emit(SuccessSelectedCustomerOrders(
+    //     //   resultModel: finalCustomerOrders,
+    //     //   totalOrdersPrice: totalOrderPrice,
+    //     // ));
+    //   } catch (e) {
+    //     log(e.toString());
+    //     emit(FailureSelectedCustomerOrders(messageError: e.toString()));
+    //   }
+    // });
+
+    on<SelectedCustomerOrderEvent3>((event, emit) {
+      emit(LoadingSelectedCustomerOrders());
+
       try {
-        print("jalan");
-        double totalOrderPrice = 0;
-
-        List<OrdersModel> allOrdersCustomer = event.allCustomerOrders;
-        OrdersModel? datas;
-
-        print(event.isIncrement);
-
-        datas = OrdersModel(
-          orderID: '',
-          tableNo: '',
-          categoryID: event.selectedItemModel.categoryID,
-          categoryName: event.selectedItemModel.categoryName,
-          companyID: event.selectedItemModel.companyID,
-          itemID: event.selectedItemModel.itemID,
-          itemName: event.selectedItemModel.itemName,
-          itemPhoto: event.selectedItemModel.itemPhoto,
-          sellBy: event.selectedItemModel.sellBy,
-          sellPrice: event.selectedItemModel.sellPrice,
-          staffHandleBy: '',
-          totalOrdersPrice: 0,
-          itemCountOrder: 1,
-          status: StatusOrder.open.name.toString(),
-        );
+        var allOrdersCustomer = event.allCustomerOrders;
+        print(">>> allOrdersCustomer : ${allOrdersCustomer.length}");
 
         if (event.isIncrement) {
-          allOrdersCustomer.add(datas);
+          allOrdersCustomer.add(event.selectedItemModel);
         } else {
-          allOrdersCustomer.remove(datas);
+          allOrdersCustomer.remove(event.selectedItemModel);
         }
 
-        double hitungTotal(List<OrdersModel> listOrder) {
-          print(listOrder.length);
+        // hitung total harga
+        double calculateTotalPrice(List<OrdersModel> allData) {
           double totalOrdersPrice = 0;
-
-          // listOrder.map((e) {
-          //   totalOrderPrice += e.sellPrice;
-          // });
-          for (var element in listOrder) {
+          for (var element in allData) {
             totalOrdersPrice += element.sellPrice;
           }
 
-          print(">>> hitungTotal : ${totalOrdersPrice}");
-
+          print(">>> totalOrdersPrice :: ${totalOrdersPrice}");
           return totalOrdersPrice;
         }
 
-        updateTotalOrdersPrice(double totalPriceOrders) {
+        // update total harga ke list
+        updateTotalPrice(double totalPrice) {
           for (var element in allOrdersCustomer) {
-            element.sellPrice = totalPriceOrders;
+            element.totalOrdersPrice = totalPrice;
           }
-
-          print(">>>final price : ${allOrdersCustomer.first.sellPrice}");
         }
 
-        //calculate total price orders
-        double totalPrice = hitungTotal(allOrdersCustomer);
+        var resultCalculateTotalPrice = calculateTotalPrice(allOrdersCustomer);
+        updateTotalPrice(resultCalculateTotalPrice);
 
-        //update totalprice orders
-        updateTotalOrdersPrice(totalPrice);
+        print(">>> abc : ${resultCalculateTotalPrice}");
 
-        // List<ItemsModel>? finalCustomerOrders = event.allCustomerOrders;
-
-        // (event.isIncrement)
-        //     ? finalCustomerOrders.add(event.selectedItemModel)
-        //     : finalCustomerOrders.remove(event.selectedItemModel);
-
-        // finalCustomerOrders.map((e) {
-        //   totalOrderPrice += e.sellPrice;
-        // });
-
-        // emit(SuccessSelectedCustomerOrders(
-        //   resultModel: finalCustomerOrders,
-        //   totalOrdersPrice: totalOrderPrice,
-        // ));
+        emit(SuccessSelectedCustomerOrders(
+          resultModel: allOrdersCustomer,
+          totalOrdersPrice: allOrdersCustomer.first.totalOrdersPrice,
+        ));
       } catch (e) {
         log(e.toString());
-        emit(FailureSelectedCustomerOrders(messageError: e.toString()));
       }
     });
   }

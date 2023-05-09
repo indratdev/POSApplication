@@ -23,7 +23,8 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
   int selectedIndexCategory = 0;
 
   // List<ItemsModel> selectedOrderCustomer = [];
-  List<OrdersModel> selectedOrderCustomer = [];
+  // List<OrdersModel> selectedOrderCustomer = [];
+  List<OrdersModel>? selectedOrderCustomer;
 
   fillSelectedItemList(String categoryID) {
     selectedListItem =
@@ -51,9 +52,9 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
             selectedListItem = state.resultModel;
           }
 
-          // if (state is SuccessSelectedCustomerOrders) {
-          //   selectedOrderCustomer = state.resultModel;
-          // }
+          if (state is SuccessSelectedCustomerOrders) {
+            selectedOrderCustomer = state.resultModel;
+          }
 
           return Column(
             children: [
@@ -96,7 +97,7 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                 ),
               ),
               //list data
-              Flexible(
+              Expanded(
                 flex: 12,
                 child: ListView.builder(
                   padding: const EdgeInsets.only(left: 8, bottom: 4, top: 4),
@@ -117,17 +118,44 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                           //       selectedItemModel: data,
                           //     ));
                           // setState(() {});
+                          // context
+                          //     .read<OrdersBloc>()
+                          //     .add(SelectedCustomerOrderEvent2(
+                          //       isIncrement: false,
+                          //       allCustomerOrders: selectedOrderCustomer,
+                          //       selectedItemModel: data,
+                          //     ));
+                          OrdersModel datas = OrdersModel(
+                            orderID: "",
+                            tableNo: "",
+                            categoryID: data.categoryID,
+                            categoryName: data.categoryName,
+                            companyID: data.companyID,
+                            itemID: data.itemID,
+                            itemName: data.itemName,
+                            itemPhoto: data.itemPhoto,
+                            itemCountOrder: 1,
+                            sellBy: data.sellBy,
+                            sellPrice: data.sellPrice,
+                            staffHandleBy: "",
+                            totalOrdersPrice: 0,
+                            status: "",
+                          );
                           context
                               .read<OrdersBloc>()
-                              .add(SelectedCustomerOrderEvent2(
+                              .add(SelectedCustomerOrderEvent3(
                                 isIncrement: false,
-                                allCustomerOrders: selectedOrderCustomer,
-                                selectedItemModel: data,
+                                allCustomerOrders: selectedOrderCustomer ?? [],
+                                selectedItemModel: datas,
                               ));
                         },
                         icon: Icon(Icons.remove_circle),
                       ),
-                      title: Text(data.itemName),
+                      // title: Text(data.itemName),
+                      title: ListTile(
+                        title: Text(data.itemName),
+                        subtitle: Text(data.sellPrice.toString()),
+                      ),
                       trailing: IconButton(
                         onPressed: () {
                           // print(">>> selected : ${data.itemName}");
@@ -141,12 +169,35 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                           //       selectedItemModel: data,
                           //     ));
                           // ===================
+                          // context
+                          //     .read<OrdersBloc>()
+                          //     .add(SelectedCustomerOrderEvent2(
+                          //       isIncrement: true,
+                          //       allCustomerOrders: selectedOrderCustomer,
+                          //       selectedItemModel: data,
+                          //     ));
+                          OrdersModel datas = OrdersModel(
+                            orderID: "",
+                            tableNo: "",
+                            categoryID: data.categoryID,
+                            categoryName: data.categoryName,
+                            companyID: data.companyID,
+                            itemID: data.itemID,
+                            itemName: data.itemName,
+                            itemPhoto: data.itemPhoto,
+                            itemCountOrder: 1,
+                            sellBy: data.sellBy,
+                            sellPrice: data.sellPrice,
+                            staffHandleBy: "",
+                            totalOrdersPrice: 0,
+                            status: "",
+                          );
                           context
                               .read<OrdersBloc>()
-                              .add(SelectedCustomerOrderEvent2(
+                              .add(SelectedCustomerOrderEvent3(
                                 isIncrement: true,
-                                allCustomerOrders: selectedOrderCustomer,
-                                selectedItemModel: data,
+                                allCustomerOrders: selectedOrderCustomer ?? [],
+                                selectedItemModel: datas,
                               ));
                         },
                         icon: Icon(Icons.add_circle),
@@ -163,7 +214,8 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                   // width: double.infinity,
                   child: Row(
                     children: [
-                      Text("Jumlah Pesanan : ${selectedOrderCustomer.length} "),
+                      Text(
+                          "Jumlah Pesanan : ${selectedOrderCustomer?.length ?? 0} "),
                       SizedBox(
                         width: 10,
                       ),
@@ -178,13 +230,14 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      Align(
-                          alignment: Alignment.centerRight,
-                          child: Text("Rp. 120.000")),
+                      Align(alignment: Alignment.centerRight, child: Text(
+                          // "Rp, ${selectedOrderCustomer.first.totalOrdersPrice}")),
+                          // "Rp ${(selectedOrderCustomer.isNotEmpty) ? selectedOrderCustomer.first.totalOrdersPrice : 0} ")),
+                          "Rp ${selectedOrderCustomer?.first.totalOrdersPrice ?? 0} ")),
                       ElevatedButton(
                           onPressed: () {
                             print("================");
-                            for (var element in selectedOrderCustomer) {
+                            for (var element in selectedOrderCustomer!) {
                               print(element.itemName);
                             }
                             print("================");
