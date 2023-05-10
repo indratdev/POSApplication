@@ -92,3 +92,20 @@ class FinalCustomerOrderEvent extends OrdersEvent {
     required this.finalOrders,
   });
 }
+
+// selected Staff Handled
+class SelectedStaffHandledEvent extends OrdersEvent {
+  UsersModel usersModel;
+
+  SelectedStaffHandledEvent({
+    required this.usersModel,
+  });
+}
+
+class RequestOrdersEvent extends OrdersEvent {
+  List<OrdersModel> requestOrder;
+
+  RequestOrdersEvent({
+    required this.requestOrder,
+  });
+}

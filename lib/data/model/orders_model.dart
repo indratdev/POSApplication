@@ -20,6 +20,7 @@ class OrdersModel extends ItemsModel {
   DateTime? dateTimeCooking;
   DateTime? dateTimeFinish;
   String? staffHandleBy;
+  String? staffUserID;
 
   OrdersModel({
     this.totalOrdersPrice = 0,
@@ -32,6 +33,7 @@ class OrdersModel extends ItemsModel {
     this.dateTimeCooking,
     this.dateTimeFinish,
     this.staffHandleBy,
+    this.staffUserID,
     companyID,
     categoryID,
     itemID,
@@ -51,7 +53,8 @@ class OrdersModel extends ItemsModel {
           categoryName: categoryName,
         );
 
-  factory OrdersModel.fromJson(Map<String, dynamic> json) => OrdersModel(
+  factory OrdersModel.fromJson(Map<String, dynamic> json) =>
+      OrdersModel(
         totalOrdersPrice: json['totalOrdersPrice'] as double? ?? 0,
         orderID: json['orderID'] as String? ?? "",
         tableNo: json['tableNo'] as String? ?? "",
@@ -62,6 +65,7 @@ class OrdersModel extends ItemsModel {
         dateTimeCooking: json['dateTimeCooking'] as DateTime? ?? DateTime.now(),
         dateTimeFinish: json['dateTimeFinish'] as DateTime? ?? DateTime.now(),
         staffHandleBy: json['staffHandleBy'] as String? ?? "",
+        staffUserID: json['staffUserID'] as String? ?? "",
         companyID: json['companyID'] as String? ?? "",
         categoryID: json['categoryID'] as String? ?? "",
         categoryName: json['categoryName'] as String? ?? "",
@@ -83,6 +87,7 @@ class OrdersModel extends ItemsModel {
         'dateTimeCooking': dateTimeCooking,
         'dateTimeFinish': dateTimeFinish,
         'staffHandleBy': staffHandleBy,
+        'staffUserID': staffUserID,
         'companyID': companyID,
         'categoryID': categoryID,
         'categoryName': categoryName,
@@ -93,7 +98,8 @@ class OrdersModel extends ItemsModel {
         'sellPrice': sellPrice,
       };
 
-  OrdersModel.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
+  OrdersModel.fromDocumentSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> doc)
       : totalOrdersPrice = doc.data()!["totalOrdersPrice"],
         orderID = doc.data()!["orderID"],
         tableNo = doc.data()!["tableNo"],
@@ -104,6 +110,7 @@ class OrdersModel extends ItemsModel {
         dateTimeCooking = doc.data()!["dateTimeCooking"],
         dateTimeFinish = doc.data()!["dateTimeFinish"],
         staffHandleBy = doc.data()!["staffHandleBy"],
+        staffUserID = doc.data()!["staffUserID"],
         super(
           categoryID: doc.data()!["categoryID"],
           companyID: doc.data()!["companyID"],
@@ -114,22 +121,4 @@ class OrdersModel extends ItemsModel {
           sellBy: doc.data()!["sellBy"],
           sellPrice: doc.data()!["sellPrice"],
         );
-
-  // OrdersModel convertItemToOrder(ItemsModel item) {
-  //   return OrdersModel(
-  //     companyID: item.companyID,
-  //     categoryID: item.categoryID,
-  //     categoryName: item.categoryName,
-  //     itemID: item.itemID,
-  //     itemName: item.itemName,
-  //     itemPhoto: item.itemPhoto,
-  //     sellBy: item.sellBy,
-  //     sellPrice: item.sellPrice,
-  //     totalOrdersPrice: item.sellPrice,
-  //     orderID: '',
-  //     tableNo: '',
-  //     itemCountOrder: 1,
-  //     status: StatusOrder.open.toString(),
-  //   );
-  // }
 }

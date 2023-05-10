@@ -18,6 +18,7 @@ class AppRoutes {
   // user management
   static const String userDashboard = "/userDashboard";
   static const String userManage = "/userManage";
+  static const String userSelected = "/userSelected";
 
   // settings
   static const String settingList = '/settingsList';
@@ -56,6 +57,7 @@ class AppRoutes {
     ownerProfile: (_) => OwnerProfileScreen(isUpdate: false),
     userDashboard: (_) => UserDashboardScreen(),
     userManage: (_) => UserManageScreen(),
+    userSelected: (_) => UserSelectedScreen(),
     settingList: (_) => SettingsListScreen(),
     customersDashboard: (_) => CustomersDashboardScreen(),
     customersManage: (_) => CustomersManageScreen(),

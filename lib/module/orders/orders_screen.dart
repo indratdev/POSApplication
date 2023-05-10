@@ -7,7 +7,7 @@ import 'package:posapplication/data/model/tables_model.dart';
 import 'package:posapplication/module/export.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
 
-import '../../shared/routes/app_routes.dart';
+import '../../data/model/users_model.dart';
 
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key});
@@ -21,6 +21,25 @@ class _OrdersScreenState extends State<OrdersScreen> {
   TablesModel? selectedTable;
   CustomersModel? selectedCustomer;
   List<OrdersModel> selectedOrders = [];
+  UsersModel? selectedStaffHandle;
+
+  fillEmptyData() {
+    // table
+    for (var element in selectedOrders) {
+      element.tableNo = selectedTable?.tableNo ?? "0";
+    }
+
+    // Users
+    for (var element in selectedOrders) {
+      element.staffHandleBy = selectedStaffHandle?.firstname ?? "";
+      element.staffUserID = selectedStaffHandle?.userID ?? "";
+    }
+
+    // // customer
+    // for (var element in selectedOrders) {
+    //   element. = selectedTable?.tableNo ?? "0";
+    // }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +64,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 CustomWidgets.showSnackBarCustom(
                     context, "Pesanan Berhasil Dipilih");
               }
+              if (state is SuccessSelectedStaffHandle) {
+                CustomWidgets.showSnackBarCustom(
+                    context, "Staff Berhasil Dipilih");
+              }
             },
             builder: (context, state) {
               if (state is SuccessSelectedCustomer) {
@@ -57,6 +80,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
               if (state is SuccessSelectedFinalOrders) {
                 selectedOrders = state.resultModel;
               }
+
+              if (state is SuccessSelectedStaffHandle) {
+                selectedStaffHandle = state.result;
+              }
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Form(
@@ -68,12 +95,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         onTap: () {
                           BlocProvider.of<CustomersBloc>(context).add(
                               GetAllCustomersEvent()); // call bloc customer
-                          // Navigator.of(context).push(
-                          //   MaterialPageRoute(
-                          //     builder: (context) =>
-                          //         const CustomersSelectedScreen(),
-                          //   ),
-                          // );
+
                           PersistentNavBarNavigator.pushNewScreen(
                             context,
                             screen: CustomersSelectedScreen(),
@@ -94,11 +116,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         onTap: () {
                           BlocProvider.of<TablesBloc>(context)
                               .add(GetAllTablesEvent()); // call bloc customer
-                          // Navigator.of(context).push(
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const TablesSelectedScreen(),
-                          //   ),
-                          // );
+
                           PersistentNavBarNavigator.pushNewScreen(
                             context,
                             screen: TablesSelectedScreen(),
@@ -119,11 +137,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         onTap: () {
                           BlocProvider.of<OrdersBloc>(context).add(
                               InitialOrderListEvent()); // call bloc customer
-                          // Navigator.of(context).push(
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const OrdersListScreen(),
-                          //   ),
-                          // );
+
                           PersistentNavBarNavigator.pushNewScreen(
                             context,
                             screen: OrdersListScreen(),
@@ -145,6 +159,46 @@ class _OrdersScreenState extends State<OrdersScreen> {
                           trailing: const Icon(Icons.arrow_drop_down),
                         ),
                       ),
+                      // staff handle
+                      InkWell(
+                        onTap: () {
+                          BlocProvider.of<UsersBloc>(context)
+                              .add(GetAllUsersEvent()); // call bloc customer
+
+                          PersistentNavBarNavigator.pushNewScreen(
+                            context,
+                            screen: UserSelectedScreen(),
+                            withNavBar: false,
+                            pageTransitionAnimation:
+                                PageTransitionAnimation.cupertino,
+                          );
+                        },
+                        child: ListTile(
+                          minLeadingWidth: 0,
+                          // title: Text(selectedStaffHandle?.firstname ??
+                          //     "Silahkan Pilih Staff (Optional)"),
+                          title: (selectedStaffHandle == null)
+                              ? const Text("Silahkan Pilih Staff (Optional)")
+                              : Text(
+                                  "${selectedStaffHandle?.firstname} ${selectedStaffHandle?.lastname}"),
+                          trailing: const Icon(Icons.arrow_drop_down),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          // print("======================");
+                          // print(
+                          //     ">>> selectedTable : ${selectedTable?.tableName.toString()}");
+                          // print(
+                          //     ">>> selectedCustomer : ${selectedCustomer?.fullname}");
+                          // // print(">>> selectedOrders : ${selectedOrders}");
+                          // cek(selectedOrders);
+                          // print(
+                          //     ">>> selectedStaffHandle : ${selectedStaffHandle?.firstname}");
+                          // print("======================");
+                        },
+                        child: const Text("PROSES PESANAN"),
+                      )
                     ],
                   ),
                 ),

@@ -18,7 +18,7 @@ class _CategorySelectedScreenState extends State<CategorySelectedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pilih Kategori"),
+        title: const Text("Pilih Kategori"),
         centerTitle: true,
         actions: [
           IconButton(
@@ -62,14 +62,6 @@ class _CategorySelectedScreenState extends State<CategorySelectedScreen> {
                       selectedIndex = index;
                       selectedCategoryData = data;
                     });
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute(
-                    //     builder: (context) => CategoryManagementScreen(
-                    //       isUpdate: true,
-                    //       categoryModel: data,
-                    //     ),
-                    //   ),
-                    // );
                   },
                   child: ListTile(
                     tileColor: (selectedIndex == index)

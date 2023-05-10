@@ -8,6 +8,7 @@ import 'package:posapplication/data/model/tables_model.dart';
 import '../../../data/model/category_model.dart';
 import '../../../data/model/customers_model.dart';
 import '../../../data/model/items_model.dart';
+import '../../../data/model/users_model.dart';
 import '../../../domain/items_repository.dart';
 import '../../../domain/user_repository.dart';
 
@@ -249,6 +250,17 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       } catch (e) {
         log(e.toString());
         emit(FailureSelectedFinalOrders(messageError: e.toString()));
+      }
+    });
+
+    // selected staff
+    on<SelectedStaffHandledEvent>((event, emit) {
+      emit(LoadingSelectedStaffHandle());
+      try {
+        emit(SuccessSelectedStaffHandle(result: event.usersModel));
+      } catch (e) {
+        log(e.toString());
+        emit(FailureSelectedStaffHandle(messageError: e.toString()));
       }
     });
   }

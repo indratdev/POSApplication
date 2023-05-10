@@ -161,3 +161,22 @@ class SuccessSelectedFinalOrders extends OrdersState {
   @override
   List<Object> get props => [resultModel];
 }
+
+// selected user
+class LoadingSelectedStaffHandle extends OrdersState {}
+
+class FailureSelectedStaffHandle extends FailureOrders {
+  FailureSelectedStaffHandle({required super.messageError});
+}
+
+class SuccessSelectedStaffHandle extends OrdersState {
+  UsersModel result;
+
+  SuccessSelectedStaffHandle({
+    required this.result,
+  });
+
+  @override
+  List<Object> get props => [result];
+}
+// end selected customer
