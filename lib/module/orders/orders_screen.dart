@@ -26,7 +26,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
   fillEmptyData() {
     // table
     for (var element in selectedOrders) {
-      element.tableNo = selectedTable?.tableNo ?? "0";
+      element.dataTable?.tableNo = selectedTable?.tableNo ?? "0";
     }
 
     // Users
@@ -35,7 +35,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
       element.staffUserID = selectedStaffHandle?.userID ?? "";
     }
 
-    // // customer
+    // customer
     // for (var element in selectedOrders) {
     //   element. = selectedTable?.tableNo ?? "0";
     // }
@@ -185,7 +185,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          await fillEmptyData();
+
+                          for (var element in selectedOrders) {
+                            print(element.dataTable?.tableNo);
+                          }
                           // print("======================");
                           // print(
                           //     ">>> selectedTable : ${selectedTable?.tableName.toString()}");

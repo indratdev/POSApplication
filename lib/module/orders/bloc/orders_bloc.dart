@@ -215,7 +215,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         double calculateTotalPrice(List<OrdersModel> allData) {
           double totalOrdersPrice = 0;
           for (var element in allData) {
-            totalOrdersPrice += element.sellPrice;
+            totalOrdersPrice += element.dataItem?.sellPrice ?? 0;
           }
 
           print(">>> totalOrdersPrice :: ${totalOrdersPrice}");
