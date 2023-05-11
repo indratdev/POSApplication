@@ -83,7 +83,7 @@ class _TablesManageScreenState extends State<TablesManageScreen> {
             (widget.isUpdate)
                 ? IconButton(
                     onPressed: () {
-                      CustomWidgets.showConfirmationDelete(
+                      CustomWidgets.showConfirmation(
                           context, "Apakah Anda Yakin Hapus User Ini ?", () {
                         deleteTable(widget.tableModel!.tableID.toString());
                         Navigator.pop(context);

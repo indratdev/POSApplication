@@ -180,3 +180,22 @@ class SuccessSelectedStaffHandle extends OrdersState {
   List<Object> get props => [result];
 }
 // end selected customer
+
+// proses orders
+class LoadingProcessOrders extends OrdersState {}
+
+class FailureProcessOrders extends FailureOrders {
+  FailureProcessOrders({required super.messageError});
+}
+
+class SuccessProcessOrders extends OrdersState {
+  String result;
+
+  SuccessProcessOrders({
+    required this.result,
+  });
+
+  @override
+  List<Object> get props => [result];
+}
+// end proses orders

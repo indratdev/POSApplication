@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:posapplication/data/model/customers_model.dart';
 import 'package:posapplication/data/model/export_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -20,12 +21,13 @@ class OrdersModel {
   String status;
   DateTime? dateTimeOrder;
   DateTime? dateTimeWaiting;
-  DateTime? dateTimeCooking;
+  DateTime? dateTimeProccess;
   DateTime? dateTimeFinish;
   String? staffHandleBy;
   String? staffUserID;
   ItemsModel? dataItem;
   TablesModel? dataTable;
+  CustomersModel? dataCustomer;
 
   OrdersModel({
     this.orderID = "",
@@ -34,7 +36,8 @@ class OrdersModel {
     this.status = "open",
     this.dataItem,
     this.dataTable,
-    this.dateTimeCooking,
+    this.dataCustomer,
+    this.dateTimeProccess,
     this.dateTimeFinish,
     this.dateTimeOrder,
     this.dateTimeWaiting,
@@ -55,11 +58,12 @@ class OrdersModel {
         orderID = doc.data()!["orderID"],
         dataItem = doc.data()!["dataItem"],
         dataTable = doc.data()!["dataTable"],
+        dataCustomer = doc.data()!["dataCustomer"],
         itemCountOrder = doc.data()!["itemCountOrder"],
         status = doc.data()!["status"],
         dateTimeOrder = doc.data()!["dateTimeOrder"],
         dateTimeWaiting = doc.data()!["dateTimeWaiting"],
-        dateTimeCooking = doc.data()!["dateTimeCooking"],
+        dateTimeProccess = doc.data()!["dateTimeProccess"],
         dateTimeFinish = doc.data()!["dateTimeFinish"],
         staffHandleBy = doc.data()!["staffHandleBy"],
         staffUserID = doc.data()!["staffUserID"];

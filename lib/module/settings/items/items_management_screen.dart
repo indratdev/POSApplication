@@ -96,7 +96,7 @@ class _ItemsManagementScreenState extends State<ItemsManagementScreen> {
           (widget.isUpdate)
               ? IconButton(
                   onPressed: () {
-                    CustomWidgets.showConfirmationDelete(
+                    CustomWidgets.showConfirmation(
                         context, "Apakah Anda Yakin Hapus User Ini ?", () {
                       deleteItems(widget.itemsModel!.itemID.toString());
                       Navigator.pop(context);

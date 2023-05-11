@@ -19,7 +19,7 @@ class HiveService {
     }
 
     box = Hive.box(companyProfileBox);
-    
+
     return box;
   }
 
@@ -59,8 +59,9 @@ class HiveService {
     box = await isBoxProfileAlreadyOpen();
 
     ProfileModel model = await box.get(companyProfileKey) as ProfileModel;
-    String name = model.companyID.toString();
-    name = name.replaceAll(" ", "");
+    // String name = model.companyID.toString();
+    String name = model.bussinessName.toString();
+    // name = name.replaceAll(" ", "");
     return name;
   }
 

@@ -5,6 +5,8 @@ import 'package:posapplication/data/model/customers_model.dart';
 import 'package:posapplication/data/model/orders_model.dart';
 import 'package:posapplication/data/model/tables_model.dart';
 import 'package:posapplication/module/export.dart';
+import 'package:posapplication/module/orders/orders_confirmation_screen.dart';
+import 'package:posapplication/shared/utils/general_function.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
 
 import '../../data/model/users_model.dart';
@@ -23,10 +25,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
   List<OrdersModel> selectedOrders = [];
   UsersModel? selectedStaffHandle;
 
-  fillEmptyData() {
+  fillEmptyData() async {
+    String orderID = await GeneralFunction().generateOrderID();
+
     // table
     for (var element in selectedOrders) {
-      element.dataTable?.tableNo = selectedTable?.tableNo ?? "0";
+      element.dataTable = selectedTable;
     }
 
     // Users
@@ -36,9 +40,28 @@ class _OrdersScreenState extends State<OrdersScreen> {
     }
 
     // customer
+    for (var element in selectedOrders) {
+      element.dataCustomer = selectedCustomer;
+    }
+
+    // // fill date order
     // for (var element in selectedOrders) {
-    //   element. = selectedTable?.tableNo ?? "0";
+    //   element.dateTimeOrder = DateTime.now();
     // }
+
+    //fill status
+    for (var element in selectedOrders) {
+      if (selectedStaffHandle == null) {
+        element.status = StatusOrder.open.name.toString();
+      } else {
+        element.status = StatusOrder.progress.name.toString();
+      }
+    }
+
+    //fill order id
+    for (var element in selectedOrders) {
+      element.orderID = orderID;
+    }
   }
 
   @override
@@ -187,20 +210,20 @@ class _OrdersScreenState extends State<OrdersScreen> {
                       ElevatedButton(
                         onPressed: () async {
                           await fillEmptyData();
+                          // context.read<OrdersBloc>().add(
+                          //       ConfirmationOrdersEvent(
+                          //         requestOrder: selectedOrders,
+                          //       ),
+                          //     );
 
-                          for (var element in selectedOrders) {
-                            print(element.dataTable?.tableNo);
-                          }
-                          // print("======================");
-                          // print(
-                          //     ">>> selectedTable : ${selectedTable?.tableName.toString()}");
-                          // print(
-                          //     ">>> selectedCustomer : ${selectedCustomer?.fullname}");
-                          // // print(">>> selectedOrders : ${selectedOrders}");
-                          // cek(selectedOrders);
-                          // print(
-                          //     ">>> selectedStaffHandle : ${selectedStaffHandle?.firstname}");
-                          // print("======================");
+                          PersistentNavBarNavigator.pushNewScreen(
+                            context,
+                            screen: OrdersConfirmationScreen(
+                                orderList: selectedOrders),
+                            withNavBar: false,
+                            pageTransitionAnimation:
+                                PageTransitionAnimation.cupertino,
+                          );
                         },
                         child: const Text("PROSES PESANAN"),
                       )

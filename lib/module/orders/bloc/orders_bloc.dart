@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/orders_model.dart';
@@ -10,6 +11,7 @@ import '../../../data/model/customers_model.dart';
 import '../../../data/model/items_model.dart';
 import '../../../data/model/users_model.dart';
 import '../../../domain/items_repository.dart';
+import '../../../domain/order_repository.dart';
 import '../../../domain/user_repository.dart';
 
 part 'orders_event.dart';
@@ -18,6 +20,7 @@ part 'orders_state.dart';
 class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   final UserRepository userRepository = UserRepository();
   final ItemsRepository itemsRepository = ItemsRepository();
+  final OrderRepository orderRepository = OrderRepository();
 
   OrdersBloc() : super(OrdersInitial()) {
     // selected customer
@@ -261,6 +264,24 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       } catch (e) {
         log(e.toString());
         emit(FailureSelectedStaffHandle(messageError: e.toString()));
+      }
+    });
+
+    // process orders
+    on<ProcessOrdersEvent>((event, emit) async {
+      emit(LoadingProcessOrders());
+      try {
+        print(">>> ProcessOrdersEvent runninggg....");
+        List<OrdersModel> ordersData = event.requestOrder;
+        Either<String, String> result =
+            await orderRepository.createOrder(ordersData);
+        result.fold(
+            (l) => emit(FailureProcessOrders(messageError: l.toString())),
+            (r) => emit(SuccessProcessOrders(result: r.toString())));
+      } catch (e) {
+        print(">>> e : ${e.toString()}");
+        log(e.toString());
+        emit(FailureProcessOrders(messageError: e.toString()));
       }
     });
   }

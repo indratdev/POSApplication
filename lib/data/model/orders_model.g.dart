@@ -17,9 +17,13 @@ OrdersModel _$OrdersModelFromJson(Map<String, dynamic> json) => OrdersModel(
       dataTable: json['dataTable'] == null
           ? null
           : TablesModel.fromJson(json['dataTable'] as Map<String, dynamic>),
-      dateTimeCooking: json['dateTimeCooking'] == null
+      dataCustomer: json['dataCustomer'] == null
           ? null
-          : DateTime.parse(json['dateTimeCooking'] as String),
+          : CustomersModel.fromJson(
+              json['dataCustomer'] as Map<String, dynamic>),
+      dateTimeProccess: json['dateTimeProccess'] == null
+          ? null
+          : DateTime.parse(json['dateTimeProccess'] as String),
       dateTimeFinish: json['dateTimeFinish'] == null
           ? null
           : DateTime.parse(json['dateTimeFinish'] as String),
@@ -41,10 +45,11 @@ Map<String, dynamic> _$OrdersModelToJson(OrdersModel instance) =>
       'status': instance.status,
       'dateTimeOrder': instance.dateTimeOrder?.toIso8601String(),
       'dateTimeWaiting': instance.dateTimeWaiting?.toIso8601String(),
-      'dateTimeCooking': instance.dateTimeCooking?.toIso8601String(),
+      'dateTimeProccess': instance.dateTimeProccess?.toIso8601String(),
       'dateTimeFinish': instance.dateTimeFinish?.toIso8601String(),
       'staffHandleBy': instance.staffHandleBy,
       'staffUserID': instance.staffUserID,
       'dataItem': instance.dataItem,
       'dataTable': instance.dataTable,
+      'dataCustomer': instance.dataCustomer,
     };

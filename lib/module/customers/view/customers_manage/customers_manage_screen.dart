@@ -91,7 +91,7 @@ class _CustomersManageScreenState extends State<CustomersManageScreen> {
             (widget.isUpdate)
                 ? IconButton(
                     onPressed: () {
-                      CustomWidgets.showConfirmationDelete(
+                      CustomWidgets.showConfirmation(
                           context, "Apakah Anda Yakin Hapus Pelanggan Ini ?",
                           () {
                         deleteCustomer(

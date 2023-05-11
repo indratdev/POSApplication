@@ -76,7 +76,7 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
             (widget.isUpdate)
                 ? IconButton(
                     onPressed: () {
-                      CustomWidgets.showConfirmationDelete(
+                      CustomWidgets.showConfirmation(
                           context, "Apakah Anda Yakin Hapus User Ini ?", () {
                         deleteCategory(
                             widget.categoryModel!.categoryID.toString());

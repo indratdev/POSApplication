@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:posapplication/domain/user_repository.dart';
 import 'package:uuid/uuid.dart';
 
+import 'shared_preferences/myshared_preferences.dart';
+
 class GeneralFunction {
+  UserRepository userRepository = UserRepository();
+
   static navigationBackOneStep(BuildContext context) {
     Navigator.of(context).pop();
   }
@@ -51,5 +56,14 @@ class GeneralFunction {
   String hideSeveralTableID(String tableID) {
     var subTableID = tableID.substring(0, 12);
     return "$subTableID-xxxx.xxx.xxx";
+  }
+
+  // generate general id
+  Future<String> generateOrderID() async {
+    var uuid = const Uuid().v1();
+    var id = uuid.replaceAll("-", "");
+    String companyID = await userRepository.readCompanyID();
+    String name = "orderS$companyID$id";
+    return name;
   }
 }

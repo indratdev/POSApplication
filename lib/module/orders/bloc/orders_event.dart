@@ -109,3 +109,19 @@ class RequestOrdersEvent extends OrdersEvent {
     required this.requestOrder,
   });
 }
+
+class ConfirmationOrdersEvent extends OrdersEvent {
+  List<OrdersModel> requestOrder;
+
+  ConfirmationOrdersEvent({
+    required this.requestOrder,
+  });
+}
+
+class ProcessOrdersEvent extends OrdersEvent {
+  List<OrdersModel> requestOrder;
+
+  ProcessOrdersEvent({
+    required this.requestOrder,
+  });
+}

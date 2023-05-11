@@ -84,7 +84,7 @@ class _UserManageScreenState extends State<UserManageScreen> {
             (widget.isUpdate)
                 ? IconButton(
                     onPressed: () {
-                      CustomWidgets.showConfirmationDelete(
+                      CustomWidgets.showConfirmation(
                           context, "Apakah Anda Yakin Hapus User Ini ?", () {
                         deleteUser(widget.userModel!.documentID.toString());
                         Navigator.pop(context);

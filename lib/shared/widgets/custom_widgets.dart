@@ -34,7 +34,7 @@ class CustomWidgets {
         });
   }
 
-  static showConfirmationDelete(
+  static showConfirmation(
       BuildContext context, String content, void Function()? voidCallback) {
     return showDialog(
         context: context,
