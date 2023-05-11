@@ -64,6 +64,20 @@ class _OrdersScreenState extends State<OrdersScreen> {
     }
   }
 
+  resetAll() {
+    selectedTable = null;
+    selectedCustomer = null;
+    selectedOrders = [];
+    selectedStaffHandle = null;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    resetAll();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScaffoldMessenger(

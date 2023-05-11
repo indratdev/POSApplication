@@ -53,7 +53,7 @@ class AppRoutes {
     register: (_) => RegisterScreen(),
     forgotPassword: (_) => ForgotPasswordScreen(),
     ownerBottomNav: (_) => OwnerBottomNavigationScreen(),
-    ownerDashboard: (_) => OwnerDashboardScreen(),
+    ownerDashboard: (_) => DashboardScreen(),
     ownerProfileInfo: (_) => OwnerProfileInfoScreen(),
     ownerProfile: (_) => OwnerProfileScreen(isUpdate: false),
     userDashboard: (_) => UserDashboardScreen(),

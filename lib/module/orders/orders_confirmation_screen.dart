@@ -21,29 +21,36 @@ class OrdersConfirmationScreen extends StatefulWidget {
 }
 
 class _OrdersConfirmationScreenState extends State<OrdersConfirmationScreen> {
-  // loadData() {
-  //   for (var element in widget.orderList) {
-  //     print(element.dataItem?.itemName);
-  //   }
-  // }
+  final Map<String, int> counts = {};
+
+  countUniqueData() {
+    for (var element in widget.orderList) {
+      String data = element.dataItem!.itemName;
+      if (counts.containsKey(data)) {
+        counts[data] = counts[data]! + 1;
+      } else {
+        counts[data] = 1;
+      }
+    }
+  }
+
+  fillEmptyData() {
+    // fill date order
+    for (var element in widget.orderList) {
+      element.dateTimeOrder = DateTime.now();
+    }
+  }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    countUniqueData();
   }
 
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
-
-    fillEmptyData() {
-      // fill date order
-      for (var element in widget.orderList) {
-        element.dateTimeOrder = DateTime.now();
-      }
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -60,6 +67,7 @@ class _OrdersConfirmationScreenState extends State<OrdersConfirmationScreen> {
                 .read<OrdersBloc>()
                 .add(ProcessOrdersEvent(requestOrder: widget.orderList));
             GeneralFunction.navigationBackTwoStep(context);
+
           });
         },
         child: Icon(Icons.check_outlined),
@@ -75,6 +83,7 @@ class _OrdersConfirmationScreenState extends State<OrdersConfirmationScreen> {
               Text(
                 "Jl. Ampera Raya No. 133, RT.05/RW.10, Ragunan, Kec. Ps. Minggu, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta",
                 maxLines: 1,
+                textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
@@ -109,15 +118,19 @@ class _OrdersConfirmationScreenState extends State<OrdersConfirmationScreen> {
               SeparatorDashWidget(),
               ListView.builder(
                 shrinkWrap: true,
-                itemCount: widget.orderList.length,
+                // itemCount: widget.orderList.length,
+                itemCount: counts.length,
                 itemBuilder: (context, index) {
-                  var items = widget.orderList[index];
-                  // return Text(items.dataItem?.itemName ?? "");
+                  // OrdersModel items = widget.orderList[index];
+                  String key = counts.keys.elementAt(index);
+                  int value = counts[key]!;
                   return ListTile(
                     dense: true,
                     contentPadding: EdgeInsets.all(0),
                     visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                    title: Text(items.dataItem?.itemName ?? ""),
+                    // title: Text(items.dataItem?.itemName ?? ""),
+                    title: Text(key),
+                    trailing: Text(value.toString()),
                   );
                 },
               ),

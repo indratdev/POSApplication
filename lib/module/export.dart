@@ -16,7 +16,7 @@ export 'package:posapplication/module/customers/view/customers_dashboard/custome
 export 'package:posapplication/module/customers/view/customers_manage/customers_manage_screen.dart';
 export 'package:posapplication/module/customers/view/customers_selected_screen.dart';
 export 'package:posapplication/module/owner/owner_bottomnav/view/owner_bottomnav_screen.dart';
-export 'package:posapplication/module/owner/owner_dashboard/view/owner_dashboard_screen.dart';
+export 'package:posapplication/module/dashboard/dashboard_screen.dart';
 export 'package:posapplication/module/owner/owner_profile/view/owner_profile_info_screen.dart';
 export 'package:posapplication/module/owner/owner_profile/view/owner_profile_screen.dart';
 export 'package:posapplication/module/settings/tables/views/tables_dashboard_screen.dart';

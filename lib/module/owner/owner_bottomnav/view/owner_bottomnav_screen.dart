@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:posapplication/module/orders/orders_screen.dart';
-import 'package:posapplication/module/owner/owner_dashboard/view/owner_dashboard_screen.dart';
+import 'package:posapplication/module/dashboard/dashboard_screen.dart';
 import 'package:posapplication/module/settings/settings_list/view/settings_list_screen.dart';
 
 class OwnerBottomNavigationScreen extends StatefulWidget {
@@ -66,7 +66,7 @@ class _OwnerBottomNavigationScreenState
 
 List<Widget> _buildScreens() {
   return [
-    OwnerDashboardScreen(),
+    DashboardScreen(),
     OrdersScreen(),
     SettingsListScreen(),
   ];

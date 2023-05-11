@@ -7,6 +7,7 @@ class ItemsModel extends CategoryModel {
   String itemPhoto;
   String sellBy;
   double sellPrice;
+  // int countOrder;
 
   ItemsModel({
     required companyID,
@@ -17,6 +18,7 @@ class ItemsModel extends CategoryModel {
     this.sellBy = "unit",
     this.sellPrice = 0,
     this.itemPhoto = "",
+    // this.countOrder = 0,
   }) : super(
           categoryID: categoryID,
           companyID: companyID,
@@ -32,6 +34,7 @@ class ItemsModel extends CategoryModel {
         itemPhoto: json['itemPhoto'] as String? ?? "",
         sellBy: json['sellBy'] as String? ?? "unit",
         sellPrice: json['sellPrice'] as double? ?? 0,
+        // countOrder: json['countOrder'] as int? ?? 0,
       );
 
   Map<String, dynamic> toJson() => {
@@ -43,6 +46,7 @@ class ItemsModel extends CategoryModel {
         'itemPhoto': itemPhoto,
         'sellBy': sellBy,
         'sellPrice': sellPrice,
+        // 'countOrder': countOrder,
       };
 
   ItemsModel.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
@@ -51,6 +55,7 @@ class ItemsModel extends CategoryModel {
         itemPhoto = doc.data()!["itemPhoto"],
         sellBy = doc.data()!["sellBy"],
         sellPrice = doc.data()!["sellPrice"],
+        // countOrder = doc.data()!["countOrder"],
         super(
           categoryID: doc.data()!["categoryID"],
           companyID: doc.data()!["companyID"],
