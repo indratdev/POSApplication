@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/orders_model.dart';
+import 'package:posapplication/domain/hive_repository.dart';
 import 'package:posapplication/module/dashboard/widgets/status_dashboard_widget.dart';
 import 'package:posapplication/module/owner/bloc/owner_bloc.dart';
 // import 'package:posapplication/module/owner/owner_dashboard/controller/owner_dashboard_controller.dart';
@@ -67,7 +68,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () => logout(),
+            // onPressed: () => logout(),
+            onPressed: () async {
+              var aaa = await HiveRepository().readUserLoginFromHive();
+              print(aaa.email);
+            },
             icon: const Icon(Icons.logout_outlined),
           ),
         ],

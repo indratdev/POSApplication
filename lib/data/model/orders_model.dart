@@ -25,6 +25,8 @@ class OrdersModel {
   DateTime? dateTimeFinish;
   String? staffHandleBy;
   String? staffUserID;
+  String? addBy;
+  String? addByID;
   List<ItemsModel>? dataItem;
   TablesModel? dataTable;
   CustomersModel? dataCustomer;
@@ -43,6 +45,8 @@ class OrdersModel {
     this.dateTimeWaiting,
     this.staffHandleBy,
     this.staffUserID,
+    this.addBy,
+    this.addByID,
   });
 
   /// Connect the generated [_$PersonFromJson] function to the `fromJson`
@@ -58,9 +62,6 @@ class OrdersModel {
   OrdersModel.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
       : totalOrdersPrice = doc.data()!["totalOrdersPrice"],
         orderID = doc.data()!["orderID"],
-        // dataItem = doc.data()!["dataItem"],
-        // dataTable = doc.data()!["dataTable"],
-        // dataCustomer = doc.data()!["dataCustomer"],
         dataItem = (doc.data()!['dataItem'] as List<dynamic>?)
             ?.map((e) => ItemsModel.fromJson(e as Map<String, dynamic>))
             .toList(),
@@ -83,7 +84,9 @@ class OrdersModel {
             ? DateTime.parse("1900-01-01 00:00:00")
             : (doc.data()?["dateTimeFinish"]).toDate(),
         staffHandleBy = doc.data()!["staffHandleBy"],
-        staffUserID = doc.data()!["staffUserID"];
+        staffUserID = doc.data()!["staffUserID"],
+        addBy = doc.data()!["addBy"],
+        addByID = doc.data()!["addByID"];
 }
 
 // class OrdersModel extends ItemsModel {

@@ -65,7 +65,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
   }
 
   resetAll() {
-    print(">>> resetAll runn.... ");
     selectedTable = null;
     selectedCustomer = null;
     selectedOrders = [];
@@ -74,7 +73,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     resetAll();
   }
@@ -225,16 +223,13 @@ class _OrdersScreenState extends State<OrdersScreen> {
                       ElevatedButton(
                         onPressed: () async {
                           await fillEmptyData();
-                          // context.read<OrdersBloc>().add(
-                          //       ConfirmationOrdersEvent(
-                          //         requestOrder: selectedOrders,
-                          //       ),
-                          //     );
+                          BlocProvider.of<OrdersBloc>(context).add(
+                              ConfirmationOrdersEvent(
+                                  requestOrder: selectedOrders));
 
                           PersistentNavBarNavigator.pushNewScreen(
                             context,
-                            screen: OrdersConfirmationScreen(
-                                orderList: selectedOrders),
+                            screen: OrdersConfirmationScreen(),
                             withNavBar: false,
                             pageTransitionAnimation:
                                 PageTransitionAnimation.cupertino,

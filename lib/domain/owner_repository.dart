@@ -37,7 +37,7 @@ class OwnerRepository {
 
   // check profile box already open ?
   Future<Box> isBoxProfileAlreadyOpen() async {
-    return await hiveService.isBoxProfileAlreadyOpen();
+    return await hiveService.isBoxAlreadyOpen(HiveService.companyProfileBox);
   }
 
   // add profile company
@@ -64,7 +64,11 @@ class OwnerRepository {
     await hiveService.updateProfileCompanyToBox(data);
   }
 
-  readProfileCompanyFromBox() async {
-    await hiveService.readProfileCompanyIDFromBox();
+  Future<String> readProfileCompanyIDFromBox() async {
+    return await hiveService.readProfileCompanyIDFromBox();
+  }
+
+  Future<ProfileModel> readProfileCompanyFromBox() async {
+    return await hiveService.readProfileFromBox();
   }
 }

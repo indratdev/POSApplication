@@ -199,3 +199,23 @@ class SuccessProcessOrders extends OrdersState {
   List<Object> get props => [result];
 }
 // end proses orders
+
+// get profile company from box
+class LoadingConfirmationOrder extends OrdersState {}
+
+class FailureConfirmationOrder extends FailureOrders {
+  FailureConfirmationOrder({required super.messageError});
+}
+
+class SuccessConfirmationOrder extends OrdersState {
+  ProfileModel profileModel;
+  List<OrdersModel> requestOrder;
+
+  SuccessConfirmationOrder({
+    required this.profileModel,
+    required this.requestOrder,
+  });
+
+  @override
+  List<Object> get props => [profileModel];
+}

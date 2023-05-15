@@ -1,13 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
 
-class UsersModel {
+import 'package:hive/hive.dart';
+part 'users_model.g.dart';
+
+UsersModel userModelFromJson(String str) =>
+    UsersModel.fromJson(json.decode(str));
+
+String userModelToJson(UsersModel data) => json.encode(data.toJson());
+
+@HiveType(typeId: 1)
+class UsersModel extends HiveObject {
+  @HiveField(0)
   String? documentID;
+  @HiveField(1)
   String? companyID;
+  @HiveField(2)
   String? email;
+  @HiveField(3)
   String? firstname;
+  @HiveField(4)
   String? lastname;
+  @HiveField(5)
   String? photo;
+  @HiveField(6)
   String? role;
+  @HiveField(7)
   String? userID;
 
   UsersModel({

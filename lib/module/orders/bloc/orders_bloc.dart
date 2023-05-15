@@ -5,10 +5,12 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/orders_model.dart';
 import 'package:posapplication/data/model/tables_model.dart';
+import 'package:posapplication/domain/owner_repository.dart';
 
 import '../../../data/model/category_model.dart';
 import '../../../data/model/customers_model.dart';
 import '../../../data/model/items_model.dart';
+import '../../../data/model/profile_model.dart';
 import '../../../data/model/users_model.dart';
 import '../../../domain/items_repository.dart';
 import '../../../domain/order_repository.dart';
@@ -21,6 +23,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   final UserRepository userRepository = UserRepository();
   final ItemsRepository itemsRepository = ItemsRepository();
   final OrderRepository orderRepository = OrderRepository();
+  final OwnerRepository ownerRepository = OwnerRepository();
 
   OrdersBloc() : super(OrdersInitial()) {
     // selected customer
@@ -288,6 +291,23 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         print(">>> e : ${e.toString()}");
         log(e.toString());
         emit(FailureProcessOrders(messageError: e.toString()));
+      }
+    });
+
+    // ConfirmationOrdersEvent
+
+    on<ConfirmationOrdersEvent>((event, emit) async {
+      emit(LoadingConfirmationOrder());
+      try {
+        // get profile company from box
+        ProfileModel profileModel =
+            await ownerRepository.readProfileCompanyFromBox();
+
+        emit(SuccessConfirmationOrder(
+            profileModel: profileModel, requestOrder: event.requestOrder));
+      } catch (e) {
+        log(e.toString());
+        emit(FailureConfirmationOrder(messageError: e.toString()));
       }
     });
   }

@@ -11,7 +11,7 @@ class ProfileController {
 
   // check profile box already open ?
   Future<Box> isBoxProfileAlreadyOpen() async {
-    return await hiveService.isBoxProfileAlreadyOpen();
+    return await hiveService.isBoxAlreadyOpen(HiveService.companyProfileBox);
   }
 
   // add profile company

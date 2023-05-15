@@ -35,6 +35,8 @@ OrdersModel _$OrdersModelFromJson(Map<String, dynamic> json) => OrdersModel(
           : DateTime.parse(json['dateTimeWaiting'] as String),
       staffHandleBy: json['staffHandleBy'] as String?,
       staffUserID: json['staffUserID'] as String?,
+      addBy: json['addBy'] as String?,
+      addByID: json['addByID'] as String?,
     );
 
 Map<String, dynamic> _$OrdersModelToJson(OrdersModel instance) =>
@@ -49,6 +51,8 @@ Map<String, dynamic> _$OrdersModelToJson(OrdersModel instance) =>
       'dateTimeFinish': instance.dateTimeFinish?.toIso8601String(),
       'staffHandleBy': instance.staffHandleBy,
       'staffUserID': instance.staffUserID,
+      'addBy': instance.addBy,
+      'addByID': instance.addByID,
       'dataItem': instance.dataItem,
       'dataTable': instance.dataTable,
       'dataCustomer': instance.dataCustomer,

@@ -4,9 +4,11 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:posapplication/data/model/profile_model.dart';
+import 'package:posapplication/data/model/users_model.dart';
 import 'package:posapplication/data/service/auth_service/auth_service.dart';
 import 'package:posapplication/data/service/signInSignUp.dart';
 import 'package:posapplication/data/service/user_service/user_service.dart';
+import 'package:posapplication/domain/hive_repository.dart';
 import 'package:posapplication/shared/utils/shared_preferences/myshared_preferences.dart';
 
 import '../../../domain/owner_repository.dart';
@@ -17,6 +19,7 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthService authService = AuthService();
   final OwnerRepository ownerRepository = OwnerRepository();
+  final HiveRepository hiveRepository = HiveRepository();
   MySharedPreferences mySharedP = MySharedPreferences();
   UserService userService = UserService();
 
@@ -109,7 +112,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         result.fold((l) {
           emit(FailureLoginUser(messageError: l));
-        }, (r) async {
+        }, (data) async {
           Box resultBox;
           resultBox = await ownerRepository.isBoxProfileAlreadyOpen();
           // if empty, check from firebase
@@ -121,9 +124,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
             await ownerRepository
                 .setProfileCompanytoBox(ProfileModel.fromJson(profiles));
+
+            // set current user login
+            await hiveRepository
+                .createUserLoginToHive(UsersModel.fromJson(data));
           }
 
-          print(">>> r : $r");
+          print(">>> r : $data");
         });
 
         emit(SuccessLoginUser(result: users));

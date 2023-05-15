@@ -71,8 +71,8 @@ class AppRoutes {
     categorySelected: (_) => CategorySelectedScreen(),
     itemsDashboard: (_) => ItemsDashboardScreen(),
     itemsManagement: (_) => ItemsManagementScreen(),
-    orders: (_) => OrdersScreen(),
-    ordersList: (_) => OrdersListScreen(),
-    ordersConfirmation: (_) => OrdersConfirmationScreen(orderList: [])
+    orders: (_) => const OrdersScreen(),
+    ordersList: (_) => const OrdersListScreen(),
+    ordersConfirmation: (_) => OrdersConfirmationScreen(),
   };
 }
