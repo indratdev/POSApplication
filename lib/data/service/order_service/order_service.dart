@@ -267,6 +267,8 @@ class OrderService {
           "itemCountOrder": orderData.first.itemCountOrder,
           "staffHandleBy": orderData.first.staffHandleBy,
           "staffUserID": orderData.first.staffUserID,
+          "addBy": orderData.first.addBy,
+          "addByID": orderData.first.addByID,
           "status": orderData.first.status,
           "totalOrdersPrice": orderData.first.totalOrdersPrice,
         })

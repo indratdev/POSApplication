@@ -9,7 +9,7 @@ UsersModel userModelFromJson(String str) =>
 
 String userModelToJson(UsersModel data) => json.encode(data.toJson());
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 2)
 class UsersModel extends HiveObject {
   @HiveField(0)
   String? documentID;

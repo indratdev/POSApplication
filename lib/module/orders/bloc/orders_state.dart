@@ -210,10 +210,12 @@ class FailureConfirmationOrder extends FailureOrders {
 class SuccessConfirmationOrder extends OrdersState {
   ProfileModel profileModel;
   List<OrdersModel> requestOrder;
+  // UsersModel currentUserLogin;
 
   SuccessConfirmationOrder({
     required this.profileModel,
     required this.requestOrder,
+    // required this.currentUserLogin,
   });
 
   @override

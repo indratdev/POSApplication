@@ -223,9 +223,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
                       ElevatedButton(
                         onPressed: () async {
                           await fillEmptyData();
-                          BlocProvider.of<OrdersBloc>(context).add(
-                              ConfirmationOrdersEvent(
-                                  requestOrder: selectedOrders));
+                          BlocProvider.of<OrdersBloc>(context)
+                              .add(ConfirmationOrdersEvent(
+                            requestOrder: selectedOrders,
+                          ));
 
                           PersistentNavBarNavigator.pushNewScreen(
                             context,

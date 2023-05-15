@@ -12,6 +12,7 @@ import '../../../data/model/customers_model.dart';
 import '../../../data/model/items_model.dart';
 import '../../../data/model/profile_model.dart';
 import '../../../data/model/users_model.dart';
+import '../../../domain/hive_repository.dart';
 import '../../../domain/items_repository.dart';
 import '../../../domain/order_repository.dart';
 import '../../../domain/user_repository.dart';
@@ -24,6 +25,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   final ItemsRepository itemsRepository = ItemsRepository();
   final OrderRepository orderRepository = OrderRepository();
   final OwnerRepository ownerRepository = OwnerRepository();
+  final HiveRepository hiveRepository = HiveRepository();
 
   OrdersBloc() : super(OrdersInitial()) {
     // selected customer
@@ -295,16 +297,30 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     });
 
     // ConfirmationOrdersEvent
-
     on<ConfirmationOrdersEvent>((event, emit) async {
       emit(LoadingConfirmationOrder());
       try {
+        List<OrdersModel> orderList = event.requestOrder;
+
         // get profile company from box
         ProfileModel profileModel =
             await ownerRepository.readProfileCompanyFromBox();
 
+        // get user current login
+        UsersModel userCurrentLogin =
+            await hiveRepository.readUserLoginFromHive();
+
+        for (var element in orderList) {
+          element.addBy =
+              "${userCurrentLogin.firstname} ${userCurrentLogin.lastname}";
+          element.addByID = userCurrentLogin.userID;
+        }
+
         emit(SuccessConfirmationOrder(
-            profileModel: profileModel, requestOrder: event.requestOrder));
+          profileModel: profileModel,
+          requestOrder: orderList,
+          // currentUserLogin: userCurrentLogin,
+        ));
       } catch (e) {
         log(e.toString());
         emit(FailureConfirmationOrder(messageError: e.toString()));

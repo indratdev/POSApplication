@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -113,11 +113,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         result.fold((l) {
           emit(FailureLoginUser(messageError: l));
         }, (data) async {
-          Box resultBox;
-          resultBox = await ownerRepository.isBoxProfileAlreadyOpen();
-          // if empty, check from firebase
-          if (resultBox.isEmpty) {
-            print(">>> check from firebase");
+          Box profileBox, currentUserBox;
+          profileBox = await ownerRepository.isBoxProfileAlreadyOpen();
+          currentUserBox = await ownerRepository.isBoxCurrentUserAlreadyOpen();
+
+          // if profile box empty, check from firebase
+          if (profileBox.isEmpty) {
             // read profile company
             Map<String, dynamic> profiles =
                 await ownerRepository.readProfileCompany();
@@ -126,11 +127,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 .setProfileCompanytoBox(ProfileModel.fromJson(profiles));
 
             // set current user login
+
             await hiveRepository
                 .createUserLoginToHive(UsersModel.fromJson(data));
           }
 
-          print(">>> r : $data");
+          // if current login user box empty, check from firebase
+          if (currentUserBox.isEmpty) {
+            await hiveRepository
+                .createUserLoginToHive(UsersModel.fromJson(data));
+          }
         });
 
         emit(SuccessLoginUser(result: users));

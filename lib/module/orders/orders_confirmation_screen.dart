@@ -133,7 +133,7 @@ class _OrdersConfirmationScreenState extends State<OrdersConfirmationScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text("Dibuat oleh :"),
-                        Text(orderList.first.staffHandleBy ?? ""),
+                        Text(orderList.first.addBy ?? ""),
                         // Text(state.requestOrder.first.staffHandleBy ?? ""),
                       ],
                     ),

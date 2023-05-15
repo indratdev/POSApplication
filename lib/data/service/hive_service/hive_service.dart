@@ -53,8 +53,10 @@ class HiveService {
 
   // addUserLoginToHive
   addUserLoginToHive(UsersModel usersModel) async {
-    print(">>> run addUserLoginToHive");
     Box box = await isBoxAlreadyOpen(currentUserLoginBox);
+    // first delete data and insert again
+    await box.deleteAll(box.keys);
+
     await box.put(currentUserLoginKey, usersModel);
   }
 
@@ -96,10 +98,8 @@ class HiveService {
     late Box box;
     box = await isBoxAlreadyOpen(currentUserLoginBox);
 
-    print(">>> box readUserLoginFromBox : ${box} ");
-
     UsersModel model = await box.get(currentUserLoginKey) as UsersModel;
-    print(">>> model readUserLoginFromBox : ${model.companyID} ");
+
     return model;
   }
 
