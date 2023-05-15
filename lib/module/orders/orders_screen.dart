@@ -5,7 +5,7 @@ import 'package:posapplication/data/model/customers_model.dart';
 import 'package:posapplication/data/model/orders_model.dart';
 import 'package:posapplication/data/model/tables_model.dart';
 import 'package:posapplication/module/export.dart';
-import 'package:posapplication/module/orders/orders_confirmation_screen.dart';
+
 import 'package:posapplication/shared/utils/general_function.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
 
@@ -65,6 +65,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
   }
 
   resetAll() {
+    print(">>> resetAll runn.... ");
     selectedTable = null;
     selectedCustomer = null;
     selectedOrders = [];

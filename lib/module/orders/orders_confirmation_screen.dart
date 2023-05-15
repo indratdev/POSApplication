@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/export_model.dart';
 import 'package:posapplication/data/model/orders_model.dart';
-import 'package:posapplication/data/service/hive_service/hive_service.dart';
 import 'package:posapplication/module/export.dart';
 import 'package:posapplication/shared/utils/general_function.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
 import 'package:posapplication/shared/widgets/separator_dash_widget.dart';
+
+import '../../shared/routes/app_routes.dart';
 
 class OrdersConfirmationScreen extends StatefulWidget {
   List<OrdersModel> orderList;
@@ -37,14 +38,6 @@ class _OrdersConfirmationScreenState extends State<OrdersConfirmationScreen> {
           }
         }
       }
-
-      // old
-      // String data = element.dataItem!.itemName;
-      // if (counts.containsKey(data)) {
-      //   counts[data] = counts[data]! + 1;
-      // } else {
-      //   counts[data] = 1;
-      // }
     }
   }
 
@@ -80,14 +73,16 @@ class _OrdersConfirmationScreenState extends State<OrdersConfirmationScreen> {
             context
                 .read<OrdersBloc>()
                 .add(ProcessOrdersEvent(requestOrder: widget.orderList));
-            GeneralFunction.navigationBackTwoStep(context);
+
+            Navigator.pushNamedAndRemoveUntil(
+                context, AppRoutes.ownerBottomNav, (route) => false);
           });
         },
-        child: Icon(Icons.check_outlined),
+        child: const Icon(Icons.check_outlined),
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -131,17 +126,15 @@ class _OrdersConfirmationScreenState extends State<OrdersConfirmationScreen> {
               SeparatorDashWidget(),
               ListView.builder(
                 shrinkWrap: true,
-                // itemCount: widget.orderList.length,
                 itemCount: counts.length,
                 itemBuilder: (context, index) {
-                  // OrdersModel items = widget.orderList[index];
                   String key = counts.keys.elementAt(index);
                   int value = counts[key]!;
                   return ListTile(
                     dense: true,
-                    contentPadding: EdgeInsets.all(0),
-                    visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                    // title: Text(items.dataItem?.itemName ?? ""),
+                    contentPadding: const EdgeInsets.all(0),
+                    visualDensity:
+                        const VisualDensity(horizontal: 0, vertical: -4),
                     title: Text(key),
                     trailing: Text(value.toString()),
                   );
