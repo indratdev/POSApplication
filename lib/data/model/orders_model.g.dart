@@ -11,9 +11,9 @@ OrdersModel _$OrdersModelFromJson(Map<String, dynamic> json) => OrdersModel(
       totalOrdersPrice: (json['totalOrdersPrice'] as num?)?.toDouble() ?? 0,
       itemCountOrder: json['itemCountOrder'] as int? ?? 0,
       status: json['status'] as String? ?? "open",
-      dataItem: json['dataItem'] == null
-          ? null
-          : ItemsModel.fromJson(json['dataItem'] as Map<String, dynamic>),
+      dataItem: (json['dataItem'] as List<dynamic>?)
+          ?.map((e) => ItemsModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       dataTable: json['dataTable'] == null
           ? null
           : TablesModel.fromJson(json['dataTable'] as Map<String, dynamic>),

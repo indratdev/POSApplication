@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:posapplication/data/model/export_model.dart';
 import 'package:posapplication/data/model/orders_model.dart';
 import 'package:posapplication/data/service/hive_service/hive_service.dart';
 import 'package:posapplication/module/export.dart';
@@ -25,12 +26,25 @@ class _OrdersConfirmationScreenState extends State<OrdersConfirmationScreen> {
 
   countUniqueData() {
     for (var element in widget.orderList) {
-      String data = element.dataItem!.itemName;
-      if (counts.containsKey(data)) {
-        counts[data] = counts[data]! + 1;
-      } else {
-        counts[data] = 1;
+      List<ItemsModel>? itemList = element.dataItem;
+
+      if (itemList != null) {
+        for (var data in itemList) {
+          if (counts.containsKey(data.itemName)) {
+            counts[data.itemName] = counts[data.itemName]! + 1;
+          } else {
+            counts[data.itemName] = 1;
+          }
+        }
       }
+
+      // old
+      // String data = element.dataItem!.itemName;
+      // if (counts.containsKey(data)) {
+      //   counts[data] = counts[data]! + 1;
+      // } else {
+      //   counts[data] = 1;
+      // }
     }
   }
 
@@ -67,7 +81,6 @@ class _OrdersConfirmationScreenState extends State<OrdersConfirmationScreen> {
                 .read<OrdersBloc>()
                 .add(ProcessOrdersEvent(requestOrder: widget.orderList));
             GeneralFunction.navigationBackTwoStep(context);
-
           });
         },
         child: Icon(Icons.check_outlined),

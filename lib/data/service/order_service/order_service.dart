@@ -255,10 +255,10 @@ class OrderService {
         .collection(ordersCollection)
         .doc(orderData.first.orderID)
         .set({
-          "companyID": orderData.first.dataItem!.companyID,
+          "companyID": orderData.first.dataItem!.first.companyID,
           "orderID": orderData.first.orderID,
           "dataCustomer": orderData.first.dataCustomer!.toJson(),
-          "listDataItem": orderData.map((e) => e.dataItem!.toJson()),
+          "listDataItem": orderData.map((e) => e.dataItem!.first.toJson()),
           "dataTable": orderData.first.dataTable!.toJson(),
           "dateTimeFinish": orderData.first.dateTimeFinish,
           "dateTimeProccess": orderData.first.dateTimeProccess,

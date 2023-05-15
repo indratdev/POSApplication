@@ -127,16 +127,18 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                           //     ));
                           OrdersModel datas = OrdersModel(
                             orderID: "",
-                            dataItem: ItemsModel(
-                              companyID: data.companyID,
-                              categoryID: data.categoryID,
-                              itemID: data.itemID,
-                              itemName: data.itemName,
-                              categoryName: data.categoryName,
-                              itemPhoto: data.itemPhoto,
-                              sellBy: data.sellBy,
-                              sellPrice: data.sellPrice,
-                            ),
+                            dataItem: [
+                              ItemsModel(
+                                companyID: data.companyID,
+                                categoryID: data.categoryID,
+                                itemID: data.itemID,
+                                itemName: data.itemName,
+                                categoryName: data.categoryName,
+                                itemPhoto: data.itemPhoto,
+                                sellBy: data.sellBy,
+                                sellPrice: data.sellPrice,
+                              )
+                            ],
                             itemCountOrder: 1,
                             staffHandleBy: "",
                             totalOrdersPrice: 0,
@@ -195,16 +197,18 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                           // );
                           OrdersModel datas = OrdersModel(
                             orderID: "",
-                            dataItem: ItemsModel(
-                              companyID: data.companyID,
-                              categoryID: data.categoryID,
-                              itemID: data.itemID,
-                              itemName: data.itemName,
-                              categoryName: data.categoryName,
-                              itemPhoto: data.itemPhoto,
-                              sellBy: data.sellBy,
-                              sellPrice: data.sellPrice,
-                            ),
+                            dataItem: [
+                              ItemsModel(
+                                companyID: data.companyID,
+                                categoryID: data.categoryID,
+                                itemID: data.itemID,
+                                itemName: data.itemName,
+                                categoryName: data.categoryName,
+                                itemPhoto: data.itemPhoto,
+                                sellBy: data.sellBy,
+                                sellPrice: data.sellPrice,
+                              )
+                            ],
                             itemCountOrder: 1,
                             staffHandleBy: "",
                             totalOrdersPrice: 0,

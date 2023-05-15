@@ -25,7 +25,7 @@ class OrdersModel {
   DateTime? dateTimeFinish;
   String? staffHandleBy;
   String? staffUserID;
-  ItemsModel? dataItem;
+  List<ItemsModel>? dataItem;
   TablesModel? dataTable;
   CustomersModel? dataCustomer;
 
@@ -50,21 +50,38 @@ class OrdersModel {
   factory OrdersModel.fromJson(Map<String, dynamic> json) =>
       _$OrdersModelFromJson(json);
 
+  // static DateTime _timestampFromJson(int timestamp) => DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+
   /// Connect the generated [_$PersonToJson] function to the `toJson` method.
   Map<String, dynamic> toJson() => _$OrdersModelToJson(this);
 
   OrdersModel.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
       : totalOrdersPrice = doc.data()!["totalOrdersPrice"],
         orderID = doc.data()!["orderID"],
-        dataItem = doc.data()!["dataItem"],
-        dataTable = doc.data()!["dataTable"],
-        dataCustomer = doc.data()!["dataCustomer"],
+        // dataItem = doc.data()!["dataItem"],
+        // dataTable = doc.data()!["dataTable"],
+        // dataCustomer = doc.data()!["dataCustomer"],
+        dataItem = (doc.data()!['dataItem'] as List<dynamic>?)
+            ?.map((e) => ItemsModel.fromJson(e as Map<String, dynamic>))
+            .toList(),
+        dataTable = TablesModel.fromJson(
+            doc.data()!['dataTable'] as Map<String, dynamic>),
+        dataCustomer = CustomersModel.fromJson(
+            doc.data()!['dataCustomer'] as Map<String, dynamic>),
         itemCountOrder = doc.data()!["itemCountOrder"],
         status = doc.data()!["status"],
-        dateTimeOrder = doc.data()!["dateTimeOrder"],
-        dateTimeWaiting = doc.data()!["dateTimeWaiting"],
-        dateTimeProccess = doc.data()!["dateTimeProccess"],
-        dateTimeFinish = doc.data()!["dateTimeFinish"],
+        dateTimeOrder = (doc.data()?["dateTimeOrder"] == null)
+            ? DateTime.parse("1900-01-01 00:00:00")
+            : (doc.data()?["dateTimeOrder"]).toDate(),
+        dateTimeWaiting = (doc.data()?["dateTimeWaiting"] == null)
+            ? DateTime.parse("1900-01-01 00:00:00")
+            : (doc.data()?["dateTimeWaiting"]).toDate(),
+        dateTimeProccess = (doc.data()?["dateTimeProccess"] == null)
+            ? DateTime.parse("1900-01-01 00:00:00")
+            : (doc.data()?["dateTimeProccess"]).toDate(),
+        dateTimeFinish = (doc.data()?["dateTimeFinish"] == null)
+            ? DateTime.parse("1900-01-01 00:00:00")
+            : (doc.data()?["dateTimeFinish"]).toDate(),
         staffHandleBy = doc.data()!["staffHandleBy"],
         staffUserID = doc.data()!["staffUserID"];
 }
