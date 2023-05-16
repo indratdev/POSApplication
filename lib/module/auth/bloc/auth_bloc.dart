@@ -123,8 +123,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             Map<String, dynamic> profiles =
                 await ownerRepository.readProfileCompany();
 
-            await ownerRepository
-                .setProfileCompanytoBox(ProfileModel.fromJson(profiles));
+            await hiveRepository
+                .createProfileCompanytoBox(ProfileModel.fromJson(profiles));
 
             // set current user login
 

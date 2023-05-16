@@ -59,21 +59,21 @@ class OwnerRepository {
     return await hiveService.isExistkBoxCompanyProfile();
   }
 
-  // set data to box
-  setProfileCompanytoBox(ProfileModel data) {
-    hiveService.addProfileToHive(data);
-  }
+  // // set data to box
+  // setProfileCompanytoBox(ProfileModel data) {
+  //   hiveService.addProfileToHive(data);
+  // }
 
   // update profile company
-  updateProfileCompanyToBox(ProfileModel data) async {
-    await hiveService.updateProfileCompanyToBox(data);
-  }
+  // updateProfileCompanyToBox(ProfileModel data) async {
+  //   await hiveService.updateProfileCompanyToBox(data);
+  // }
 
-  Future<String> readProfileCompanyIDFromBox() async {
-    return await hiveService.readProfileCompanyIDFromBox();
-  }
+  // Future<String> readProfileCompanyIDFromBox() async {
+  //   return await hiveService.readProfileCompanyIDFromBox();
+  // }
 
-  Future<ProfileModel> readProfileCompanyFromBox() async {
-    return await hiveService.readProfileFromBox();
-  }
+  // Future<ProfileModel> readProfileCompanyFromBox() async {
+  //   return await hiveService.readProfileFromBox();
+  // }
 }

@@ -304,7 +304,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
 
         // get profile company from box
         ProfileModel profileModel =
-            await ownerRepository.readProfileCompanyFromBox();
+            await hiveRepository.readProfileCompanyFromBox();
 
         // get user current login
         UsersModel userCurrentLogin =

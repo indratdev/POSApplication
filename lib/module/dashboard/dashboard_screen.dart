@@ -5,10 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/orders_model.dart';
+import 'package:posapplication/domain/export.dart';
+import 'package:posapplication/domain/hive_repository.dart';
 
 import 'package:posapplication/module/dashboard/widgets/status_dashboard_widget.dart';
 import 'package:posapplication/module/owner/bloc/owner_bloc.dart';
 import 'package:posapplication/shared/utils/DateUtil/dateutil.dart';
+import 'package:posapplication/shared/widgets/custom_widgets.dart';
+
+import '../../shared/utils/firebase_utils/firebase_utils.dart';
 // import 'package:posapplication/module/owner/owner_dashboard/controller/owner_dashboard_controller.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -79,62 +84,75 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ],
       ),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('orders')
-            .where("dateTimeOrder",
-                isGreaterThanOrEqualTo:
-                    DateUtil.getDateyyyyMMddWithMilisecond())
-            .snapshots(),
+      body: FutureBuilder(
+        future: HiveRepository().readProfileCompanyIDFromBox(),
         builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(child: Text(snapshot.error.toString()));
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CustomWidgets.showLoadingWidget();
           }
 
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator.adaptive());
+          if (snapshot.connectionState == ConnectionState.done) {
+            String companyID = snapshot.data ?? "";
+
+            return StreamBuilder(
+              stream: FirebaseUtil().queryOrdersFirebase(companyID),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Center(child: Text(snapshot.error.toString()));
+                }
+
+                if (!snapshot.hasData) {
+                  return const Center(
+                      child: CircularProgressIndicator.adaptive());
+                }
+
+                // var dataList = snapshot.data;
+                colletionDataFB(snapshot.data);
+
+                return GridView.count(
+                  primary: false,
+                  scrollDirection: Axis.vertical,
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  children: [
+                    StatusDashboardWidget(
+                      status: "OPEN",
+                      amountOfData:
+                          statusItem[StatusOrder.open.name.toString()] ?? 0,
+                      colorStatus: Colors.blueAccent.shade200,
+                    ),
+                    StatusDashboardWidget(
+                      status: "WAITING",
+                      amountOfData:
+                          statusItem[StatusOrder.waiting.name.toString()] ?? 0,
+                    ),
+                    StatusDashboardWidget(
+                      status: "PROGRESS",
+                      amountOfData:
+                          statusItem[StatusOrder.progress.name.toString()] ?? 0,
+                      colorStatus: Colors.amber.shade300,
+                    ),
+                    StatusDashboardWidget(
+                      status: "DONE",
+                      amountOfData:
+                          statusItem[StatusOrder.done.name.toString()] ?? 0,
+                      colorStatus: Colors.green.shade300,
+                    ),
+                    StatusDashboardWidget(
+                      status: "CANCELED",
+                      amountOfData:
+                          statusItem[StatusOrder.cancel.name.toString()] ?? 0,
+                      colorStatus: Colors.redAccent.shade200,
+                    ),
+                  ],
+                );
+              },
+            );
+          } else {
+            return const SizedBox();
           }
-
-          // var dataList = snapshot.data;
-          colletionDataFB(snapshot.data);
-
-          return GridView.count(
-            primary: false,
-            scrollDirection: Axis.vertical,
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-            crossAxisCount: 2,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            children: [
-              StatusDashboardWidget(
-                status: "OPEN",
-                amountOfData: statusItem[StatusOrder.open.name.toString()] ?? 0,
-                colorStatus: Colors.blueAccent.shade200,
-              ),
-              StatusDashboardWidget(
-                status: "WAITING",
-                amountOfData:
-                    statusItem[StatusOrder.waiting.name.toString()] ?? 0,
-              ),
-              StatusDashboardWidget(
-                status: "PROGRESS",
-                amountOfData:
-                    statusItem[StatusOrder.progress.name.toString()] ?? 0,
-                colorStatus: Colors.amber.shade300,
-              ),
-              StatusDashboardWidget(
-                status: "DONE",
-                amountOfData: statusItem[StatusOrder.done.name.toString()] ?? 0,
-                colorStatus: Colors.green.shade300,
-              ),
-              StatusDashboardWidget(
-                status: "CANCELED",
-                amountOfData:
-                    statusItem[StatusOrder.cancel.name.toString()] ?? 0,
-                colorStatus: Colors.redAccent.shade200,
-              ),
-            ],
-          );
         },
       ),
     );
