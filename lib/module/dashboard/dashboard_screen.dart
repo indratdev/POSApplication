@@ -74,12 +74,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            // onPressed: () => logout(),
-            onPressed: () async {
-              // var aaa = await HiveRepository().readUserLoginFromHive();
-              // print(aaa.email);
-              // print(DateUtil.getDateyyyyMMddWithMilisecond());
-            },
+            onPressed: () => logout(),
+
+            // onPressed: () async {
+            // var aaa = await HiveRepository().readUserLoginFromHive();
+            // print(aaa.email);
+            // print(DateUtil.getDateyyyyMMddWithMilisecond());
+            // },
             icon: const Icon(Icons.logout_outlined),
           ),
         ],
@@ -118,30 +119,35 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   crossAxisSpacing: 10,
                   children: [
                     StatusDashboardWidget(
-                      status: "OPEN",
+                      status: StatusOrder.open.name,
+                      dataList: resultData,
                       amountOfData:
                           statusItem[StatusOrder.open.name.toString()] ?? 0,
                       colorStatus: Colors.blueAccent.shade200,
                     ),
                     StatusDashboardWidget(
-                      status: "WAITING",
+                      status: StatusOrder.waiting.name,
+                      dataList: resultData,
                       amountOfData:
                           statusItem[StatusOrder.waiting.name.toString()] ?? 0,
                     ),
                     StatusDashboardWidget(
-                      status: "PROGRESS",
+                      status: StatusOrder.progress.name,
+                      dataList: resultData,
                       amountOfData:
                           statusItem[StatusOrder.progress.name.toString()] ?? 0,
                       colorStatus: Colors.amber.shade300,
                     ),
                     StatusDashboardWidget(
-                      status: "DONE",
+                      status: StatusOrder.done.name,
+                      dataList: resultData,
                       amountOfData:
                           statusItem[StatusOrder.done.name.toString()] ?? 0,
                       colorStatus: Colors.green.shade300,
                     ),
                     StatusDashboardWidget(
-                      status: "CANCELED",
+                      status: StatusOrder.cancel.name,
+                      dataList: resultData,
                       amountOfData:
                           statusItem[StatusOrder.cancel.name.toString()] ?? 0,
                       colorStatus: Colors.redAccent.shade200,

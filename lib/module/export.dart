@@ -32,3 +32,4 @@ export 'package:posapplication/module/orders/orders_list_screen.dart';
 export 'package:posapplication/module/orders/orders_screen.dart';
 export 'package:posapplication/module/Users/user_selected_screen.dart';
 export 'package:posapplication/module/orders/orders_confirmation_screen.dart';
+export 'package:posapplication/module/transactions/views/list_transaction_screen.dart';

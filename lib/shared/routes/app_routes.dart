@@ -47,6 +47,9 @@ class AppRoutes {
   static const String ordersList = "/orders/lists";
   static const String ordersConfirmation = "/orders/lists/confirmation";
 
+  // transactions
+  static const String listTransaction = "/listTransaction";
+
   Map<String, WidgetBuilder> getRoutes = {
     first: (_) => CoverAuthScreen(),
     login: (_) => LoginScreen(),
@@ -74,5 +77,6 @@ class AppRoutes {
     orders: (_) => const OrdersScreen(),
     ordersList: (_) => const OrdersListScreen(),
     ordersConfirmation: (_) => OrdersConfirmationScreen(),
+    listTransaction: (_) => ListTransactionScreen(status: ""),
   };
 }
