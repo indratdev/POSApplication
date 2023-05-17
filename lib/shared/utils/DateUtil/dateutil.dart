@@ -10,6 +10,11 @@ class DateUtil {
     return DateFormat('HH:mm:ss').format(time);
   }
 
+  // ex : Sunday, 17 May 2023
+  static String convertToDayAndDateTime(DateTime time) {
+    return DateFormat('EEEE, dd MMMM yyyy').format(time);
+  }
+
   static DateTime getDateyyyyMMddWithMilisecond() {
     DateTime originalDateTime = DateTime.now();
 

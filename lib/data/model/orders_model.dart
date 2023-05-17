@@ -62,7 +62,7 @@ class OrdersModel {
   OrdersModel.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
       : totalOrdersPrice = doc.data()!["totalOrdersPrice"],
         orderID = doc.data()!["orderID"],
-        dataItem = (doc.data()!['dataItem'] as List<dynamic>?)
+        dataItem = (doc.data()!['listDataItem'] as List<dynamic>?)
             ?.map((e) => ItemsModel.fromJson(e as Map<String, dynamic>))
             .toList(),
         dataTable = TablesModel.fromJson(

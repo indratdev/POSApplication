@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:posapplication/data/model/orders_model.dart';
+import 'package:posapplication/module/export.dart';
 import 'package:posapplication/shared/utils/DateUtil/dateutil.dart';
 import 'package:posapplication/shared/widgets/nodata_widget.dart';
 
@@ -20,7 +21,7 @@ class ListTransactionScreen extends StatefulWidget {
 class _ListTransactionScreenState extends State<ListTransactionScreen> {
   @override
   Widget build(BuildContext context) {
-    double _width = MediaQuery.of(context).size.width;
+    // double _width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
@@ -28,35 +29,52 @@ class _ListTransactionScreenState extends State<ListTransactionScreen> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-          child: (widget.dataList!.isEmpty)
-              ? NoDataWidget(
-                  description:
-                      "Belum terdapat data, lakukan input untuk melakukan transaksi.")
-              : ListView.separated(
-                  padding: const EdgeInsets.all(8),
-                  separatorBuilder: (context, index) => const Divider(),
-                  shrinkWrap: true,
-                  itemCount: widget.dataList?.length ?? 0,
-                  itemBuilder: (context, index) {
-                    OrdersModel datas = widget.dataList![index];
-                    return Row(
+        child: (widget.dataList!.isEmpty)
+            ? NoDataWidget(
+                description:
+                    "Belum terdapat data, lakukan input untuk melakukan transaksi.")
+            : ListView.separated(
+                padding: const EdgeInsets.all(18),
+                separatorBuilder: (context, index) => const Divider(
+                  thickness: 0.5,
+                  height: 25,
+                  color: Colors.black,
+                ),
+                shrinkWrap: true,
+                itemCount: widget.dataList?.length ?? 0,
+                itemBuilder: (context, index) {
+                  OrdersModel datas = widget.dataList![index];
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                DetailTransactionScreen(orderCustomer: datas),
+                          ));
+                    },
+                    child: Row(
                       children: [
-                        Container(
-                          color: Colors.red,
-                          width: (_width / 2) - 10,
+                        Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(datas.dataCustomer?.fullname.toString() ??
-                                  ""),
                               Text(
-                                  "Waktu Pesan :${DateUtil.convertToOnlyTime(datas.dateTimeOrder!)}")
+                                datas.dataCustomer?.fullname.toString() ?? "",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              Text(
+                                  "Pesanan : ${datas.dataItem?.length ?? 0} Item"),
+                              Text(
+                                "Waktu Pesan :${DateUtil.convertToOnlyTime(datas.dateTimeOrder!)}",
+                              ),
                             ],
                           ),
                         ),
-                        Container(
-                          color: Colors.amber,
-                          width: (_width / 2) - 10,
+                        Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
@@ -66,9 +84,11 @@ class _ListTransactionScreenState extends State<ListTransactionScreen> {
                           ),
                         ),
                       ],
-                    );
-                  },
-                )),
+                    ),
+                  );
+                },
+              ),
+      ),
     );
   }
 }
