@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:posapplication/data/model/orders_model.dart';
 import 'package:posapplication/shared/utils/DateUtil/dateutil.dart';
+import 'package:posapplication/shared/widgets/nodata_widget.dart';
 
 class ListTransactionScreen extends StatefulWidget {
   List<OrdersModel>? dataList;
@@ -27,42 +28,47 @@ class _ListTransactionScreenState extends State<ListTransactionScreen> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-          child: ListView.separated(
-        padding: const EdgeInsets.all(8),
-        separatorBuilder: (context, index) => const Divider(),
-        shrinkWrap: true,
-        itemCount: widget.dataList?.length ?? 0,
-        itemBuilder: (context, index) {
-          OrdersModel datas = widget.dataList![index];
-          return Row(
-            children: [
-              Container(
-                color: Colors.red,
-                width: (_width / 2) - 10,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(datas.dataCustomer?.fullname.toString() ?? ""),
-                    Text(
-                        "Waktu Pesan :${DateUtil.convertToOnlyTime(datas.dateTimeOrder!)}")
-                  ],
-                ),
-              ),
-              Container(
-                color: Colors.amber,
-                width: (_width / 2) - 10,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(datas.dataTable?.tableName.toString() ?? ""),
-                    Text(datas.status.toString()),
-                  ],
-                ),
-              ),
-            ],
-          );
-        },
-      )),
+          child: (widget.dataList!.isEmpty)
+              ? NoDataWidget(
+                  description:
+                      "Belum terdapat data, lakukan input untuk melakukan transaksi.")
+              : ListView.separated(
+                  padding: const EdgeInsets.all(8),
+                  separatorBuilder: (context, index) => const Divider(),
+                  shrinkWrap: true,
+                  itemCount: widget.dataList?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    OrdersModel datas = widget.dataList![index];
+                    return Row(
+                      children: [
+                        Container(
+                          color: Colors.red,
+                          width: (_width / 2) - 10,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(datas.dataCustomer?.fullname.toString() ??
+                                  ""),
+                              Text(
+                                  "Waktu Pesan :${DateUtil.convertToOnlyTime(datas.dateTimeOrder!)}")
+                            ],
+                          ),
+                        ),
+                        Container(
+                          color: Colors.amber,
+                          width: (_width / 2) - 10,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(datas.dataTable?.tableName.toString() ?? ""),
+                              Text(datas.status.toString()),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                )),
     );
   }
 }
