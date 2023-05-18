@@ -8,6 +8,12 @@ const failedImage = 'assets/images/failed.webp';
 const warningImage = 'assets/images/warning.webp';
 const noDataImage = 'assets/images/nodata.webp';
 
+// icons
+const workProcess = 'assets/icons/work_process.webp';
+const check = 'assets/icons/check.webp';
+const excellence = 'assets/icons/excellence.webp';
+const failure = 'assets/icons/failure.webp';
+
 // sizebox
 const SizedBox sbWidth10 = SizedBox(width: 10);
 const SizedBox sbHeight10 = SizedBox(height: 10);

@@ -79,7 +79,7 @@ class _ListTransactionScreenState extends State<ListTransactionScreen> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(datas.dataTable?.tableName.toString() ?? ""),
-                              Text(datas.status.toString()),
+                              Text(datas.status.toUpperCase().toString()),
                             ],
                           ),
                         ),

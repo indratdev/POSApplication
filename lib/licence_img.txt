@@ -2,3 +2,17 @@
 // no data
 Please, copy this code on your website to accredit the author:
 <a href="http://www.freepik.com">Designed by slidesgo / Freepik</a>
+
+
+// progreess
+<a href="https://www.flaticon.com/free-icons/work-in-progress" title="work in progress icons">Work in progress icons created by Anggara - Flaticon</a>
+
+
+// done
+<a href="https://www.flaticon.com/free-icons/checklist" title="checklist icons">Checklist icons created by exomoon design studio - Flaticon</a>
+
+// success
+<a href="https://www.flaticon.com/free-icons/excellence" title="excellence icons">Excellence icons created by photo3idea_studio - Flaticon</a>
+
+// failed
+<a href="https://www.flaticon.com/free-icons/failed" title="failed icons">Failed icons created by Freepik - Flaticon</a>
