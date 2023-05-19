@@ -62,6 +62,8 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
     double _width = MediaQuery.of(context).size.width;
     int _widthIcon = _width ~/ 5;
 
+    print("======  ${widget.orderCustomer}");
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Detail Transaksi"),
@@ -383,11 +385,28 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                                       color: Colors.green.shade500,
                                     ),
                                     ElevatedButton(
-                                      onPressed:
-                                          (widget.orderCustomer!.status ==
-                                                  StatusOrder.open.name)
-                                              ? null
-                                              : () {},
+                                      onPressed: (widget
+                                                  .orderCustomer!.status ==
+                                              StatusOrder.open.name)
+                                          ? null
+                                          // : () {},
+                                          : () {
+                                              CustomWidgets.showConfirmation(
+                                                  context,
+                                                  "Apakah anda ingin melanjutkan proses ini ?",
+                                                  () {
+                                                if (widget.orderCustomer !=
+                                                    null) {
+                                                  BlocProvider.of<OrdersBloc>(
+                                                          context)
+                                                      .add(UpdateStatusOrders(
+                                                    status: StatusOrder.done,
+                                                    orderCustomer:
+                                                        widget.orderCustomer!,
+                                                  ));
+                                                }
+                                              });
+                                            },
                                       child: Text("SELESAI PROSES"),
                                     ),
                                   ],
