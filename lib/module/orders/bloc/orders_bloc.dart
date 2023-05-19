@@ -326,5 +326,20 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         emit(FailureConfirmationOrder(messageError: e.toString()));
       }
     });
+
+    // update status order
+    on<UpdateStatusOrders>((event, emit) async {
+      emit(LoadingUpdateStatusOrder());
+      try {
+        Either<String, String> result = await orderRepository.updateStatusOrder(
+            event.status, event.orderCustomer);
+        result.fold(
+            (l) => emit(FailureUpdateStatusOrder(messageError: l.toString())),
+            (r) => emit(SuccessUpdateStatusOrder(result: r.toString())));
+      } catch (e) {
+        log(e.toString());
+        emit(FailureUpdateStatusOrder(messageError: e.toString()));
+      }
+    });
   }
 }

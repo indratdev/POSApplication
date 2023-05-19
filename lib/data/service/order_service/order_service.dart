@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:posapplication/data/model/customers_model.dart';
 import 'package:posapplication/data/model/orders_model.dart';
 import 'package:posapplication/shared/utils/shared_preferences/myshared_preferences.dart';
 
@@ -299,6 +297,26 @@ class OrderService {
           "sellPrice": itemModel.sellPrice,
         })
         .then((value) => myEither = const Right("Update Items Successfully!"))
+        .catchError((e) => myEither = Left(e.toString()));
+
+    return myEither;
+  }
+
+  // update status orders
+  Future<Either<String, String>> updateStatusOrder(
+    String status,
+    OrdersModel orderModel,
+  ) async {
+    late Either<String, String> myEither;
+
+    await FirebaseFirestore.instance
+        .collection(ordersCollection)
+        .doc(orderModel.orderID)
+        .update({
+          "status": status,
+        })
+        .then((value) =>
+            myEither = const Right("Update Status Order Successfully!"))
         .catchError((e) => myEither = Left(e.toString()));
 
     return myEither;

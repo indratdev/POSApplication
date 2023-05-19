@@ -125,3 +125,13 @@ class ProcessOrdersEvent extends OrdersEvent {
     required this.requestOrder,
   });
 }
+
+class UpdateStatusOrders extends OrdersEvent {
+  StatusOrder status;
+  OrdersModel orderCustomer;
+
+  UpdateStatusOrders({
+    required this.status,
+    required this.orderCustomer,
+  });
+}

@@ -221,3 +221,22 @@ class SuccessConfirmationOrder extends OrdersState {
   @override
   List<Object> get props => [profileModel];
 }
+
+// update status order
+// get profile company from box
+class LoadingUpdateStatusOrder extends OrdersState {}
+
+class FailureUpdateStatusOrder extends FailureOrders {
+  FailureUpdateStatusOrder({required super.messageError});
+}
+
+class SuccessUpdateStatusOrder extends OrdersState {
+  String result;
+
+  SuccessUpdateStatusOrder({
+    required this.result,
+  });
+
+  @override
+  List<Object> get props => [result];
+}

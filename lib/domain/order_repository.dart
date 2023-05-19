@@ -10,4 +10,10 @@ class OrderRepository {
   Future<Either<String, String>> createOrder(List<OrdersModel> data) async {
     return await orderService.createNewOrder(data);
   }
+
+  // update order status
+  Future<Either<String, String>> updateStatusOrder(
+      StatusOrder status, OrdersModel orderCustomer) async {
+    return await orderService.updateStatusOrder(status.name, orderCustomer);
+  }
 }

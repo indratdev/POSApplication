@@ -17,6 +17,23 @@ class GeneralFunction {
       ..pop();
   }
 
+  static navigationBack(BuildContext context, int step) {
+    if (step == 1) {
+      Navigator.of(context).pop();
+    } else if (step == 2) {
+      Navigator.of(context)
+        ..pop()
+        ..pop();
+    } else if (step == 3) {
+      Navigator.of(context)
+        ..pop()
+        ..pop()
+        ..pop();
+    } else {
+      Navigator.of(context).pop();
+    }
+  }
+
   String generateUniqueID() {
     var uuid = const Uuid().v1();
     var id = uuid.replaceAll("-", "");
