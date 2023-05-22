@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/orders_model.dart';
 import 'package:posapplication/module/export.dart';
+import 'package:posapplication/module/transactions/widgets/status_transaction_widgets.dart';
 import 'package:posapplication/shared/utils/DateUtil/dateutil.dart';
 import 'package:posapplication/shared/utils/TextUtil/text_util.dart';
-import 'package:posapplication/shared/utils/general_function.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
 
 import '../../../shared/constants/constatns.dart';
@@ -55,6 +55,30 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
       statusMap["image"] = excellence;
       statusMap["description"] = "Transaksi Berhasil";
     }
+  }
+
+  continueProcess() {
+    CustomWidgets.showConfirmation(
+        context, "Apakah anda ingin melanjutkan proses ini ?", () {
+      if (widget.orderCustomer != null) {
+        BlocProvider.of<OrdersBloc>(context).add(UpdateStatusOrders(
+          status: StatusOrder.progress,
+          orderCustomer: widget.orderCustomer!,
+        ));
+      }
+    });
+  }
+
+  canceledProcess() {
+    CustomWidgets.showConfirmation(
+        context, "Apakah anda ingin membatalkan proses ini ?", () {
+      if (widget.orderCustomer != null) {
+        // BlocProvider.of<OrdersBloc>(context).add(UpdateStatusOrders(
+        //   status: StatusOrder.progress,
+        //   orderCustomer: widget.orderCustomer!,
+        // ));
+      }
+    });
   }
 
   @override
@@ -197,224 +221,109 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 18),
                 // color: Colors.amber,
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height / 2,
-                child: Column(
-                  children: [
-                    Text(
-                      '"Pesanan ini masih dalam status ${widget.orderCustomer?.status ?? ''}" \n Anda dapat melihat catatan untuk kemudahan',
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 18),
-                    (widget.orderCustomer!.status == StatusOrder.cancel.name ||
-                            widget.orderCustomer!.status ==
-                                StatusOrder.waiting.name)
-                        ? const SizedBox()
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Column(
-                                children: [
-                                  Icon(
-                                    (widget.orderCustomer!.status ==
-                                                StatusOrder.open.name ||
-                                            widget.orderCustomer!.status ==
-                                                StatusOrder.progress.name ||
-                                            widget.orderCustomer!.status ==
-                                                StatusOrder.done.name)
-                                        ? Icons.circle
-                                        : Icons.circle_outlined,
-                                    color: (widget.orderCustomer!.status ==
-                                                StatusOrder.open.name ||
-                                            widget.orderCustomer!.status ==
-                                                StatusOrder.progress.name ||
-                                            widget.orderCustomer!.status ==
-                                                StatusOrder.done.name)
-                                        ? Colors.blue
-                                        : null,
-                                  ),
-                                  Text(StatusOrder.open.name
-                                      .toUpperCase()
-                                      .toString())
-                                ],
-                              ),
-                              const Icon(Icons.maximize),
-                              Column(
-                                children: [
-                                  Icon(
-                                    // (status == 0)
-                                    (widget.orderCustomer!.status ==
-                                            StatusOrder.open.name)
-                                        ? Icons.circle_outlined
-                                        : Icons.circle,
-                                    color:
-                                        // (status == 0)
-                                        (widget.orderCustomer!.status ==
-                                                StatusOrder.open.name)
-                                            ? null
-                                            : Colors.blue,
-                                  ),
-                                  Text(StatusOrder.progress.name
-                                      .toUpperCase()
-                                      .toString())
-                                ],
-                              ),
-                              Icon(Icons.maximize),
-                              Column(
-                                children: [
-                                  Icon(
-                                    // (status == 0 || status == 2)
-                                    (widget.orderCustomer!.status ==
-                                                StatusOrder.open.name ||
-                                            widget.orderCustomer!.status ==
-                                                StatusOrder.progress.name)
-                                        ? Icons.circle_outlined
-                                        : Icons.circle,
-                                    color:
-                                        // (status == 0 || status == 2)
-                                        (widget.orderCustomer!.status ==
-                                                    StatusOrder.open.name ||
-                                                widget.orderCustomer!.status ==
-                                                    StatusOrder.progress.name)
-                                            ? null
-                                            : Colors.blue,
-                                  ),
-                                  Text(
-                                    StatusOrder.done.name
+                // height: MediaQuery.of(context).size.height / 2,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Text(
+                        '"Pesanan ini masih dalam status ${widget.orderCustomer?.status ?? ''}" \n Anda dapat melihat catatan untuk kemudahan',
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 18),
+                      (widget.orderCustomer!.status ==
+                                  StatusOrder.cancel.name ||
+                              widget.orderCustomer!.status ==
+                                  StatusOrder.waiting.name)
+                          ? const SizedBox()
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Column(
+                                  children: [
+                                    Icon(
+                                      (widget.orderCustomer!.status ==
+                                                  StatusOrder.open.name ||
+                                              widget.orderCustomer!.status ==
+                                                  StatusOrder.progress.name ||
+                                              widget.orderCustomer!.status ==
+                                                  StatusOrder.done.name)
+                                          ? Icons.circle
+                                          : Icons.circle_outlined,
+                                      color: (widget.orderCustomer!.status ==
+                                                  StatusOrder.open.name ||
+                                              widget.orderCustomer!.status ==
+                                                  StatusOrder.progress.name ||
+                                              widget.orderCustomer!.status ==
+                                                  StatusOrder.done.name)
+                                          ? Colors.blue
+                                          : null,
+                                    ),
+                                    Text(StatusOrder.open.name
                                         .toUpperCase()
-                                        .toString(),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                    const SizedBox(height: 55),
-                    (widget.orderCustomer!.status == StatusOrder.done.name ||
-                            widget.orderCustomer!.status ==
-                                StatusOrder.cancel.name)
-                        ? Column(
-                            children: [
-                              Image.asset(
-                                statusMap["image"],
-                                cacheWidth: _width ~/ 3,
-                                color: (statusMap["image"] == excellence)
-                                    ? Colors.green.shade500
-                                    : Colors.red.shade900,
-                              ),
-                              const SizedBox(height: 10),
-                              Text(
-                                statusMap["description"],
-                                style: TextStyle(
-                                  fontSize:
-                                      MediaQuery.of(context).size.width / 23,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          )
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Container(
-                                foregroundDecoration:
-                                    (widget.orderCustomer!.status ==
-                                            StatusOrder.progress.name)
-                                        ? const BoxDecoration(
-                                            color: Colors.grey,
-                                            backgroundBlendMode:
-                                                BlendMode.saturation,
-                                          )
-                                        : BoxDecoration(
-                                            color: Colors.green.shade500,
-                                            backgroundBlendMode:
-                                                BlendMode.saturation,
-                                          ),
-                                child: Column(
-                                  children: [
-                                    Image.asset(
-                                      workProcess,
-                                      cacheWidth: _widthIcon,
-                                      color: Colors.green.shade500,
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: (widget
-                                                  .orderCustomer!.status ==
-                                              StatusOrder.progress.name)
-                                          ? null
-                                          : () {
-                                              CustomWidgets.showConfirmation(
-                                                  context,
-                                                  "Apakah anda ingin melanjutkan proses ini ?",
-                                                  () {
-                                                if (widget.orderCustomer !=
-                                                    null) {
-                                                  BlocProvider.of<OrdersBloc>(
-                                                          context)
-                                                      .add(UpdateStatusOrders(
-                                                    status:
-                                                        StatusOrder.progress,
-                                                    orderCustomer:
-                                                        widget.orderCustomer!,
-                                                  ));
-                                                }
-                                              });
-                                            },
-                                      child: const Text("PROSES PESANAN"),
-                                    ),
+                                        .toString())
                                   ],
                                 ),
-                              ),
-                              Container(
-                                foregroundDecoration:
-                                    (widget.orderCustomer!.status ==
-                                            StatusOrder.open.name)
-                                        ? const BoxDecoration(
-                                            color: Colors.grey,
-                                            backgroundBlendMode:
-                                                BlendMode.saturation,
-                                          )
-                                        : BoxDecoration(
-                                            color: Colors.green.shade500,
-                                            backgroundBlendMode:
-                                                BlendMode.saturation,
-                                          ),
-                                child: Column(
+                                const Icon(Icons.maximize),
+                                Column(
                                   children: [
-                                    Image.asset(
-                                      check,
-                                      cacheWidth: _widthIcon,
-                                      color: Colors.green.shade500,
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: (widget
-                                                  .orderCustomer!.status ==
+                                    Icon(
+                                      // (status == 0)
+                                      (widget.orderCustomer!.status ==
                                               StatusOrder.open.name)
-                                          ? null
-                                          // : () {},
-                                          : () {
-                                              CustomWidgets.showConfirmation(
-                                                  context,
-                                                  "Apakah anda ingin melanjutkan proses ini ?",
-                                                  () {
-                                                if (widget.orderCustomer !=
-                                                    null) {
-                                                  BlocProvider.of<OrdersBloc>(
-                                                          context)
-                                                      .add(UpdateStatusOrders(
-                                                    status: StatusOrder.done,
-                                                    orderCustomer:
-                                                        widget.orderCustomer!,
-                                                  ));
-                                                }
-                                              });
-                                            },
-                                      child: Text("SELESAI PROSES"),
+                                          ? Icons.circle_outlined
+                                          : Icons.circle,
+                                      color:
+                                          // (status == 0)
+                                          (widget.orderCustomer!.status ==
+                                                  StatusOrder.open.name)
+                                              ? null
+                                              : Colors.blue,
+                                    ),
+                                    Text(StatusOrder.progress.name
+                                        .toUpperCase()
+                                        .toString())
+                                  ],
+                                ),
+                                const Icon(Icons.maximize),
+                                Column(
+                                  children: [
+                                    Icon(
+                                      // (status == 0 || status == 2)
+                                      (widget.orderCustomer!.status ==
+                                                  StatusOrder.open.name ||
+                                              widget.orderCustomer!.status ==
+                                                  StatusOrder.progress.name)
+                                          ? Icons.circle_outlined
+                                          : Icons.circle,
+                                      color:
+                                          // (status == 0 || status == 2)
+                                          (widget.orderCustomer!.status ==
+                                                      StatusOrder.open.name ||
+                                                  widget.orderCustomer!
+                                                          .status ==
+                                                      StatusOrder.progress.name)
+                                              ? null
+                                              : Colors.blue,
+                                    ),
+                                    Text(
+                                      StatusOrder.done.name
+                                          .toUpperCase()
+                                          .toString(),
                                     ),
                                   ],
                                 ),
-                              ),
-                            ],
-                          )
-                  ],
+                              ],
+                            ),
+                      const SizedBox(height: 55),
+
+                      // StatusTransactionWidget(statusMap: statusMap),
+                      StatusTransactionWidgets(
+                        orderCustomer: widget.orderCustomer,
+                        statusMap: statusMap,
+                        width: _width,
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],

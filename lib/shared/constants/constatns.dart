@@ -23,6 +23,11 @@ const SizedBox sbHeight30 = SizedBox(height: 30);
 // color
 const color1 = Color(0xFF3B2D60);
 
+const Color activeIconColor = Color(0xFF198754);
+// const Color inActiveIconColor = Color(0xFFd3d3d3);
+const Color inActiveIconColor = Colors.grey;
+const Color cancelIconColor = Color(0xFFcf142b);
+
 BoxShadow boxShadowMenu = BoxShadow(
   color: color1.withOpacity(0.5),
   spreadRadius: 4,
