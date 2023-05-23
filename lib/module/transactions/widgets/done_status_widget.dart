@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../data/model/orders_model.dart';
 import '../../../shared/constants/constatns.dart';
+import '../../../shared/utils/TextUtil/text_util.dart';
+import '../../../shared/widgets/custom_widgets.dart';
+import '../../orders/bloc/orders_bloc.dart';
 
 class DoneStatusWidget extends StatelessWidget {
+  final OrdersModel? orderCustomer;
+  final double _width;
+  final int _widthIcon;
+
   const DoneStatusWidget({
     super.key,
     required double width,
     required int widthIcon,
+    required this.orderCustomer,
   })  : _width = width,
         _widthIcon = widthIcon;
-
-  final double _width;
-  final int _widthIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +53,23 @@ class DoneStatusWidget extends StatelessWidget {
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.red,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    // change status from done --> open
+                    CustomWidgets.showConfirmation(
+                        context, TextUtil.confrimProcessText, () {
+                      OrdersModel? result = orderCustomer;
+                      result?.dateTimeFinish = null;
+                      result?.dateTimeProccess = null;
+
+                      if (orderCustomer != null) {
+                        BlocProvider.of<OrdersBloc>(context)
+                            .add(UpdateStatusOrders(
+                          status: StatusOrder.open,
+                          orderCustomer: result!,
+                        ));
+                      }
+                    });
+                  },
                   child: const Text("BATAL PESANAN"),
                 ),
               ],
@@ -63,7 +86,22 @@ class DoneStatusWidget extends StatelessWidget {
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.red,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    // change status from done --> progress
+                    CustomWidgets.showConfirmation(
+                        context, TextUtil.confrimProcessText, () {
+                      OrdersModel? result = orderCustomer;
+                      result?.dateTimeFinish = null;
+
+                      if (orderCustomer != null) {
+                        BlocProvider.of<OrdersBloc>(context)
+                            .add(UpdateStatusOrders(
+                          status: StatusOrder.progress,
+                          orderCustomer: result!,
+                        ));
+                      }
+                    });
+                  },
                   child: const Text("BATAL PROSES"),
                 ),
               ],

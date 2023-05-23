@@ -314,6 +314,10 @@ class OrderService {
         .doc(orderModel.orderID)
         .update({
           "status": status,
+          "dateTimeProccess": orderModel.dateTimeProccess,
+          "dateTimeFinish": orderModel.dateTimeFinish,
+          "dateTimeOrder": orderModel.dateTimeOrder,
+          // "dateTimeWaiting": orderModel.dateTimeWaiting,
         })
         .then((value) =>
             myEither = const Right("Update Status Order Successfully!"))

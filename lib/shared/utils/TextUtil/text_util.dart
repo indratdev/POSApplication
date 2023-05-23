@@ -4,4 +4,7 @@ class TextUtil {
     // allText = "$allText...";
     // return allText;
   }
+
+  static String confrimProcessText =
+      "Apakah anda ingin melanjutkan proses ini ?";
 }

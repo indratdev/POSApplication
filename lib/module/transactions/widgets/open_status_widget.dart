@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:posapplication/data/model/orders_model.dart';
+import 'package:posapplication/module/export.dart';
+import 'package:posapplication/shared/utils/TextUtil/text_util.dart';
 
 import '../../../shared/constants/constatns.dart';
+import '../../../shared/widgets/custom_widgets.dart';
 
 class OpenStatusWidget extends StatelessWidget {
+  final OrdersModel? orderCustomer;
+  final int _widthIcon;
+
   const OpenStatusWidget({
     super.key,
     required int widthIcon,
+    required this.orderCustomer,
   }) : _widthIcon = widthIcon;
-
-  final int _widthIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -24,29 +31,37 @@ class OpenStatusWidget extends StatelessWidget {
               color: activeIconColor,
             ),
             ElevatedButton(
-              onPressed: () {},
-              child: Text("PROSES PESANAN"),
+              onPressed: () {
+                // change status from open --> progress
+                CustomWidgets.showConfirmation(
+                    context, TextUtil.confrimProcessText, () {
+                  if (orderCustomer != null) {
+                    OrdersModel? result = orderCustomer;
+                    result?.dateTimeProccess = DateTime.now();
+
+                    BlocProvider.of<OrdersBloc>(context).add(UpdateStatusOrders(
+                      status: StatusOrder.progress,
+                      orderCustomer: result!,
+                    ));
+                  }
+                });
+              },
+              child: const Text("PROSES PESANAN"),
             ),
           ],
         ),
-        Container(
-          foregroundDecoration: BoxDecoration(
-            color: inActiveIconColor,
-            backgroundBlendMode: BlendMode.saturation,
-          ),
-          child: Column(
-            children: [
-              Image.asset(
-                check,
-                cacheWidth: _widthIcon,
-                color: activeIconColor,
-              ),
-              const ElevatedButton(
-                onPressed: null,
-                child: Text("SELESAI PROSES"),
-              ),
-            ],
-          ),
+        Column(
+          children: [
+            Image.asset(
+              check,
+              cacheWidth: _widthIcon,
+              color: inActiveIconColor,
+            ),
+            const ElevatedButton(
+              onPressed: null,
+              child: Text("SELESAI PROSES"),
+            ),
+          ],
         ),
       ],
     );

@@ -8,6 +8,7 @@ import 'package:posapplication/shared/utils/TextUtil/text_util.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
 
 import '../../../shared/constants/constatns.dart';
+import '../../../shared/routes/app_routes.dart';
 
 class DetailTransactionScreen extends StatefulWidget {
   OrdersModel? orderCustomer;
@@ -57,29 +58,29 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
     }
   }
 
-  continueProcess() {
-    CustomWidgets.showConfirmation(
-        context, "Apakah anda ingin melanjutkan proses ini ?", () {
-      if (widget.orderCustomer != null) {
-        BlocProvider.of<OrdersBloc>(context).add(UpdateStatusOrders(
-          status: StatusOrder.progress,
-          orderCustomer: widget.orderCustomer!,
-        ));
-      }
-    });
-  }
+  // continueProcess() {
+  //   CustomWidgets.showConfirmation(
+  //       context, "Apakah anda ingin melanjutkan proses ini ?", () {
+  //     if (widget.orderCustomer != null) {
+  //       BlocProvider.of<OrdersBloc>(context).add(UpdateStatusOrders(
+  //         status: StatusOrder.progress,
+  //         orderCustomer: widget.orderCustomer!,
+  //       ));
+  //     }
+  //   });
+  // }
 
-  canceledProcess() {
-    CustomWidgets.showConfirmation(
-        context, "Apakah anda ingin membatalkan proses ini ?", () {
-      if (widget.orderCustomer != null) {
-        // BlocProvider.of<OrdersBloc>(context).add(UpdateStatusOrders(
-        //   status: StatusOrder.progress,
-        //   orderCustomer: widget.orderCustomer!,
-        // ));
-      }
-    });
-  }
+  // canceledProcess() {
+  //   CustomWidgets.showConfirmation(
+  //       context, "Apakah anda ingin membatalkan proses ini ?", () {
+  //     if (widget.orderCustomer != null) {
+  //       // BlocProvider.of<OrdersBloc>(context).add(UpdateStatusOrders(
+  //       //   status: StatusOrder.progress,
+  //       //   orderCustomer: widget.orderCustomer!,
+  //       // ));
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -101,13 +102,8 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
               Navigator.pop(context);
               CustomWidgets.showMessageAlertWithF(context, state.result, true,
                   () {
-                // GeneralFunction.navigationBack(context, 3);
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DashboardScreen(),
-                    ),
-                    (route) => false);
+                Navigator.pushNamedAndRemoveUntil(
+                    context, AppRoutes.ownerBottomNav, (route) => false);
               });
             }
           },
