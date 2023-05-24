@@ -41,11 +41,11 @@ class ProgressStatusWidget extends StatelessWidget {
                     context, TextUtil.confrimProcessText, () {
                   OrdersModel? result = orderCustomer;
                   result?.dateTimeProccess = null;
-                  result?.dateTimeFinish = null;
+                  result?.dateTimeReady = null;
 
                   if (orderCustomer != null) {
                     BlocProvider.of<OrdersBloc>(context).add(UpdateStatusOrders(
-                      status: StatusOrder.open,
+                      status: StatusOrder.waiting,
                       orderCustomer: result!,
                     ));
                   }
@@ -69,12 +69,12 @@ class ProgressStatusWidget extends StatelessWidget {
                   CustomWidgets.showConfirmation(
                       context, TextUtil.confrimProcessText, () {
                     OrdersModel? result = orderCustomer;
-                    result?.dateTimeFinish = DateTime.now();
+                    result?.dateTimeReady = DateTime.now();
 
                     if (orderCustomer != null) {
                       BlocProvider.of<OrdersBloc>(context)
                           .add(UpdateStatusOrders(
-                        status: StatusOrder.done,
+                        status: StatusOrder.ready,
                         orderCustomer: result!,
                       ));
                     }

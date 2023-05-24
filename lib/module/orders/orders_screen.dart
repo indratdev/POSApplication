@@ -35,8 +35,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
     // Users
     for (var element in selectedOrders) {
-      element.staffHandleBy = selectedStaffHandle?.firstname ?? "";
-      element.staffUserID = selectedStaffHandle?.userID ?? "";
+      element.userHandleBy = selectedStaffHandle?.firstname ?? "";
+      element.userHandleID = selectedStaffHandle?.userID ?? "";
+      // element.staffHandleBy = selectedStaffHandle?.firstname ?? "";
+      // element.staffUserID = selectedStaffHandle?.userID ?? "";
     }
 
     // customer
@@ -52,7 +54,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     //fill status
     for (var element in selectedOrders) {
       if (selectedStaffHandle == null) {
-        element.status = StatusOrder.open.name.toString();
+        element.status = StatusOrder.waiting.name.toString();
       } else {
         element.status = StatusOrder.progress.name.toString();
       }

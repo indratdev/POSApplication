@@ -11,6 +11,7 @@ import 'package:posapplication/domain/hive_repository.dart';
 import 'package:posapplication/module/dashboard/widgets/status_dashboard_widget.dart';
 import 'package:posapplication/module/owner/bloc/owner_bloc.dart';
 import 'package:posapplication/shared/utils/DateUtil/dateutil.dart';
+import 'package:posapplication/shared/utils/TextUtil/text_util.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
 
 import '../../shared/utils/firebase_utils/firebase_utils.dart';
@@ -119,30 +120,50 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   crossAxisSpacing: 10,
                   children: [
                     StatusDashboardWidget(
-                      status: StatusOrder.open.name,
-                      dataList: resultData,
-                      amountOfData:
-                          statusItem[StatusOrder.open.name.toString()] ?? 0,
-                      colorStatus: Colors.blueAccent.shade200,
-                    ),
-                    StatusDashboardWidget(
                       status: StatusOrder.waiting.name,
                       dataList: resultData,
                       amountOfData:
                           statusItem[StatusOrder.waiting.name.toString()] ?? 0,
+                      colorStatus: Colors.blueAccent.shade200,
                     ),
                     StatusDashboardWidget(
                       status: StatusOrder.progress.name,
                       dataList: resultData,
                       amountOfData:
                           statusItem[StatusOrder.progress.name.toString()] ?? 0,
+                    ),
+                    StatusDashboardWidget(
+                      status: StatusOrder.ready.name,
+                      dataList: resultData,
+                      amountOfData:
+                          statusItem[StatusOrder.ready.name.toString()] ?? 0,
                       colorStatus: Colors.amber.shade300,
                     ),
                     StatusDashboardWidget(
-                      status: StatusOrder.done.name,
+                      status: TextUtil.subStringbyUpperCase(
+                          StatusOrder.orderCompleted.name),
+                      dataList: resultData,
+                      amountOfData: statusItem[
+                              StatusOrder.orderCompleted.name.toString()] ??
+                          0,
+                      colorStatus: Colors.green.shade300,
+                    ),
+                    StatusDashboardWidget(
+                      status: TextUtil.subStringbyUpperCase(
+                          StatusOrder.billIsReady.name),
                       dataList: resultData,
                       amountOfData:
-                          statusItem[StatusOrder.done.name.toString()] ?? 0,
+                          statusItem[StatusOrder.billIsReady.name.toString()] ??
+                              0,
+                      colorStatus: Colors.green.shade300,
+                    ),
+                    StatusDashboardWidget(
+                      status: TextUtil.subStringbyUpperCase(
+                          StatusOrder.paymentCompleted.name),
+                      dataList: resultData,
+                      amountOfData: statusItem[
+                              StatusOrder.paymentCompleted.name.toString()] ??
+                          0,
                       colorStatus: Colors.green.shade300,
                     ),
                     StatusDashboardWidget(

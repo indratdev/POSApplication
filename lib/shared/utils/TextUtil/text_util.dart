@@ -1,8 +1,14 @@
 class TextUtil {
   static String substringAndEclipsText(String text) {
     return "${text.substring(0, 20)}...";
-    // allText = "$allText...";
-    // return allText;
+  }
+
+  static String subStringbyUpperCase(String text) {
+    String separatedText = text.replaceAllMapped(
+      RegExp(r'([a-z])([A-Z])'),
+      (match) => '${match.group(1)} ${match.group(2)}',
+    );
+    return separatedText.toUpperCase();
   }
 
   static String confrimProcessText =

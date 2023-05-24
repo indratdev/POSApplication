@@ -36,7 +36,7 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
   }
 
   checkImageStatus() {
-    if (widget.orderCustomer!.status == StatusOrder.open.name) {
+    if (widget.orderCustomer!.status == StatusOrder.waiting.name) {
       statusMap["image"] = workProcess;
       statusMap["description"] = "Transaksi Sudah Didaftarkan";
     }
@@ -52,7 +52,7 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
       statusMap["image"] = failure;
       statusMap["description"] = "Transaksi Dibatalkan / Gagal";
     }
-    if (widget.orderCustomer!.status == StatusOrder.done.name) {
+    if (widget.orderCustomer!.status == StatusOrder.ready.name) {
       statusMap["image"] = excellence;
       statusMap["description"] = "Transaksi Berhasil";
     }
@@ -238,23 +238,23 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                                   children: [
                                     Icon(
                                       (widget.orderCustomer!.status ==
-                                                  StatusOrder.open.name ||
+                                                  StatusOrder.ready.name ||
                                               widget.orderCustomer!.status ==
                                                   StatusOrder.progress.name ||
                                               widget.orderCustomer!.status ==
-                                                  StatusOrder.done.name)
+                                                  StatusOrder.ready.name)
                                           ? Icons.circle
                                           : Icons.circle_outlined,
                                       color: (widget.orderCustomer!.status ==
-                                                  StatusOrder.open.name ||
+                                                  StatusOrder.waiting.name ||
                                               widget.orderCustomer!.status ==
                                                   StatusOrder.progress.name ||
                                               widget.orderCustomer!.status ==
-                                                  StatusOrder.done.name)
+                                                  StatusOrder.waiting.name)
                                           ? Colors.blue
                                           : null,
                                     ),
-                                    Text(StatusOrder.open.name
+                                    Text(StatusOrder.waiting.name
                                         .toUpperCase()
                                         .toString())
                                   ],
@@ -265,13 +265,13 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                                     Icon(
                                       // (status == 0)
                                       (widget.orderCustomer!.status ==
-                                              StatusOrder.open.name)
+                                              StatusOrder.waiting.name)
                                           ? Icons.circle_outlined
                                           : Icons.circle,
                                       color:
                                           // (status == 0)
                                           (widget.orderCustomer!.status ==
-                                                  StatusOrder.open.name)
+                                                  StatusOrder.waiting.name)
                                               ? null
                                               : Colors.blue,
                                     ),
@@ -286,7 +286,7 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                                     Icon(
                                       // (status == 0 || status == 2)
                                       (widget.orderCustomer!.status ==
-                                                  StatusOrder.open.name ||
+                                                  StatusOrder.waiting.name ||
                                               widget.orderCustomer!.status ==
                                                   StatusOrder.progress.name)
                                           ? Icons.circle_outlined
@@ -294,7 +294,8 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                                       color:
                                           // (status == 0 || status == 2)
                                           (widget.orderCustomer!.status ==
-                                                      StatusOrder.open.name ||
+                                                      StatusOrder
+                                                          .waiting.name ||
                                                   widget.orderCustomer!
                                                           .status ==
                                                       StatusOrder.progress.name)
@@ -302,7 +303,7 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                                               : Colors.blue,
                                     ),
                                     Text(
-                                      StatusOrder.done.name
+                                      StatusOrder.ready.name
                                           .toUpperCase()
                                           .toString(),
                                     ),

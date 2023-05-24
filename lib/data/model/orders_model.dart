@@ -6,11 +6,13 @@ import 'package:json_annotation/json_annotation.dart';
 part 'orders_model.g.dart';
 
 enum StatusOrder {
-  open,
   waiting,
   progress,
-  done,
-  cancel,
+  ready,
+  orderCompleted,
+  billIsReady,
+  paymentCompleted,
+  cancel
 }
 
 @JsonSerializable()
@@ -22,11 +24,21 @@ class OrdersModel {
   DateTime? dateTimeOrder;
   DateTime? dateTimeWaiting;
   DateTime? dateTimeProccess;
-  DateTime? dateTimeFinish;
-  String? staffHandleBy;
-  String? staffUserID;
+  DateTime? dateTimeReady;
+  DateTime? dateTimeOrderComplete;
+  DateTime? dateTimeBillIsReady;
+  DateTime? dateTimePaymentComplete;
+  DateTime? dateTimeCancel;
+
   String? addBy;
   String? addByID;
+  String? userHandleBy;
+  String? userHandleID;
+  String? userSenderBy;
+  String? userSenderID;
+  String? userPaymentBy;
+  String? userPaymentID;
+
   List<ItemsModel>? dataItem;
   TablesModel? dataTable;
   CustomersModel? dataCustomer;
@@ -39,14 +51,22 @@ class OrdersModel {
     this.dataItem,
     this.dataTable,
     this.dataCustomer,
-    this.dateTimeProccess,
-    this.dateTimeFinish,
     this.dateTimeOrder,
     this.dateTimeWaiting,
-    this.staffHandleBy,
-    this.staffUserID,
+    this.dateTimeProccess,
+    this.dateTimeReady,
+    this.dateTimeOrderComplete,
+    this.dateTimeBillIsReady,
+    this.dateTimePaymentComplete,
+    this.dateTimeCancel,
     this.addBy,
     this.addByID,
+    this.userHandleBy,
+    this.userHandleID,
+    this.userSenderBy,
+    this.userSenderID,
+    this.userPaymentBy,
+    this.userPaymentID,
   });
 
   /// Connect the generated [_$PersonFromJson] function to the `fromJson`
@@ -80,13 +100,30 @@ class OrdersModel {
         dateTimeProccess = (doc.data()?["dateTimeProccess"] == null)
             ? DateTime.parse("1900-01-01 00:00:00")
             : (doc.data()?["dateTimeProccess"]).toDate(),
-        dateTimeFinish = (doc.data()?["dateTimeFinish"] == null)
+        dateTimeReady = (doc.data()?["dateTimeReady"] == null)
             ? DateTime.parse("1900-01-01 00:00:00")
-            : (doc.data()?["dateTimeFinish"]).toDate(),
-        staffHandleBy = doc.data()!["staffHandleBy"],
-        staffUserID = doc.data()!["staffUserID"],
+            : (doc.data()?["dateTimeReady"]).toDate(),
+        dateTimeOrderComplete = (doc.data()?["dateTimeOrderComplete"] == null)
+            ? DateTime.parse("1900-01-01 00:00:00")
+            : (doc.data()?["dateTimeOrderComplete"]).toDate(),
+        dateTimeBillIsReady = (doc.data()?["dateTimeBillIsReady"] == null)
+            ? DateTime.parse("1900-01-01 00:00:00")
+            : (doc.data()?["dateTimeBillIsReady"]).toDate(),
+        dateTimePaymentComplete =
+            (doc.data()?["dateTimePaymentComplete"] == null)
+                ? DateTime.parse("1900-01-01 00:00:00")
+                : (doc.data()?["dateTimePaymentComplete"]).toDate(),
+        dateTimeCancel = (doc.data()?["dateTimeCancel"] == null)
+            ? DateTime.parse("1900-01-01 00:00:00")
+            : (doc.data()?["dateTimeCancel"]).toDate(),
         addBy = doc.data()!["addBy"],
-        addByID = doc.data()!["addByID"];
+        addByID = doc.data()!["addByID"],
+        userHandleBy = doc.data()!["userHandleBy"],
+        userHandleID = doc.data()!["userHandleID"],
+        userSenderBy = doc.data()!["userSenderBy"],
+        userSenderID = doc.data()!["userSenderID"],
+        userPaymentBy = doc.data()!["userPaymentBy"],
+        userPaymentID = doc.data()!["userPaymentID"];
 }
 
 // class OrdersModel extends ItemsModel {

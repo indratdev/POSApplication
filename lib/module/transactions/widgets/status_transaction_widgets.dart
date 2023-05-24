@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/model/orders_model.dart';
-import '../../../shared/widgets/custom_widgets.dart';
-import '../../orders/bloc/orders_bloc.dart';
-import 'export.dart';
+import '../export.dart';
 
 class StatusTransactionWidgets extends StatelessWidget {
   final OrdersModel? orderCustomer;
@@ -25,8 +22,8 @@ class StatusTransactionWidgets extends StatelessWidget {
 
     return Column(
       children: [
-        // open
-        if (orderCustomer?.status == StatusOrder.open.name) ...[
+        // waiting
+        if (orderCustomer?.status == StatusOrder.waiting.name) ...[
           OpenStatusWidget(widthIcon: _widthIcon, orderCustomer: orderCustomer)
         ],
 
@@ -36,8 +33,8 @@ class StatusTransactionWidgets extends StatelessWidget {
               widthIcon: _widthIcon, orderCustomer: orderCustomer),
         ],
 
-        // done
-        if (orderCustomer?.status == StatusOrder.done.name) ...[
+        // ready
+        if (orderCustomer?.status == StatusOrder.ready.name) ...[
           DoneStatusWidget(
               width: _width,
               widthIcon: _widthIcon,
