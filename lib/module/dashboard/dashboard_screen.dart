@@ -76,12 +76,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
         actions: [
           IconButton(
             onPressed: () => logout(),
-
-            // onPressed: () async {
-            // var aaa = await HiveRepository().readUserLoginFromHive();
-            // print(aaa.email);
-            // print(DateUtil.getDateyyyyMMddWithMilisecond());
-            // },
             icon: const Icon(Icons.logout_outlined),
           ),
         ],

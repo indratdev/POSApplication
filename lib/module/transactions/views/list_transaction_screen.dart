@@ -21,7 +21,8 @@ class ListTransactionScreen extends StatefulWidget {
 class _ListTransactionScreenState extends State<ListTransactionScreen> {
   @override
   Widget build(BuildContext context) {
-    // double _width = MediaQuery.of(context).size.width;
+    widget.dataList!
+        .sort((a, b) => a.dateTimeOrder!.compareTo(b.dateTimeOrder!));
 
     return Scaffold(
       appBar: AppBar(

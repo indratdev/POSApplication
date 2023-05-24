@@ -30,7 +30,17 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
     // table
     for (var element in selectedOrders) {
-      element.dataTable = selectedTable;
+      if (selectedTable == null) {
+        element.dataTable = TablesModel(
+            companyID: "",
+            tableID: "",
+            shape: "",
+            size: 0,
+            tableName: "",
+            tableNo: "");
+      } else {
+        element.dataTable = selectedTable;
+      }
     }
 
     // Users
@@ -145,7 +155,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         child: ListTile(
                           minLeadingWidth: 0,
                           title: Text(selectedCustomer?.fullname ??
-                              "Silahkan Pilih Pelanggan"),
+                              "Silahkan Pilih Pelanggan *"),
                           trailing: const Icon(Icons.arrow_drop_down),
                         ),
                       ),
@@ -192,7 +202,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                           title: Text(
                             (selectedOrders.isNotEmpty)
                                 ? "Pesanan Sudah Dipilih"
-                                : "Pilih Pesanan",
+                                : "Pilih Pesanan *",
                           ),
                           trailing: const Icon(Icons.arrow_drop_down),
                         ),
@@ -216,7 +226,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                           // title: Text(selectedStaffHandle?.firstname ??
                           //     "Silahkan Pilih Staff (Optional)"),
                           title: (selectedStaffHandle == null)
-                              ? const Text("Silahkan Pilih Staff (Optional)")
+                              ? const Text("Silahkan Pilih Staff")
                               : Text(
                                   "${selectedStaffHandle?.firstname} ${selectedStaffHandle?.lastname}"),
                           trailing: const Icon(Icons.arrow_drop_down),
