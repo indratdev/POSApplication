@@ -20,6 +20,9 @@ const SizedBox sbHeight10 = SizedBox(height: 10);
 const SizedBox sbHeight20 = SizedBox(height: 20);
 const SizedBox sbHeight30 = SizedBox(height: 30);
 
+// border radius
+const double defaultBorderRadius = 13.0;
+
 // color
 const color1 = Color(0xFF3B2D60);
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:posapplication/module/transactions/widgets/waiting_status_widget.dart';
 
 import '../../../data/model/orders_model.dart';
 import '../export.dart';
@@ -24,8 +25,14 @@ class StatusTransactionWidgets extends StatelessWidget {
       children: [
         // waiting
         if (orderCustomer?.status == StatusOrder.waiting.name) ...[
-          OpenStatusWidget(widthIcon: _widthIcon, orderCustomer: orderCustomer)
+          WaitingStatusWidget(
+              widthIcon: _widthIcon, orderCustomer: orderCustomer)
         ],
+
+        // // waiting old
+        // if (orderCustomer?.status == StatusOrder.waiting.name) ...[
+        //   OpenStatusWidget(widthIcon: _widthIcon, orderCustomer: orderCustomer)
+        // ],
 
         // progress
         if (orderCustomer?.status == StatusOrder.progress.name) ...[

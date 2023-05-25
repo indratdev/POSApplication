@@ -47,19 +47,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
     for (var element in selectedOrders) {
       element.userHandleBy = selectedStaffHandle?.firstname ?? "";
       element.userHandleID = selectedStaffHandle?.userID ?? "";
-      // element.staffHandleBy = selectedStaffHandle?.firstname ?? "";
-      // element.staffUserID = selectedStaffHandle?.userID ?? "";
     }
 
     // customer
     for (var element in selectedOrders) {
       element.dataCustomer = selectedCustomer;
     }
-
-    // // fill date order
-    // for (var element in selectedOrders) {
-    //   element.dateTimeOrder = DateTime.now();
-    // }
 
     //fill status
     for (var element in selectedOrders) {

@@ -138,6 +138,17 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                     ),
                     Text(DateUtil.convertToDayAndDateTime(
                         widget.orderCustomer!.dateTimeOrder!)),
+                    // table
+                    const SizedBox(height: 5),
+                    const Text(
+                      "No. Meja",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      ),
+                    ),
+                    Text(widget.orderCustomer!.dataTable?.tableName ??
+                        "Belum Pilih Meja"),
                   ],
                 ),
               ),
