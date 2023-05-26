@@ -16,7 +16,7 @@ class SeparatorDashWidget extends StatelessWidget {
         final dashHeight = height;
         final dashCount = (boxWidth / (2 * dashWidth)).floor();
         return Padding(
-          padding: EdgeInsets.symmetric(vertical: 5),
+          padding: const EdgeInsets.symmetric(vertical: 5),
           child: Flex(
             children: List.generate(dashCount, (_) {
               return SizedBox(

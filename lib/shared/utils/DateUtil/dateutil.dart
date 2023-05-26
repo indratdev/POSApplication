@@ -5,6 +5,10 @@ class DateUtil {
     return DateFormat('dd-MM-yyyy').format(DateTime.now());
   }
 
+  static String convertyyyyMMdd(DateTime datetime) {
+    return DateFormat('yyyy-MM-dd').format(datetime);
+  }
+
   static String convertToOnlyTime(DateTime time) {
     // DateTime dateTime = DateTime.parse(time);
     return DateFormat('HH:mm:ss').format(time);

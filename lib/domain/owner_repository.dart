@@ -45,6 +45,11 @@ class OwnerRepository {
     return await hiveService.isBoxAlreadyOpen(HiveService.currentUserLoginBox);
   }
 
+  // check ops daily box already open ?
+  Future<Box> isBoxOpsDailyAlreadyOpen() async {
+    return await hiveService.isBoxAlreadyOpen(HiveService.opsDailyBox);
+  }
+
   // add profile company
   Future<Either<String, ProfileModel>> addProfileCompany(
       ProfileModel profile) async {

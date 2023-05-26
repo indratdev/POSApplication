@@ -1,3 +1,4 @@
+import 'package:posapplication/data/model/ops_daily_model.dart';
 import 'package:posapplication/data/model/users_model.dart';
 import 'package:posapplication/data/service/hive_service/hive_service.dart';
 
@@ -15,6 +16,11 @@ class HiveRepository {
   // set data to box
   createProfileCompanytoBox(ProfileModel data) {
     hiveService.addProfileToHive(data);
+  }
+
+  // create ops daily
+  createOpsDailytoBox(OpsDailyModel opsDailyModel) {
+    hiveService.addOpsDailyToHive(opsDailyModel);
   }
 
   // --------------- READ

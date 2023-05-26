@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:posapplication/data/model/ops_daily_model.dart';
 import 'package:posapplication/data/model/users_model.dart';
 import 'package:posapplication/data/service/hive_service/boxes.dart';
 
@@ -11,6 +12,8 @@ class HiveService {
   static const String companyProfileKey = "profile_key";
   static const String currentUserLoginBox = "currentUserLogin_box";
   static const String currentUserLoginKey = "currentUserLogin_key";
+  static const String opsDailyBox = "opsDaily_box";
+  static const String opsDailyKey = "opsDaily_key";
   static Box profileBox = Boxes.getTask();
 
   // check
@@ -24,6 +27,9 @@ class HiveService {
       }
       if (boxName == currentUserLoginBox) {
         box = await Hive.openBox(currentUserLoginBox);
+      }
+      if (boxName == opsDailyBox) {
+        box = await Hive.openBox(opsDailyBox);
       }
     }
 
@@ -49,6 +55,12 @@ class HiveService {
   addProfileToHive(ProfileModel profile) async {
     Box box = await isBoxAlreadyOpen(companyProfileBox);
     await box.put(companyProfileKey, profile);
+  }
+
+  // add ops daily
+  addOpsDailyToHive(OpsDailyModel opsDailyModel) async {
+    Box box = await isBoxAlreadyOpen(opsDailyBox);
+    await box.put(opsDailyKey, opsDailyModel);
   }
 
   // addUserLoginToHive

@@ -17,7 +17,7 @@ class CustomWidgets {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)), //this right here
             child: SizedBox(
-              height: MediaQuery.of(context).size.height / 3,
+              height: MediaQuery.of(context).size.height / 4,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
                 child: Column(
