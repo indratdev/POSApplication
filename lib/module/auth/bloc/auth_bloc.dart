@@ -10,10 +10,14 @@ import 'package:posapplication/data/service/auth_service/auth_service.dart';
 import 'package:posapplication/data/service/signInSignUp.dart';
 import 'package:posapplication/data/service/user_service/user_service.dart';
 import 'package:posapplication/domain/hive_repository.dart';
+import 'package:posapplication/domain/table_repository.dart';
 import 'package:posapplication/domain/user_repository.dart';
 import 'package:posapplication/shared/utils/DateUtil/dateutil.dart';
 import 'package:posapplication/shared/utils/shared_preferences/myshared_preferences.dart';
 
+import '../../../data/model/category_model.dart';
+import '../../../data/model/tables_model.dart';
+import '../../../domain/category_repository.dart';
 import '../../../domain/owner_repository.dart';
 
 part 'auth_event.dart';
@@ -24,6 +28,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final OwnerRepository ownerRepository = OwnerRepository();
   final HiveRepository hiveRepository = HiveRepository();
   final UserRepository userRepository = UserRepository();
+  final CategoryRepository categoryRepository = CategoryRepository();
+  final TableRepository tableRepository = TableRepository();
 
   MySharedPreferences mySharedP = MySharedPreferences();
   UserService userService = UserService();
@@ -143,12 +149,39 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 .createUserLoginToHive(UsersModel.fromJson(data));
           }
 
-          // cek init
+          // cek ops daily init
           if (opsDailytBox.isEmpty) {
             List<UsersModel> userList = await userRepository.readAllUser();
             await hiveRepository.createOpsDailytoBox(OpsDailyModel(
+              // initDate: DateUtil.convertyyyyMMdd(
+              //     DateTime.now().subtract(Duration(days: 1))),
+              initDate: DateUtil.convertyyyyMMdd(DateTime.now()),
+              userList: userList,
+            ));
+          } else {
+            // compare kl tgl nya beda hapus -> insert baru
+            OpsDailyModel result = opsDailytBox.values.first;
+            if (DateUtil.compareDate(
+                result.initDate!, DateUtil.getDateyyyyMMdd())) {
+              // do nothing
+            } else {
+              // tanggal di hive beda dengan sekarang
+              // insert baru ambil dari firebase
+
+              List<UsersModel> userList = await userRepository.readAllUser();
+              List<CategoryModel> categoryList =
+                  await categoryRepository.readAllCategory(
+                      await hiveRepository.readProfileCompanyIDFromBox());
+              List<TablesModel> tableList = await tableRepository.readAllTables(
+                  await hiveRepository.readProfileCompanyIDFromBox());
+
+              await hiveRepository.rewriteOpsDailytoBox(OpsDailyModel(
                 initDate: DateUtil.convertyyyyMMdd(DateTime.now()),
-                userList: userList));
+                userList: userList,
+                categoryList: categoryList,
+                tableList: tableList,
+              ));
+            }
           }
         });
 

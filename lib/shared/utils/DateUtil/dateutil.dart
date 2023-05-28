@@ -5,6 +5,10 @@ class DateUtil {
     return DateFormat('dd-MM-yyyy').format(DateTime.now());
   }
 
+  static String getDateyyyyMMdd() {
+    return DateFormat('yyyy-MM-dd').format(DateTime.now());
+  }
+
   static String convertyyyyMMdd(DateTime datetime) {
     return DateFormat('yyyy-MM-dd').format(datetime);
   }
@@ -17,6 +21,10 @@ class DateUtil {
   // ex : Sunday, 17 May 2023
   static String convertToDayAndDateTime(DateTime time) {
     return DateFormat('EEEE, dd MMMM yyyy').format(time);
+  }
+
+  static bool compareDate(String date1, String date2) {
+    return (date1 == date2) ? true : false;
   }
 
   static DateTime getDateyyyyMMddWithMilisecond() {

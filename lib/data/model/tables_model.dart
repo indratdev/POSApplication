@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hive/hive.dart';
+part 'tables_model.g.dart';
 
 enum TableShape {
   rectangle,
@@ -10,12 +12,19 @@ enum TableShape {
   others,
 }
 
-class TablesModel {
+@HiveType(typeId: 5)
+class TablesModel extends HiveObject {
+  @HiveField(0)
   String companyID;
+  @HiveField(1)
   String tableID;
+  @HiveField(2)
   String tableNo;
+  @HiveField(3)
   int size;
+  @HiveField(4)
   String shape;
+  @HiveField(5)
   String tableName;
 
   static const defaultShape = "rectangle";

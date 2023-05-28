@@ -60,6 +60,13 @@ class HiveService {
   // add ops daily
   addOpsDailyToHive(OpsDailyModel opsDailyModel) async {
     Box box = await isBoxAlreadyOpen(opsDailyBox);
+
+    await box.put(opsDailyKey, opsDailyModel);
+  }
+
+  rewriteOpsDailyToHive(OpsDailyModel opsDailyModel) async {
+    Box box = await isBoxAlreadyOpen(opsDailyBox);
+    await box.clear();
     await box.put(opsDailyKey, opsDailyModel);
   }
 
@@ -145,6 +152,12 @@ class HiveService {
   deleteProfileBox() async {
     if (await Hive.boxExists(companyProfileBox)) {
       profileBox.delete(companyProfileKey);
+    }
+  }
+
+  deleteOpsDailyBox() async {
+    if (await Hive.boxExists(opsDailyBox)) {
+      Hive.box(opsDailyBox).clear();
     }
   }
 

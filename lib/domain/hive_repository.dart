@@ -23,6 +23,10 @@ class HiveRepository {
     hiveService.addOpsDailyToHive(opsDailyModel);
   }
 
+  rewriteOpsDailytoBox(OpsDailyModel opsDailyModel) {
+    hiveService.rewriteOpsDailyToHive(opsDailyModel);
+  }
+
   // --------------- READ
   Future<UsersModel> readUserLoginFromHive() async {
     return await hiveService.readUserLoginFromBox();
@@ -39,5 +43,10 @@ class HiveRepository {
   // ---------------------- UPDATE
   updateProfileCompanyToBox(ProfileModel data) async {
     await hiveService.updateProfileCompanyToBox(data);
+  }
+
+  // ---------------------- DELETE
+  deleteOpsDailyBox() async {
+    await hiveService.deleteOpsDailyBox();
   }
 }

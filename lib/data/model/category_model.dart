@@ -1,8 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class CategoryModel {
+import 'package:hive/hive.dart';
+part 'category_model.g.dart';
+
+@HiveType(typeId: 4)
+class CategoryModel extends HiveObject {
+  @HiveField(0)
   String companyID;
+  @HiveField(1)
   String categoryID;
+  @HiveField(2)
   String categoryName;
 
   CategoryModel({
