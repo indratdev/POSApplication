@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/orders_model.dart';
-import 'package:posapplication/module/export.dart';
+
 import 'package:posapplication/module/transactions/widgets/status_transaction_widgets.dart';
 import 'package:posapplication/shared/utils/DateUtil/dateutil.dart';
 import 'package:posapplication/shared/utils/TextUtil/text_util.dart';
@@ -9,6 +9,7 @@ import 'package:posapplication/shared/widgets/custom_widgets.dart';
 
 import '../../../shared/constants/constatns.dart';
 import '../../../shared/routes/app_routes.dart';
+import '../../blocs/export_bloc.dart';
 
 class DetailTransactionScreen extends StatefulWidget {
   OrdersModel? orderCustomer;
@@ -87,7 +88,7 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
     double _width = MediaQuery.of(context).size.width;
     int _widthIcon = _width ~/ 5;
 
-    print("======  ${widget.orderCustomer}");
+    // print("======  ${widget.orderCustomer}");
 
     return Scaffold(
       appBar: AppBar(

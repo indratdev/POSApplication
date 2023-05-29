@@ -5,7 +5,7 @@ import '../../../data/model/orders_model.dart';
 import '../../../shared/constants/constatns.dart';
 import '../../../shared/utils/TextUtil/text_util.dart';
 import '../../../shared/widgets/custom_widgets.dart';
-import '../../orders/bloc/orders_bloc.dart';
+import '../../blocs/export_bloc.dart';
 
 class ProgressStatusWidget extends StatelessWidget {
   final OrdersModel? orderCustomer;

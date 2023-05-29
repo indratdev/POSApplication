@@ -1,11 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:posapplication/module/auth/bloc/auth_bloc.dart';
 
 import '../../../shared/routes/app_routes.dart';
 import '../../../shared/utils/validator/validator.dart';
 import '../../../shared/widgets/custom_widgets.dart';
+import '../../blocs/export_bloc.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   ForgotPasswordScreen({

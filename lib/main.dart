@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:posapplication/data/service/hive_service/hive_init.dart';
-import 'package:posapplication/module/export.dart';
+import 'package:posapplication/module/blocs/export_bloc.dart';
 
 import 'package:posapplication/shared/routes/app_routes.dart';
 

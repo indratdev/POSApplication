@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/category_model.dart';
-import 'package:posapplication/module/export.dart';
+
+import '../../../blocs/export_bloc.dart';
 
 class CategorySelectedScreen extends StatefulWidget {
   const CategorySelectedScreen({super.key});
@@ -29,17 +30,10 @@ class _CategorySelectedScreenState extends State<CategorySelectedScreen> {
                 Navigator.pop(context);
               }
             },
-            icon: Icon(Icons.check),
+            icon: const Icon(Icons.check),
           ),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //     onPressed: () {
-      //       // Navigator.pushNamed(context, AppRoutes.categoryManagement);
-      //       print("object");
-      //       Navigator.pushNamed(context, AppRoutes.categoryManagement);
-      //     },
-      //     child: Icon(Icons.add)),
       body: BlocBuilder<SettingsBloc, SettingsState>(
         builder: (context, state) {
           if (state is SuccessGetAllCategory) {
@@ -55,7 +49,7 @@ class _CategorySelectedScreenState extends State<CategorySelectedScreen> {
               itemCount: listCategorys.length,
               itemBuilder: (context, index) {
                 CategoryModel data = listCategorys[index];
-                print(">>>> data : $data");
+                // print(">>>> data : $data");
                 return InkWell(
                   onTap: () {
                     setState(() {
@@ -68,8 +62,6 @@ class _CategorySelectedScreenState extends State<CategorySelectedScreen> {
                         ? Colors.amber
                         : Colors.transparent,
                     title: Text(data.categoryName.toString()),
-                    // subtitle: Text(data.categoryName.toString()),
-                    // trailing: Text(data.tableName.toString()),
                   ),
                 );
               },

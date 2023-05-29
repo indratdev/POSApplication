@@ -1,20 +1,12 @@
-export 'package:posapplication/module/Users/bloc/users_bloc.dart';
-export 'package:posapplication/module/auth/bloc/auth_bloc.dart';
-export 'package:posapplication/module/customers/bloc/customers_bloc.dart';
-export 'package:posapplication/module/owner/bloc/owner_bloc.dart';
-export 'package:posapplication/module/settings/tables/bloc/tables_bloc.dart';
-export 'package:posapplication/module/settings/bloc/settings_bloc.dart';
-export 'package:posapplication/module/orders/bloc/orders_bloc.dart';
-
 export 'package:posapplication/module/Users/user_dashboard/view/user_dashboard_screen.dart';
 export 'package:posapplication/module/Users/user_manage/view/user_manage_screen.dart';
 export 'package:posapplication/module/auth/cover/coverauth_screen.dart';
 export 'package:posapplication/module/auth/forgot_password/forgot_password_screen.dart';
 export 'package:posapplication/module/auth/login/view/login_screen.dart';
 export 'package:posapplication/module/auth/register/register_Screen.dart';
-export 'package:posapplication/module/customers/view/customers_dashboard/customers_dashboard_screen.dart';
-export 'package:posapplication/module/customers/view/customers_manage/customers_manage_screen.dart';
-export 'package:posapplication/module/customers/view/customers_selected_screen.dart';
+export 'package:posapplication/module/customers/customers_dashboard/customers_dashboard_screen.dart';
+export 'package:posapplication/module/customers/customers_manage/customers_manage_screen.dart';
+export 'package:posapplication/module/customers/customers_selected_screen.dart';
 export 'package:posapplication/module/owner/owner_bottomnav/view/owner_bottomnav_screen.dart';
 export 'package:posapplication/module/dashboard/dashboard_screen.dart';
 export 'package:posapplication/module/owner/owner_profile/view/owner_profile_info_screen.dart';

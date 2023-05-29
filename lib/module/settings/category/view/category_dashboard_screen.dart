@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/category_model.dart';
+
 import 'package:posapplication/module/export.dart';
 import 'package:posapplication/module/settings/category/view/category_management_screen.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
+
+import '../../../blocs/export_bloc.dart';
 
 class CategoryDashboardScreen extends StatefulWidget {
   const CategoryDashboardScreen({super.key});
@@ -49,7 +52,9 @@ class _CategoryDashboardScreenState extends State<CategoryDashboardScreen> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => CategoryManagementScreen(
-                            isUpdate: true, categoryModel: data, ),
+                          isUpdate: true,
+                          categoryModel: data,
+                        ),
                       ),
                     );
                   },

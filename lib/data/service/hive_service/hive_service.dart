@@ -12,6 +12,8 @@ class HiveService {
   static const String companyProfileKey = "profile_key";
   static const String currentUserLoginBox = "currentUserLogin_box";
   static const String currentUserLoginKey = "currentUserLogin_key";
+  static const String usersBox = "users_box";
+  static const String usersKey = "users_key";
   static const String opsDailyBox = "opsDaily_box";
   static const String opsDailyKey = "opsDaily_key";
   static Box profileBox = Boxes.getTask();
@@ -31,6 +33,9 @@ class HiveService {
       if (boxName == opsDailyBox) {
         box = await Hive.openBox(opsDailyBox);
       }
+      if (boxName == usersBox) {
+        box = await Hive.openBox(usersBox);
+      }
     }
 
     box = Hive.box(boxName);
@@ -40,6 +45,10 @@ class HiveService {
 
   Future<bool> isExistkBoxCompanyProfile() async {
     return await Hive.boxExists(companyProfileBox);
+  }
+
+  Future<bool> isExistkBoxUsers() async {
+    return await Hive.boxExists(usersBox);
   }
 
   Future<bool> isExistCompanyProfileFromBox() async {
@@ -121,6 +130,20 @@ class HiveService {
 
     return model;
   }
+
+  // readProfileCompanyIDFromBox
+  // Future<List<UsersModel>> readUsersFromBox() async {
+  //   late Box box;
+  //   box = await isBoxAlreadyOpen(usersBox);
+
+  //   var modelBox = await box.get(usersKey);
+
+  //   for (var element in modelBox) {
+
+  //   }
+
+  //   return model;
+  // }
 
   // END READ
 

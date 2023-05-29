@@ -59,7 +59,7 @@ class SuccessUpdateProfileCompany extends OwnerState {
 }
 // update profile company end
 
-// open box profile company
+// open box profile company from firebase
 class LoadingOpenBoxProfileCompany extends OwnerState {}
 
 class FailureOpenBoxProfileCompany extends FailureOwner {

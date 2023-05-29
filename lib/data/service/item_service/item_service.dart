@@ -1,21 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:posapplication/data/model/customers_model.dart';
 import 'package:posapplication/shared/utils/shared_preferences/myshared_preferences.dart';
 
-import '../../model/category_model.dart';
 import '../../model/items_model.dart';
-import '../../model/tables_model.dart';
-import '../../model/users_model.dart';
-
-// enum RoleUsers {
-//   owner,
-//   admin,
-//   cashier,
-//   maker,
-//   staff,
-// }
 
 class ItemsService {
   final MySharedPreferences mySharedP = MySharedPreferences();

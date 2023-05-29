@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/export_model.dart';
 import 'package:posapplication/data/model/orders_model.dart';
-import 'package:posapplication/module/export.dart';
+
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
 import 'package:posapplication/shared/widgets/separator_dash_widget.dart';
 
 import '../../data/model/profile_model.dart';
 import '../../shared/routes/app_routes.dart';
+import '../blocs/export_bloc.dart';
 
 class OrdersConfirmationScreen extends StatefulWidget {
   // List<OrdersModel> orderList = [];

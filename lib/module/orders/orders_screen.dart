@@ -4,12 +4,14 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:posapplication/data/model/customers_model.dart';
 import 'package:posapplication/data/model/orders_model.dart';
 import 'package:posapplication/data/model/tables_model.dart';
+
 import 'package:posapplication/module/export.dart';
 
 import 'package:posapplication/shared/utils/general_function.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
 
 import '../../data/model/users_model.dart';
+import '../blocs/export_bloc.dart';
 
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key});

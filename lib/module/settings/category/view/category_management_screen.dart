@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/category_model.dart';
-import 'package:posapplication/module/export.dart';
 
 import '../../../../shared/utils/general_function.dart';
 import '../../../../shared/utils/validator/validator.dart';
 import '../../../../shared/widgets/custom_widgets.dart';
+import '../../../blocs/export_bloc.dart';
 
 class CategoryManagementScreen extends StatefulWidget {
   bool isUpdate;
@@ -146,21 +146,6 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
               key: _formKeyCategoryManage,
               child: Column(
                 children: <Widget>[
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(vertical: 10),
-                  //   child: TextFormField(
-                  //     // enabled: (widget.isUpdate) ? false : true,
-                  //     validator: (value) =>
-                  //         Validator.rule(value, required: true),
-                  //     controller: noTableController,
-                  //     decoration: InputDecoration(
-                  //       label: Text("No. Meja"),
-                  //       // fillColor: Colors.grey.shade300,
-                  //       // filled: (widget.isUpdate) ? true : false,
-                  //       // focusColor: (widget.isUpdate) ? Colors.grey : null,
-                  //     ),
-                  //   ),
-                  // ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: TextFormField(
@@ -172,30 +157,6 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
                       ),
                     ),
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(vertical: 10),
-                  //   child: TextFormField(
-                  //     validator: (value) =>
-                  //         Validator.rule(value, required: true),
-                  //     controller: sizeController,
-                  //     keyboardType: TextInputType.number,
-                  //     decoration: const InputDecoration(
-                  //       label: Text("Ukuran Meja"),
-                  //     ),
-                  //   ),
-                  // ),
-                  // Padding(
-                  //   padding: const EdgeInsets.fromLTRB(8, 12, 8, 12),
-                  //   child: DropdownButton(
-                  //     isExpanded: true,
-                  //     value: selectedShape,
-                  //     items: dropdownShapes,
-                  //     onChanged: (value) {
-                  //       selectedShape = value!;
-                  //       setState(() {});
-                  //     },
-                  //   ),
-                  // ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(8, 12, 8, 12),
                     child: Row(
@@ -222,7 +183,6 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
                                 child: ElevatedButton(
                                   child: const Text("UPDATE"),
                                   onPressed: () {
-                                    print("update");
                                     addOrUpdateCategory(isUpdate: true);
                                   },
                                 ),
@@ -230,30 +190,15 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
                             // ADD NEW DATA
                             : Expanded(
                                 child: SizedBox(
-                                height: MediaQuery.of(context).size.height / 16,
-                                child: ElevatedButton(
-                                  child: Text("SIMPAN"),
-                                  onPressed: () =>
-                                      addOrUpdateCategory(isUpdate: false),
-                                  // onPressed:
-                                  //     addOrUpdateCategory(isUpdate: false),
-                                  // onPressed: _addData,
-                                  // onPressed: () {}
-                                  //   if (_formKeyCategoryManage.currentState!
-                                  //       .validate()) {
-                                  //     TablesModel users = TablesModel(
-                                  //       email: noTableController.text,
-                                  //       firstname: sizeController.text,
-                                  //       lastname: nameCategoryController.text,
-                                  //       role: selectedRole,
-                                  //       photo: "",
-                                  //     );
-                                  //     BlocProvider.of<TablesBloc>(context)
-                                  //         .add(AddNewUsers(tableModel: users));
-                                  //   }
-                                  // },
+                                  height:
+                                      MediaQuery.of(context).size.height / 16,
+                                  child: ElevatedButton(
+                                    child: Text("SIMPAN"),
+                                    onPressed: () =>
+                                        addOrUpdateCategory(isUpdate: false),
+                                  ),
                                 ),
-                              )),
+                              ),
                       ],
                     ),
                   ),
@@ -264,25 +209,3 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
         ));
   }
 }
-
-// List<DropdownMenuItem<String>> get dropdownShapes {
-//   List<DropdownMenuItem<String>> menuItems = [
-//     DropdownMenuItem(
-//         child: Text("Persegi Panjang"),
-//         value: TableShape.rectangle.name.toString()),
-//     DropdownMenuItem(
-//         child: Text("Lingkaran"), value: TableShape.circle.name.toString()),
-//     DropdownMenuItem(
-//         child: Text("Bentuk L"), value: TableShape.lshape.name.toString()),
-//     DropdownMenuItem(
-//         child: Text("Bar"), value: TableShape.barseat.name.toString()),
-//     DropdownMenuItem(
-//         child: Text("Oval"), value: TableShape.oval.name.toString()),
-//     DropdownMenuItem(
-//         child: Text("Persegi"), value: TableShape.square.name.toString()),
-//     DropdownMenuItem(
-//         child: Text("Lainnya"), value: TableShape.others.name.toString()),
-//   ];
-//   return menuItems;
-// }
-

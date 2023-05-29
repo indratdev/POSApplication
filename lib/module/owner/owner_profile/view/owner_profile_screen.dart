@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:posapplication/module/owner/bloc/owner_bloc.dart';
-import 'package:posapplication/module/owner/owner_profile/controller/profile_controller.dart';
 
 import 'package:posapplication/data/service/hive_service/hive_service.dart';
+import 'package:posapplication/module/owner/owner_profile/controller/profile_controller.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
 import 'package:posapplication/shared/utils/validator/validator.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
 
 import '../../../../data/model/profile_model.dart';
+import '../../../blocs/export_bloc.dart';
 
 class OwnerProfileScreen extends StatefulWidget {
   bool isUpdate;
@@ -64,26 +64,14 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
     }
   }
 
-  // openBoxx() async {
-  //   print(">>> start openBoxx");
-  //   bool status = Hive.isBoxOpen(HiveService.companyProfileBox);
-  //   print(">>> status openBoxx : ${status}");
-  //   (status)
-  //       ? box = Hive.box<ProfileModel>(HiveService.companyProfileBox)
-  //       : box = await Hive.openBox(HiveService.companyProfileBox);
-  //   // final result = await hiveService.isBoxProfileAlreadyOpen();
-  //   // print(">>> result : ${result}");
-  //   // box = result;
-  //   print(">>> end status Box : ${box.values}");
-  // }
   Future<Box> openBoxx() async {
-    // trial
-    print(">>> start openBoxx");
     var resultBox = await controller.isBoxProfileAlreadyOpen();
-    print(">>> status openBoxx : ${resultBox.values}");
     box = resultBox;
-    print(">>> end status Box : ${box.values}");
     return resultBox;
+    // trial
+    // print(">>> start openBoxx");
+    // print(">>> status openBoxx : ${resultBox.values}");
+    // print(">>> end status Box : ${box.values}");
   }
 
   // setProfileBox(ProfileModel data) {
@@ -108,20 +96,7 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
   }
 
   _addData() {
-    // Storing key-value pair
-    // box.put(
-    //     'profile_key',
-    //     ProfileModel(
-    //       bussinessName: bussinessNameController.text,
-    //       bussinessAddress: bussinessAddressController.text,
-    //       bussinessCountry: bussinessCountryController.text,
-    //       bussinessCurrency: bussinessCurrencyController.text,
-    //       bussinessPhone: bussinessPhoneController.text,
-    //       bussinessPhoto: "",
-    //       bussinessType: bussinessTypeController.text,
-    //       companyID: "companyID-123",
-    //     ));
-    var data = ProfileModel(
+    ProfileModel data = ProfileModel(
       bussinessName: bussinessNameController.text,
       bussinessAddress: bussinessAddressController.text,
       bussinessCountry: bussinessCountryController.text,
@@ -132,31 +107,15 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
       companyID: "companyID-123",
     );
     hiveService.addProfileToHive(data);
-    print('Info added to box!');
+    // print('Info added to box!');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("PROFILE USAHA"),
+        title: const Text("PROFIL USAHA"),
         centerTitle: true,
-        actions: [
-          IconButton(
-              onPressed: () async {
-                // var abc = await controller.readProfileCompany();
-                // print(abc);
-                // bool ress = await Hive.boxExists('_companyProfile');
-                // bool ress = await controller.isExistkBoxCompanyProfile();
-                // print(ress);
-                // print(bussinessAddressController.text);
-                ProfileModel result = box.get('profile_key');
-                // result.toJson().map((key, value) {
-                //   print(value);
-                // });
-              },
-              icon: Icon(Icons.abc))
-        ],
       ),
       body: SingleChildScrollView(
         child: BlocConsumer<OwnerBloc, OwnerState>(
@@ -342,7 +301,7 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
                                             UpdateProfileCompanyEvent(
                                                 profileModel: datas));
 
-                                        print("update");
+                                        // print("update");
                                       }
                                     },
                                   ),
@@ -377,8 +336,8 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
                                             AddProfileCompanyEvent(
                                                 profileModel: datas));
 
-                                        print(bussinessNameController.text);
-                                        print("ok");
+                                        // print(bussinessNameController.text);
+                                        // print("ok");
                                       }
                                     },
                                   ),

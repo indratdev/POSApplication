@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:posapplication/data/service/hive_service/hive_service.dart';
 import 'package:posapplication/data/service/user_service/user_service.dart';
 import 'package:posapplication/domain/export.dart';
 import 'package:posapplication/domain/user_repository.dart';
@@ -17,17 +18,30 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
   final UserRepository userRepository = UserRepository();
   final UserService userService = UserService();
   final AuthRepository authRepository = AuthRepository();
+  final HiveService hiveRepository = HiveService();
 
   UsersBloc() : super(UsersInitial()) {
+    // on<GetAllUsersEvent>((event, emit) async {
+    //   emit(LoadingGetAllUser());
+    //   try {
+    //     List<UsersModel> result = await userRepository.readAllUser();
+
+    //     emit(SuccessGetAllUser(resultModel: result));
+    //   } catch (e) {
+    //     log(e.toString());
+    //     emit(FailureGetAllUser(messageError: e.toString()));
+    //   }
+    // });
     on<GetAllUsersEvent>((event, emit) async {
       emit(LoadingGetAllUser());
       try {
-        List<UsersModel> result = await userRepository.readAllUser();
+        // List<UsersModel> result = await userRepository.readAllUser();
+        var result = await hivere
 
         emit(SuccessGetAllUser(resultModel: result));
       } catch (e) {
+        log(e.toString());
         emit(FailureGetAllUser(messageError: e.toString()));
-        print(e.toString());
       }
     });
 

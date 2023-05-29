@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/customers_model.dart';
 
-import 'package:posapplication/module/customers/bloc/customers_bloc.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import '../../../../shared/utils/general_function.dart';
-import '../../../../shared/utils/validator/validator.dart';
-import '../../../../shared/widgets/custom_widgets.dart';
+import '../../../shared/utils/general_function.dart';
+import '../../../shared/utils/validator/validator.dart';
+import '../../../shared/widgets/custom_widgets.dart';
+import '../../blocs/export_bloc.dart';
 
 enum GenderEnum {
   male,

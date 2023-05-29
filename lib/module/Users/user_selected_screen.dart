@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:posapplication/module/Users/bloc/users_bloc.dart';
-import 'package:posapplication/module/Users/user_manage/view/user_manage_screen.dart';
-import 'package:posapplication/module/export.dart';
-
-import 'package:posapplication/shared/routes/app_routes.dart';
-
 import '../../../../data/model/users_model.dart';
+import '../blocs/export_bloc.dart';
 
 class UserSelectedScreen extends StatefulWidget {
   const UserSelectedScreen({super.key});

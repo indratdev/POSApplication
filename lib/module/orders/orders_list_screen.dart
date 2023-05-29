@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/export_model.dart';
 import 'package:posapplication/data/model/orders_model.dart';
-import 'package:posapplication/module/export.dart';
+
+import '../blocs/export_bloc.dart';
 
 class OrdersListScreen extends StatefulWidget {
   const OrdersListScreen({super.key});
@@ -33,10 +34,10 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(">>> refresh");
+    // print(">>> refresh");
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pilih Pesanan"),
+        title: const Text("Pilih Pesanan"),
         centerTitle: true,
       ),
       body: BlocBuilder<OrdersBloc, OrdersState>(
@@ -228,53 +229,13 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                   },
                 ),
               ),
-              //footer
-              // Flexible(
-              //   flex: 1,
-              //   child: Container(
-              //     child: Row(
-              //       children: [
-              //         Text(
-              //             "Jumlah Pesanan : ${selectedOrderCustomer?.length ?? 0} "),
-              //         SizedBox(
-              //           width: 10,
-              //         ),
-              //         Text(
-              //           "| Bayar ",
-              //           style: TextStyle(
-              //             color: Color(0xff757575),
-              //             fontWeight: FontWeight.w700,
-              //             fontFamily: "Roboto",
-              //             fontStyle: FontStyle.normal,
-              //             fontSize: 20.0,
-              //           ),
-              //           textAlign: TextAlign.center,
-              //         ),
-              //         Align(alignment: Alignment.centerRight, child: Text(
-              //             // "Rp, ${selectedOrderCustomer.first.totalOrdersPrice}")),
-              //             // "Rp ${(selectedOrderCustomer.isNotEmpty) ? selectedOrderCustomer.first.totalOrdersPrice : 0} ")),
-              //             "Rp ${selectedOrderCustomer?.first.totalOrdersPrice ?? 0} ")),
-              //         ElevatedButton(
-              //             onPressed: () {
-              //               print("================");
-              //               for (var element in selectedOrderCustomer!) {
-              //                 print(element.itemName);
-              //               }
-              //               print("================");
-              //             },
-              //             child: Text("cek"))
-              //       ],
-              //     ),
-              //   ),
-              // ),
+
               Flexible(
                 flex: 1,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Column(
                     children: [
-                      // Text(
-                      //     "Jumlah Pesanan : ${selectedOrderCustomer?.length ?? 0} "),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

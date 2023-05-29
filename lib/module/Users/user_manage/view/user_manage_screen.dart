@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/users_model.dart';
-import 'package:posapplication/module/Users/bloc/users_bloc.dart';
 import 'package:posapplication/shared/utils/general_function.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
 
 import '../../../../data/service/user_service/user_service.dart';
 import '../../../../shared/utils/validator/validator.dart';
+import '../../../blocs/export_bloc.dart';
 
 class UserManageScreen extends StatefulWidget {
   bool isUpdate;

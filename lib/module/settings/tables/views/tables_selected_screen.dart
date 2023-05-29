@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/tables_model.dart';
-import 'package:posapplication/module/export.dart';
-import 'package:posapplication/shared/routes/app_routes.dart';
+
+import '../../../blocs/export_bloc.dart';
 
 class TablesSelectedScreen extends StatefulWidget {
   const TablesSelectedScreen({super.key});
@@ -89,26 +89,6 @@ class _TablesSelectedScreenState extends State<TablesSelectedScreen> {
                 );
               },
             );
-            // ListView.builder(
-            //   itemCount: listTables.length,
-            //   itemBuilder: (context, index) {
-            //     TablesModel data = listTables[index];
-            //     print(">>>> data : $data");
-            //     return InkWell(
-            //       onTap: () {
-            //         Navigator.of(context).push(MaterialPageRoute(
-            //           builder: (context) =>
-            //               TablesManageScreen(isUpdate: true, tableModel: data),
-            //         ));
-            //       },
-            //       child: ListTile(
-            //         title: Text("No. Meja : ${data.tableNo}"),
-            //         subtitle: Text("Ukuran : ${data.size.toString()} "),
-            //         trailing: Text(data.tableName.toString()),
-            //       ),
-            //     );
-            //   },
-            // );
           } else {
             return const SizedBox();
           }

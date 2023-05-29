@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:posapplication/module/export.dart';
+
 import 'package:posapplication/shared/routes/app_routes.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
 
@@ -9,6 +9,7 @@ import '../../../data/model/items_model.dart';
 import '../../../shared/utils/general_function.dart';
 import '../../../shared/utils/sell_category_enum.dart';
 import '../../../shared/utils/validator/validator.dart';
+import '../../blocs/export_bloc.dart';
 
 class ItemsManagementScreen extends StatefulWidget {
   bool isUpdate;
@@ -275,9 +276,6 @@ class _ItemsManagementScreenState extends State<ItemsManagementScreen> {
                                       child: const Text("UPDATE"),
                                       onPressed: () {
                                         addOrUpdateItems("", isUpdate: true);
-
-                                        // print("update");
-                                        // addOrUpdateCategory(isUpdate: true);
                                       },
                                     ),
                                   ),
@@ -288,38 +286,13 @@ class _ItemsManagementScreenState extends State<ItemsManagementScreen> {
                                     height:
                                         MediaQuery.of(context).size.height / 16,
                                     child: ElevatedButton(
-                                      child: Text("SIMPAN"),
+                                      child: const Text("SIMPAN"),
                                       onPressed: () {
                                         String itemID = GeneralFunction()
                                             .generateUniqueItemID();
 
                                         addOrUpdateItems(itemID,
                                             isUpdate: false);
-
-                                        // if (_formKeyItemsManage.currentState!
-                                        //     .validate()) {
-                                        //   print("validasi ok");
-
-                                        //   ItemsModel data = ItemsModel(
-                                        //     companyID:
-                                        //         selectedCategory.companyID,
-                                        //     categoryID:
-                                        //         selectedCategory.categoryID,
-                                        //     itemID: itemID,
-                                        //     itemName: itemsNameController.text,
-                                        //     categoryName:
-                                        //         selectedCategory.categoryName,
-                                        //     sellBy:
-                                        //         selectedSellBy.name.toString(),
-                                        //     sellPrice: double.tryParse(
-                                        //             priceController.text) ??
-                                        //         0,
-                                        //     itemPhoto: "",
-                                        //   );
-
-                                        //   context.read<SettingsBloc>().add(
-                                        //       AddNewItemsEvent(
-                                        //           itemsModel: data));
                                       },
                                     ),
                                   ),

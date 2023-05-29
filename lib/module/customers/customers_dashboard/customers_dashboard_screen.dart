@@ -2,23 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/customers_model.dart';
 
-import 'package:posapplication/module/customers/bloc/customers_bloc.dart';
-import 'package:posapplication/module/orders/bloc/orders_bloc.dart';
+import 'package:posapplication/module/customers/customers_manage/customers_manage_screen.dart';
 
 import 'package:posapplication/shared/routes/app_routes.dart';
 
-class CustomersSelectedScreen extends StatefulWidget {
-  const CustomersSelectedScreen({super.key});
+import '../../blocs/export_bloc.dart';
+
+class CustomersDashboardScreen extends StatefulWidget {
+  const CustomersDashboardScreen({super.key});
 
   @override
-  State<CustomersSelectedScreen> createState() =>
-      _CustomersSelectedScreenState();
+  State<CustomersDashboardScreen> createState() =>
+      _CustomersDashboardScreenState();
 }
 
-class _CustomersSelectedScreenState extends State<CustomersSelectedScreen> {
-  int? selectedIndex;
-  CustomersModel? selectedCustomerData;
-
+class _CustomersDashboardScreenState extends State<CustomersDashboardScreen> {
   @override
   void initState() {
     super.initState();
@@ -28,20 +26,8 @@ class _CustomersSelectedScreenState extends State<CustomersSelectedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Pelanggan"),
+        title: Text("Customers Management"),
         centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {
-              if (selectedCustomerData != null) {
-                context.read<OrdersBloc>().add(SelectedCustomerEvent(
-                    customersModel: selectedCustomerData!));
-                Navigator.pop(context);
-              }
-            },
-            icon: Icon(Icons.check),
-          ),
-        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () =>
@@ -65,15 +51,12 @@ class _CustomersSelectedScreenState extends State<CustomersSelectedScreen> {
                 CustomersModel data = listUsers[index];
                 return InkWell(
                   onTap: () {
-                    setState(() {
-                      selectedIndex = index;
-                      selectedCustomerData = data;
-                    });
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CustomersManageScreen(
+                          isUpdate: true, customersModel: data),
+                    ));
                   },
                   child: ListTile(
-                    tileColor: (selectedIndex == index)
-                        ? Colors.amber
-                        : Colors.transparent,
                     title: Text(data.email ?? ""),
                     subtitle: Text("${data.fullname}"),
                     // trailing: Text(data.role.toString()),

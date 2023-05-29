@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:posapplication/data/model/category_model.dart';
 import 'package:posapplication/data/model/items_model.dart';
 import 'package:posapplication/module/export.dart';
-import 'package:posapplication/module/settings/category/view/category_management_screen.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
+
+import '../../blocs/export_bloc.dart';
 
 class ItemsDashboardScreen extends StatefulWidget {
   const ItemsDashboardScreen({super.key});
@@ -18,7 +18,7 @@ class _ItemsDashboardScreenState extends State<ItemsDashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Dashboard Item / Barang"),
+        title: const Text("Dashboard Item / Barang"),
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
@@ -26,12 +26,12 @@ class _ItemsDashboardScreenState extends State<ItemsDashboardScreen> {
             Navigator.pushNamed(context, AppRoutes.itemsManagement);
             context.read<SettingsBloc>().add(GetAllCategoryEvent());
           },
-          child: Icon(Icons.add)),
+          child: const Icon(Icons.add)),
       body: BlocBuilder<SettingsBloc, SettingsState>(
         builder: (context, state) {
           if (state is SuccessGetAllItems) {
             List<ItemsModel> listItems = state.resultModel;
-            print(listItems.length);
+            // print(listItems.length);
 
             if (listItems.isEmpty) {
               return const Center(
@@ -43,7 +43,7 @@ class _ItemsDashboardScreenState extends State<ItemsDashboardScreen> {
               itemCount: listItems.length,
               itemBuilder: (context, index) {
                 ItemsModel data = listItems[index];
-                print(">>>> data : $data");
+                // print(">>>> data : $data");
                 return InkWell(
                   onTap: () {
                     Navigator.of(context).push(
@@ -57,8 +57,6 @@ class _ItemsDashboardScreenState extends State<ItemsDashboardScreen> {
                   },
                   child: ListTile(
                     title: Text(data.itemName.toString()),
-                    // subtitle: Text(data.itemName.toString()),
-                    // trailing: Text(data.tableName.toString()),
                   ),
                 );
               },
