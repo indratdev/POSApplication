@@ -88,7 +88,17 @@ class HiveService {
     await box.put(currentUserLoginKey, usersModel);
   }
 
-  // READ
+  // addUserLoginToHive
+  addUserFirebaseToHive(UsersModel usersModel) async {
+    Box box = await isBoxAlreadyOpen(usersBox);
+    // first delete data and insert again
+    // await box.deleteAll(box.keys);
+
+    // await box.put(usersKey, usersModel);
+    await box.add(usersModel);
+  }
+
+  // --------------------- READ
 
   // readProfileCompanyIDFromBox
   Future<String> readProfileCompanyIDFromBox() async {
@@ -97,6 +107,50 @@ class HiveService {
 
     ProfileModel model = await box.get(companyProfileKey) as ProfileModel;
     return model.companyID.toString();
+  }
+
+  // testing
+  readAllUserFromBox() async {
+    late Box box;
+    box = await isBoxAlreadyOpen(usersBox);
+
+    var bbb = box.values.toList();
+
+    // var aaa = box.get(usersKey) as List<UsersModel>;
+
+    for (var element in bbb) {
+      UsersModel aaa = element;
+      print(">>> element : ${aaa.firstname}");
+    }
+
+    // UsersModel model = await box.get(usersKey) as UsersModel;
+
+    // print(">>> user length : ${model.firstname}");
+
+    // var aaa = box.getAt(0);
+    // var bbb = box.getAt(1);
+
+    // print(aaa);
+    // print(bbb);
+
+    // Map<dynamic, dynamic> tess = box.toMap();
+    // List list = tess.values.toList();
+
+    // print(">>> list length : ${list.length}");
+
+    // for (var element in list) {
+    //   print(element);
+    // }
+
+    // var model = await box.get(usersKey);
+    // print(model[0]);
+    // print(model[1]);
+    // var aaa = HiveList(box);
+    // print(model);
+    // print(">>> aaa: ${tess}");
+    // for (var element in tess) {
+    //   print(">>> element : ${element}");
+    // }
   }
 
   // readProfileCompanyNameFromBox

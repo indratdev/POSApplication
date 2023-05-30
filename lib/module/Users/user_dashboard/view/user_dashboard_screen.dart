@@ -30,7 +30,11 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              print("==================");
+              context.read<UsersBloc>().add(GetAllUsersEvent2());
+              print("==================");
+            },
             icon: Icon(Icons.abc),
           ),
         ],

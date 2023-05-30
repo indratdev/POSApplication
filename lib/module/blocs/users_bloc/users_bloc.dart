@@ -21,27 +21,28 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
   final HiveService hiveRepository = HiveService();
 
   UsersBloc() : super(UsersInitial()) {
-    // on<GetAllUsersEvent>((event, emit) async {
-    //   emit(LoadingGetAllUser());
-    //   try {
-    //     List<UsersModel> result = await userRepository.readAllUser();
-
-    //     emit(SuccessGetAllUser(resultModel: result));
-    //   } catch (e) {
-    //     log(e.toString());
-    //     emit(FailureGetAllUser(messageError: e.toString()));
-    //   }
-    // });
     on<GetAllUsersEvent>((event, emit) async {
       emit(LoadingGetAllUser());
       try {
-        // List<UsersModel> result = await userRepository.readAllUser();
-        var result = await hivere
+        List<UsersModel> result = await userRepository.readAllUser();
 
         emit(SuccessGetAllUser(resultModel: result));
       } catch (e) {
         log(e.toString());
         emit(FailureGetAllUser(messageError: e.toString()));
+      }
+    });
+    on<GetAllUsersEvent2>((event, emit) async {
+      emit(LoadingGetAllUser());
+      try {
+        // List<UsersModel> result = await userRepository.readAllUser();
+        var result = await HiveService().readAllUserFromBox();
+        print(">>>> result GetAllUsersEvent2 : ${result}");
+
+        // emit(SuccessGetAllUser(resultModel: result));
+      } catch (e) {
+        log(e.toString());
+        // emit(FailureGetAllUser(messageError: e.toString()));
       }
     });
 

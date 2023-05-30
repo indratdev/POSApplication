@@ -9,6 +9,8 @@ abstract class UsersEvent extends Equatable {
 
 class GetAllUsersEvent extends UsersEvent {}
 
+class GetAllUsersEvent2 extends UsersEvent {}
+
 class AddNewUsersEvent extends UsersEvent {
   UsersModel userModel;
 

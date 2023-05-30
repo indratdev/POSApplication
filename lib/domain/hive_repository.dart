@@ -13,6 +13,15 @@ class HiveRepository {
     return await hiveService.addUserLoginToHive(usersModel);
   }
 
+  // create user to hive
+  createUserFromFirebaseToHive(List<UsersModel> usersList) async {
+    print(">>>>> runningg createUserFromFirebaseToHive ....");
+    for (var user in usersList) {
+      print(">>>> user : ${user.firstname}");
+      await hiveService.addUserFirebaseToHive(user);
+    }
+  }
+
   // set data to box
   createProfileCompanytoBox(ProfileModel data) {
     hiveService.addProfileToHive(data);

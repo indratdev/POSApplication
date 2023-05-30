@@ -158,6 +158,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               initDate: DateUtil.convertyyyyMMdd(DateTime.now()),
               userList: userList,
             ));
+
+            // insert user
+            await hiveRepository.createUserFromFirebaseToHive(userList);
           } else {
             // compare kl tgl nya beda hapus -> insert baru
             OpsDailyModel result = opsDailytBox.values.first;
@@ -167,7 +170,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             } else {
               // tanggal di hive beda dengan sekarang
               // insert baru ambil dari firebase
-
               List<UsersModel> userList = await userRepository.readAllUser();
               List<CategoryModel> categoryList =
                   await categoryRepository.readAllCategory(
@@ -177,10 +179,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
               await hiveRepository.rewriteOpsDailytoBox(OpsDailyModel(
                 initDate: DateUtil.convertyyyyMMdd(DateTime.now()),
-                userList: userList,
+                // userList: userList,
                 categoryList: categoryList,
                 tableList: tableList,
               ));
+
+              // insert user
+              await hiveRepository.createUserFromFirebaseToHive(userList);
             }
           }
         });
