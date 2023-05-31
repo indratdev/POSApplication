@@ -21,7 +21,7 @@ class _UserListviewWidgetState extends State<UserListviewWidget> {
     return ListView.builder(
       itemCount: widget.listUsers?.length ?? 0,
       itemBuilder: (context, index) {
-        UsersModel data = widget.listUsers?[index] ?? UsersModel();
+        UsersModel data = widget.listUsers![index];
         return InkWell(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(

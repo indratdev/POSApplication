@@ -39,6 +39,25 @@ class SuccessGetAllUser extends UsersState {
 }
 // END Get all users
 
+// Get all users from firebase
+class LoadingGetAllUserFromFirebase extends UsersState {}
+
+class FailureGetAllUserFromFirebase extends FailureUsers {
+  FailureGetAllUserFromFirebase({required super.messageError});
+}
+
+class SuccessGetAllUserFromFirebase extends UsersState {
+  List<UsersModel> resultModel;
+
+  SuccessGetAllUserFromFirebase({
+    required this.resultModel,
+  });
+
+  @override
+  List<Object> get props => [resultModel];
+}
+// END Get all users from firebase
+
 // Get all users from box
 class LoadingGetAllUserFromBox extends UsersState {}
 

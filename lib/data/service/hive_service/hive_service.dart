@@ -98,8 +98,7 @@ class HiveService {
     await box.add(usersModel);
   }
 
-  // --------------------- READ
-
+  // ------------------------------ READ
   // readProfileCompanyIDFromBox
   Future<String> readProfileCompanyIDFromBox() async {
     late Box box;
@@ -113,8 +112,9 @@ class HiveService {
   Future<List<UsersModel>> readAllUserFromBox() async {
     late Box box;
     box = await isBoxAlreadyOpen(usersBox);
-
     var result = box.values;
+
+    print(">>> readAllUserFromBox :: ${result.length}");
 
     return List<UsersModel>.from(result);
 
@@ -237,6 +237,12 @@ class HiveService {
   deleteOpsDailyBox() async {
     if (await Hive.boxExists(opsDailyBox)) {
       Hive.box(opsDailyBox).clear();
+    }
+  }
+
+  deleteUsersBox() async {
+    if (await Hive.boxExists(usersBox)) {
+      Hive.box(usersBox).clear();
     }
   }
 

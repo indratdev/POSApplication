@@ -9,6 +9,8 @@ abstract class UsersEvent extends Equatable {
 
 class GetAllUsersEvent extends UsersEvent {}
 
+class GetAllUsersFromFirebaseEvent extends UsersEvent {}
+
 class GetAllUsersFromBoxEvent extends UsersEvent {}
 
 class AddNewUsersEvent extends UsersEvent {

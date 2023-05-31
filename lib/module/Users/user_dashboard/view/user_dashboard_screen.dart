@@ -30,11 +30,9 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              print("==================");
-              context.read<UsersBloc>().add(GetAllUsersFromBoxEvent());
-              print("==================");
+              context.read<UsersBloc>().add(GetAllUsersFromFirebaseEvent());
             },
-            icon: Icon(Icons.abc),
+            icon: const Icon(Icons.refresh),
           ),
         ],
       ),
@@ -46,8 +44,12 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
         builder: (context, state) {
           List<UsersModel> listUsers = [];
 
+          print(">>> state : $state");
+
           // loading
-          if (state is LoadingGetAllUser || state is LoadingGetAllUserFromBox) {
+          if (state is LoadingGetAllUser ||
+              state is LoadingGetAllUserFromBox ||
+              state is LoadingGetAllUserFromFirebase) {
             return CustomWidgets.showLoadingWidget();
           }
 
@@ -59,6 +61,10 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
             CustomWidgets.showInfoMessageWidget(state.messageError);
           }
 
+          if (state is FailureGetAllUserFromFirebase) {
+            CustomWidgets.showInfoMessageWidget(state.messageError);
+          }
+
           //success
           if (state is SuccessGetAllUser) {
             listUsers = state.resultModel;
@@ -66,6 +72,12 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
           }
 
           if (state is SuccessGetAllUserFromBox) {
+            listUsers = state.resultModel;
+            return UserListviewWidget(listUsers: listUsers);
+          }
+
+          if (state is SuccessGetAllUserFromFirebase) {
+            print(">>>> state SuccessGetAllUserFromFirebase Runningggg....");
             listUsers = state.resultModel;
             return UserListviewWidget(listUsers: listUsers);
           }

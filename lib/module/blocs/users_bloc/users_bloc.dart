@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/service/hive_service/hive_service.dart';
 import 'package:posapplication/data/service/user_service/user_service.dart';
 import 'package:posapplication/domain/export.dart';
+import 'package:posapplication/domain/hive_repository.dart';
 import 'package:posapplication/domain/user_repository.dart';
 
 import '../../../data/model/users_model.dart';
@@ -18,7 +19,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
   final UserRepository userRepository = UserRepository();
   final UserService userService = UserService();
   final AuthRepository authRepository = AuthRepository();
-  final HiveService hiveRepository = HiveService();
+  final HiveRepository hiveRepository = HiveRepository();
 
   UsersBloc() : super(UsersInitial()) {
     on<GetAllUsersEvent>((event, emit) async {
@@ -32,6 +33,31 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
         emit(FailureGetAllUser(messageError: e.toString()));
       }
     });
+
+    on<GetAllUsersFromFirebaseEvent>((event, emit) async {
+      print(">>> GetAllUsersFromFirebaseEvent runningggg....");
+      emit(LoadingGetAllUserFromFirebase());
+      try {
+        List<UsersModel> userList = await userRepository.readAllUser();
+        print(">>> length userList : ${userList.length}");
+
+        // insert user
+        await hiveRepository.deleteUsersBox(); // hapus users box dulu
+        await hiveRepository.createUserFromFirebaseToHive(userList);
+
+        //// get all users from box
+        // List<UsersModel> result = await hiveRepository.readAllUsersFromHive();
+
+        var result = await HiveService().readAllUserFromBox();
+        print(">>> setelah crate baru : ${result.length}");
+
+        emit(SuccessGetAllUserFromFirebase(resultModel: result));
+      } catch (e) {
+        log(e.toString());
+        emit(FailureGetAllUserFromFirebase(messageError: e.toString()));
+      }
+    });
+
     on<GetAllUsersFromBoxEvent>((event, emit) async {
       emit(LoadingGetAllUserFromBox());
       try {

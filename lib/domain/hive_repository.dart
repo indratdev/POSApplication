@@ -14,8 +14,10 @@ class HiveRepository {
   }
 
   // create user to hive
-  createUserFromFirebaseToHive(List<UsersModel> usersList) async {
-    print(">>>>> runningg createUserFromFirebaseToHive ....");
+  Future<void> createUserFromFirebaseToHive(List<UsersModel> usersList) async {
+    print(
+        ">>>>> runningg createUserFromFirebaseToHive  : ${usersList.length} ....");
+    // deleteUsersBox(); // hapus dulu data users sebelum di insert ulang
     for (var user in usersList) {
       print(">>>> user : ${user.firstname}");
       await hiveService.addUserFirebaseToHive(user);
@@ -41,6 +43,10 @@ class HiveRepository {
     return await hiveService.readUserLoginFromBox();
   }
 
+  Future<List<UsersModel>> readAllUsersFromHive() async {
+    return await hiveService.readAllUserFromBox();
+  }
+
   Future<String> readProfileCompanyIDFromBox() async {
     return await hiveService.readProfileCompanyIDFromBox();
   }
@@ -57,5 +63,9 @@ class HiveRepository {
   // ---------------------- DELETE
   deleteOpsDailyBox() async {
     await hiveService.deleteOpsDailyBox();
+  }
+
+  deleteUsersBox() async {
+    await hiveService.deleteUsersBox();
   }
 }
