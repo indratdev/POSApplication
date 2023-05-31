@@ -110,18 +110,20 @@ class HiveService {
   }
 
   // testing
-  readAllUserFromBox() async {
+  Future<List<UsersModel>> readAllUserFromBox() async {
     late Box box;
     box = await isBoxAlreadyOpen(usersBox);
 
-    var bbb = box.values.toList();
+    var result = box.values;
+
+    return List<UsersModel>.from(result);
 
     // var aaa = box.get(usersKey) as List<UsersModel>;
 
-    for (var element in bbb) {
-      UsersModel aaa = element;
-      print(">>> element : ${aaa.firstname}");
-    }
+    // for (var element in bbb) {
+    //   UsersModel aaa = element;
+    //   print(">>> element : ${aaa.firstname}");
+    // }
 
     // UsersModel model = await box.get(usersKey) as UsersModel;
 

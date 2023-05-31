@@ -39,6 +39,25 @@ class SuccessGetAllUser extends UsersState {
 }
 // END Get all users
 
+// Get all users from box
+class LoadingGetAllUserFromBox extends UsersState {}
+
+class FailureGetAllUserFromBox extends FailureUsers {
+  FailureGetAllUserFromBox({required super.messageError});
+}
+
+class SuccessGetAllUserFromBox extends UsersState {
+  List<UsersModel> resultModel;
+
+  SuccessGetAllUserFromBox({
+    required this.resultModel,
+  });
+
+  @override
+  List<Object> get props => [resultModel];
+}
+// END Get all users
+
 // Add new user
 class LoadingAddNewUser extends UsersState {}
 

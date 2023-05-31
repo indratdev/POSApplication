@@ -7,6 +7,10 @@ class CustomWidgets {
     return const Center(child: Text('Loading..'));
   }
 
+  static showInfoMessageWidget(String message) {
+    return Center(child: Text(message));
+  }
+
   static showLoadingWidgetContainer(
     BuildContext context,
   ) {

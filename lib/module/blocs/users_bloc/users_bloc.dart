@@ -32,17 +32,17 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
         emit(FailureGetAllUser(messageError: e.toString()));
       }
     });
-    on<GetAllUsersEvent2>((event, emit) async {
-      emit(LoadingGetAllUser());
+    on<GetAllUsersFromBoxEvent>((event, emit) async {
+      emit(LoadingGetAllUserFromBox());
       try {
         // List<UsersModel> result = await userRepository.readAllUser();
         var result = await HiveService().readAllUserFromBox();
         print(">>>> result GetAllUsersEvent2 : ${result}");
 
-        // emit(SuccessGetAllUser(resultModel: result));
+        emit(SuccessGetAllUserFromBox(resultModel: result));
       } catch (e) {
         log(e.toString());
-        // emit(FailureGetAllUser(messageError: e.toString()));
+        emit(FailureGetAllUserFromBox(messageError: e.toString()));
       }
     });
 

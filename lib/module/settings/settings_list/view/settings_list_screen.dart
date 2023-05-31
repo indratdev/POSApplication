@@ -41,7 +41,8 @@ class _SettingsListScreenState extends State<SettingsListScreen> {
             iconName: Icons.manage_accounts,
             screenToOpen: UserDashboardScreen(),
             bloc: BlocProvider.of<UsersBloc>(context),
-            eventToCall: GetAllUsersEvent(),
+            // eventToCall: GetAllUsersEvent(),
+            eventToCall: GetAllUsersFromBoxEvent(),
           ),
           SettingsWidget(
             menu: "Manajemen Pelanggan",
