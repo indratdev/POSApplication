@@ -166,13 +166,14 @@ class _CustomersManageScreenState extends State<CustomersManageScreen> {
                     (widget.isUpdate)
                         ? Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: QrImage(
+                            child: QrImageView(
                               data:
                                   widget.customersModel!.customerID.toString(),
                               version: QrVersions.auto,
                               size: MediaQuery.of(context).size.width / 2.5,
                               gapless: false,
-                            ))
+                            ),
+                          )
                         : const SizedBox(),
                     (widget.isUpdate)
                         ? Padding(

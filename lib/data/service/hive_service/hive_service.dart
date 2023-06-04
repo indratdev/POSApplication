@@ -22,7 +22,7 @@ class HiveService {
   Future<Box<dynamic>> isBoxAlreadyOpen(String boxName) async {
     late Box box;
     bool status = Hive.isBoxOpen(boxName);
-    print(">>> status : $status");
+    print(">>> status new : $status");
     if (status == false) {
       if (boxName == companyProfileBox) {
         box = await Hive.openBox(companyProfileBox);
@@ -38,7 +38,10 @@ class HiveService {
       }
     }
 
-    box = Hive.box(boxName);
+    // box = Hive.box(boxName);
+    box = await Hive.openBox(boxName);
+
+    print(">> status box nya  ::: ${box.values}");
 
     return box;
   }
@@ -90,11 +93,10 @@ class HiveService {
 
   // addUserLoginToHive
   addUserFirebaseToHive(UsersModel usersModel) async {
-    Box box = await isBoxAlreadyOpen(usersBox);
-    // first delete data and insert again
-    // await box.deleteAll(box.keys);
+    await isExistkBoxUsers();
 
-    // await box.put(usersKey, usersModel);
+    Box box = await isBoxAlreadyOpen(usersBox);
+
     await box.add(usersModel);
   }
 
@@ -242,7 +244,10 @@ class HiveService {
 
   deleteUsersBox() async {
     if (await Hive.boxExists(usersBox)) {
-      Hive.box(usersBox).clear();
+      // Hive.box(usersBox).clear();
+      Hive.box(usersBox).deleteFromDisk();
+      // Hive.deleteBoxFromDisk(usersBox);
+      // Hive.box(usersBox).delete(usersKey);
     }
   }
 

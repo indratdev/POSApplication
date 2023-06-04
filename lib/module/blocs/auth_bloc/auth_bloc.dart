@@ -139,8 +139,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 .createProfileCompanytoBox(ProfileModel.fromJson(profiles));
 
             // set current user login
-            await hiveRepository
-                .createUserLoginToHive(UsersModel.fromJson(data));
+            // await hiveRepository
+            //     .createUserLoginToHive(UsersModel.fromJson(data));
           }
 
           // if current login user box empty, check from firebase

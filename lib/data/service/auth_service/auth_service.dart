@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -139,6 +140,7 @@ class AuthService {
 
       // return Right(SignInSignUpResult(user: result.user));
     } on FirebaseAuthException catch (e) {
+      log(e.toString());
       // return SignInSignUpResult(message: e.toString());
       var err = AuthExceptionHandler.handleAuthException(e);
       return Left((AuthExceptionHandler.generateErrorMessage(err)));
