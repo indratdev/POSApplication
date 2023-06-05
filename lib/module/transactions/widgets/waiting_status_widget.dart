@@ -82,7 +82,7 @@ class WaitingStatusWidget extends StatelessWidget {
                 // }
                 // });
               },
-              child: const Text("PROSES PESANAN"),
+              child: const Text("Pilih Staff"),
             ),
           ],
         ),
