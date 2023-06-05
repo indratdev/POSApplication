@@ -129,7 +129,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           var result = await AuthService.signInWithEmailNew(
               email: event.email, pass: event.password);
 
-          result.fold((l) {
+          await result.fold((l) {
             emit(FailureLoginUser(messageError: l));
           }, (data) async {
             Box profileBox, currentUserBox, opsDailytBox;
