@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
-import 'package:posapplication/shared/utils/shared_preferences/myshared_preferences.dart';
+import 'package:posapplication/shared/utils/connectivity/network_connectivity.dart';
 
 class CoverAuthScreen extends StatefulWidget {
   const CoverAuthScreen({super.key});
@@ -15,6 +16,10 @@ class _CoverAuthScreenState extends State<CoverAuthScreen> {
   @override
   Widget build(BuildContext context) {
     final sizeLayer = MediaQuery.of(context).size;
+    // Map _source = {ConnectivityResult.none: false};
+    // final NetworkConnectivity _networkConnectivity =
+    //     NetworkConnectivity.instance;
+    // String string = '';
 
     return SafeArea(
       child: Scaffold(
@@ -76,8 +81,43 @@ class _CoverAuthScreenState extends State<CoverAuthScreen> {
                 ),
                 ElevatedButton(
                     onPressed: () async {
-                      var aaa = await MySharedPreferences().getCompanyID();
-                      print(aaa);
+                      // var aaa = await MySharedPreferences().getCompanyID();
+                      // print(aaa);
+                      // _networkConnectivity.initialise();
+                      // _networkConnectivity.myStream.listen((source) {
+                      //   _source = source;
+                      //   print('source $_source');
+                      //   // 1.
+                      //   switch (_source.keys.toList()[0]) {
+                      //     case ConnectivityResult.mobile:
+                      //       string = _source.values.toList()[0]
+                      //           ? 'Mobile: Online'
+                      //           : 'Mobile: Offline';
+                      //       break;
+                      //     case ConnectivityResult.wifi:
+                      //       string = _source.values.toList()[0]
+                      //           ? 'WiFi: Online'
+                      //           : 'WiFi: Offline';
+                      //       break;
+                      //     case ConnectivityResult.none:
+                      //     default:
+                      //       string = 'Offline';
+                      //   }
+                      //   // 2.
+                      //   setState(() {});
+                      //   // 3.
+                      //   ScaffoldMessenger.of(context).showSnackBar(
+                      //     SnackBar(
+                      //       content: Text(
+                      //         string,
+                      //         style: TextStyle(fontSize: 30),
+                      //       ),
+                      //     ),
+                      //   );
+                      // });
+
+                      // print(
+                      //     ">>>  ${await NetworkConnectivity.hasInternetConnection()}");
                     },
                     child: Text("test")),
                 // Container(

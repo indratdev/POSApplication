@@ -13,6 +13,7 @@ import 'package:posapplication/domain/hive_repository.dart';
 import 'package:posapplication/domain/table_repository.dart';
 import 'package:posapplication/domain/user_repository.dart';
 import 'package:posapplication/shared/utils/DateUtil/dateutil.dart';
+import 'package:posapplication/shared/utils/connectivity/network_connectivity.dart';
 import 'package:posapplication/shared/utils/shared_preferences/myshared_preferences.dart';
 
 import '../../../data/model/category_model.dart';
@@ -118,79 +119,88 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       Map<String, dynamic> users = {};
       emit(LoadingLoginUser());
       try {
-        var result = await AuthService.signInWithEmailNew(
-            email: event.email, pass: event.password);
+        // check internet connection
+        bool hasInternetConnection =
+            await NetworkConnectivity.hasInternetConnection();
 
-        result.fold((l) {
-          emit(FailureLoginUser(messageError: l));
-        }, (data) async {
-          Box profileBox, currentUserBox, opsDailytBox;
-          profileBox = await ownerRepository.isBoxProfileAlreadyOpen();
-          currentUserBox = await ownerRepository.isBoxCurrentUserAlreadyOpen();
-          opsDailytBox = await ownerRepository.isBoxOpsDailyAlreadyOpen();
+        if (!hasInternetConnection) {
+          emit(FailureLoginUser(messageError: "Tidak Ada Koneksi Internet"));
+        } else {
+          var result = await AuthService.signInWithEmailNew(
+              email: event.email, pass: event.password);
 
-          // if profile box empty, check from firebase
-          if (profileBox.isEmpty) {
-            // read profile company
-            Map<String, dynamic> profiles =
-                await ownerRepository.readProfileCompany();
+          result.fold((l) {
+            emit(FailureLoginUser(messageError: l));
+          }, (data) async {
+            Box profileBox, currentUserBox, opsDailytBox;
+            profileBox = await ownerRepository.isBoxProfileAlreadyOpen();
+            currentUserBox =
+                await ownerRepository.isBoxCurrentUserAlreadyOpen();
+            opsDailytBox = await ownerRepository.isBoxOpsDailyAlreadyOpen();
 
-            await hiveRepository
-                .createProfileCompanytoBox(ProfileModel.fromJson(profiles));
+            // if profile box empty, check from firebase
+            if (profileBox.isEmpty) {
+              // read profile company
+              Map<String, dynamic> profiles =
+                  await ownerRepository.readProfileCompany();
 
-            // set current user login
-            // await hiveRepository
-            //     .createUserLoginToHive(UsersModel.fromJson(data));
-          }
+              await hiveRepository
+                  .createProfileCompanytoBox(ProfileModel.fromJson(profiles));
 
-          // if current login user box empty, check from firebase
-          if (currentUserBox.isEmpty) {
-            await hiveRepository
-                .createUserLoginToHive(UsersModel.fromJson(data));
-          }
+              // set current user login
+              // await hiveRepository
+              //     .createUserLoginToHive(UsersModel.fromJson(data));
+            }
 
-          // cek ops daily init
-          if (opsDailytBox.isEmpty) {
-            List<UsersModel> userList = await userRepository.readAllUser();
-            await hiveRepository.createOpsDailytoBox(OpsDailyModel(
-              // initDate: DateUtil.convertyyyyMMdd(
-              //     DateTime.now().subtract(Duration(days: 1))),
-              initDate: DateUtil.convertyyyyMMdd(DateTime.now()),
-              userList: userList,
-            ));
+            // if current login user box empty, check from firebase
+            if (currentUserBox.isEmpty) {
+              await hiveRepository
+                  .createUserLoginToHive(UsersModel.fromJson(data));
+            }
 
-            // insert user
-            await hiveRepository.createUserFromFirebaseToHive(userList);
-          } else {
-            // compare kl tgl nya beda hapus -> insert baru
-            OpsDailyModel result = opsDailytBox.values.first;
-            if (DateUtil.compareDate(
-                result.initDate!, DateUtil.getDateyyyyMMdd())) {
-              // do nothing
-            } else {
-              // tanggal di hive beda dengan sekarang
-              // insert baru ambil dari firebase
+            // cek ops daily init
+            if (opsDailytBox.isEmpty) {
               List<UsersModel> userList = await userRepository.readAllUser();
-              List<CategoryModel> categoryList =
-                  await categoryRepository.readAllCategory(
-                      await hiveRepository.readProfileCompanyIDFromBox());
-              List<TablesModel> tableList = await tableRepository.readAllTables(
-                  await hiveRepository.readProfileCompanyIDFromBox());
-
-              await hiveRepository.rewriteOpsDailytoBox(OpsDailyModel(
+              await hiveRepository.createOpsDailytoBox(OpsDailyModel(
+                // initDate: DateUtil.convertyyyyMMdd(
+                //     DateTime.now().subtract(Duration(days: 1))),
                 initDate: DateUtil.convertyyyyMMdd(DateTime.now()),
-                // userList: userList,
-                categoryList: categoryList,
-                tableList: tableList,
+                userList: userList,
               ));
 
               // insert user
               await hiveRepository.createUserFromFirebaseToHive(userList);
-            }
-          }
-        });
+            } else {
+              // compare kl tgl nya beda hapus -> insert baru
+              OpsDailyModel result = opsDailytBox.values.first;
+              if (DateUtil.compareDate(
+                  result.initDate!, DateUtil.getDateyyyyMMdd())) {
+                // do nothing
+              } else {
+                // tanggal di hive beda dengan sekarang
+                // insert baru ambil dari firebase
+                List<UsersModel> userList = await userRepository.readAllUser();
+                List<CategoryModel> categoryList =
+                    await categoryRepository.readAllCategory(
+                        await hiveRepository.readProfileCompanyIDFromBox());
+                List<TablesModel> tableList =
+                    await tableRepository.readAllTables(
+                        await hiveRepository.readProfileCompanyIDFromBox());
 
-        emit(SuccessLoginUser(result: users));
+                await hiveRepository.rewriteOpsDailytoBox(OpsDailyModel(
+                  initDate: DateUtil.convertyyyyMMdd(DateTime.now()),
+                  // userList: userList,
+                  categoryList: categoryList,
+                  tableList: tableList,
+                ));
+
+                // insert user
+                await hiveRepository.createUserFromFirebaseToHive(userList);
+              }
+            }
+            emit(SuccessLoginUser(result: users));
+          });
+        }
       } catch (e) {
         emit(FailureLoginUser(messageError: e.toString()));
       }

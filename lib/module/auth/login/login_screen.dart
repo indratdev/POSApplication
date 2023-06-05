@@ -1,14 +1,13 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:posapplication/shared/constants/constatns.dart';
 import 'package:posapplication/shared/utils/validator/validator.dart';
 
-import '../../../../shared/routes/app_routes.dart';
-import '../../../../shared/utils/connectivity/network_connectivity.dart';
-import '../../../../shared/widgets/custom_widgets.dart';
-import '../../../blocs/export_bloc.dart';
+import '../../../shared/routes/app_routes.dart';
+
+import '../../../shared/widgets/custom_widgets.dart';
+import '../../blocs/export_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,9 +20,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  final NetworkConnectivity _networkConnectivity = NetworkConnectivity.instance;
-  String string = '';
-  Map _source = {ConnectivityResult.none: false};
+  // final NetworkConnectivity _networkConnectivity = NetworkConnectivity.instance;
+  // String string = '';
+  // Map _source = {ConnectivityResult.none: false};
 
   @override
   Widget build(BuildContext context) {
@@ -126,43 +125,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
                             // }
 
-                            // BlocProvider.of<AuthBloc>(context).add(
-                            //     LoginUserEvent(
-                            //         email: "owner@mail.com",
-                            //         password: "123123"));
-
-                            _networkConnectivity.initialise();
-                            _networkConnectivity.myStream.listen((source) {
-                              _source = source;
-                              print('source $_source');
-                              // 1.
-                              switch (_source.keys.toList()[0]) {
-                                case ConnectivityResult.mobile:
-                                  string = _source.values.toList()[0]
-                                      ? 'Mobile: Online'
-                                      : 'Mobile: Offline';
-                                  break;
-                                case ConnectivityResult.wifi:
-                                  string = _source.values.toList()[0]
-                                      ? 'WiFi: Online'
-                                      : 'WiFi: Offline';
-                                  break;
-                                case ConnectivityResult.none:
-                                default:
-                                  string = 'Offline';
-                              }
-                              // 2.
-                              setState(() {});
-                              // 3.
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    string,
-                                    style: TextStyle(fontSize: 30),
-                                  ),
-                                ),
-                              );
-                            });
+                            BlocProvider.of<AuthBloc>(context).add(
+                                LoginUserEvent(
+                                    email: "owner@mail.com",
+                                    password: "123123"));
                           },
                         ),
                       ),

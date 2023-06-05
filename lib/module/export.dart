@@ -2,7 +2,7 @@ export 'package:posapplication/module/Users/user_dashboard/view/user_dashboard_s
 export 'package:posapplication/module/Users/user_manage/view/user_manage_screen.dart';
 export 'package:posapplication/module/auth/cover/coverauth_screen.dart';
 export 'package:posapplication/module/auth/forgot_password/forgot_password_screen.dart';
-export 'package:posapplication/module/auth/login/view/login_screen.dart';
+export 'package:posapplication/module/auth/login/login_screen.dart';
 export 'package:posapplication/module/auth/register/register_Screen.dart';
 export 'package:posapplication/module/customers/customers_dashboard/customers_dashboard_screen.dart';
 export 'package:posapplication/module/customers/customers_manage/customers_manage_screen.dart';
