@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:posapplication/data/model/users_model.dart';
 import 'package:posapplication/module/transactions/widgets/waiting_status_widget.dart';
 
 import '../../../data/model/orders_model.dart';
@@ -8,12 +9,14 @@ class StatusTransactionWidgets extends StatelessWidget {
   final OrdersModel? orderCustomer;
   final Map<String, dynamic> statusMap;
   final double _width;
+  // final List<UsersModel>? usersList;
 
   StatusTransactionWidgets({
     super.key,
     required this.statusMap,
     required double width,
     required this.orderCustomer,
+    // this.usersList,
   }) : _width = width;
 
   @override
@@ -26,7 +29,10 @@ class StatusTransactionWidgets extends StatelessWidget {
         // waiting
         if (orderCustomer?.status == StatusOrder.waiting.name) ...[
           WaitingStatusWidget(
-              widthIcon: _widthIcon, orderCustomer: orderCustomer)
+            widthIcon: _widthIcon,
+            orderCustomer: orderCustomer,
+            // userList: usersList!,
+          )
         ],
 
         // // waiting old
