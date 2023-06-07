@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:posapplication/shared/constants/constatns.dart';
+import 'package:posapplication/shared/constants/constants.dart';
 import 'package:posapplication/shared/utils/validator/validator.dart';
 
 import '../../../shared/routes/app_routes.dart';

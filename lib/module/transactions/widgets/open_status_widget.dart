@@ -4,7 +4,7 @@ import 'package:posapplication/data/model/orders_model.dart';
 
 import 'package:posapplication/shared/utils/TextUtil/text_util.dart';
 import '../../blocs/export_bloc.dart';
-import '../../../shared/constants/constatns.dart';
+import '../../../shared/constants/constants.dart';
 import '../../../shared/widgets/custom_widgets.dart';
 
 class OpenStatusWidget extends StatelessWidget {

@@ -133,3 +133,22 @@ class SuccessDeleteUser extends UsersState {
   List<Object> get props => [result];
 }
 // END update users
+
+// selected users
+class LoadingSelectedUser extends UsersState {}
+
+class FailureSelectedUser extends FailureUsers {
+  FailureSelectedUser({required super.messageError});
+}
+
+class SuccessSelectedUser extends UsersState {
+  UsersModel user;
+
+  SuccessSelectedUser({
+    required this.user,
+  });
+
+  @override
+  List<Object> get props => [user];
+}
+// END update users

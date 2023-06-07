@@ -36,3 +36,11 @@ class deleteUsersEvent extends UsersEvent {
     required this.documentID,
   });
 }
+
+class selectedUserEvent extends UsersEvent {
+  UsersModel user;
+
+  selectedUserEvent({
+    required this.user,
+  });
+}

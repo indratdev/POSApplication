@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
-import '../../../../shared/constants/constatns.dart';
+import '../../../../shared/constants/constants.dart';
 
 class SettingsWidget extends StatelessWidget {
   String menu;

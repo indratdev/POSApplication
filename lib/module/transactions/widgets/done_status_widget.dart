@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/model/orders_model.dart';
-import '../../../shared/constants/constatns.dart';
+import '../../../shared/constants/constants.dart';
 import '../../../shared/utils/TextUtil/text_util.dart';
 import '../../../shared/widgets/custom_widgets.dart';
 import '../../blocs/export_bloc.dart';

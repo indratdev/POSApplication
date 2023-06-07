@@ -317,6 +317,13 @@ class OrderService {
           "dateTimeProccess": orderModel.dateTimeProccess,
           "dateTimeReady": orderModel.dateTimeReady,
           "dateTimeOrder": orderModel.dateTimeOrder,
+          "userHandleBy": orderModel.userHandleBy,
+          "userHandleID": orderModel.userHandleID,
+          "userSenderBy": orderModel.userSenderBy,
+          "userSenderID": orderModel.userSenderID,
+          "userPaymentBy": orderModel.userPaymentBy,
+          "userPaymentID": orderModel.userPaymentID,
+
           // "dateTimeWaiting": orderModel.dateTimeWaiting,
         })
         .then((value) =>

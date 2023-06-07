@@ -123,5 +123,16 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
         emit(FailureDeleteUser(messageError: e.toString()));
       }
     });
+
+    // selected user
+    on<selectedUserEvent>((event, emit) {
+      emit(LoadingSelectedUser());
+      try {
+        emit(SuccessSelectedUser(user: event.user));
+      } catch (e) {
+        log(e.toString());
+        emit(FailureSelectedUser(messageError: e.toString()));
+      }
+    });
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/constatns.dart';
+import '../constants/constants.dart';
 
 class CustomWidgets {
   static showLoadingWidget() {

@@ -3,7 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:posapplication/module/owner/owner_profile/view/owner_profile_screen.dart';
 
 import '../../../../../data/model/profile_model.dart';
-import '../../../../../shared/constants/constatns.dart';
+import '../../../../../shared/constants/constants.dart';
 
 class ProfileWidget extends StatefulWidget {
   bool isUpdate = false;
