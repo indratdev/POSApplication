@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:posapplication/module/export.dart';
 
 import '../../../data/model/users_model.dart';
 import '../../../shared/constants/constants.dart';
@@ -13,12 +14,21 @@ class BottomSheetUsersWidget extends StatefulWidget {
 }
 
 class _BottomSheetUsersWidgetState extends State<BottomSheetUsersWidget> {
+  // final UsersBloc userBloc = UsersBloc();
   int? selectedIndex;
   UsersModel? selectedUser;
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    // userBloc.close();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<UsersBloc, UsersState>(
+      // bloc: userBloc,
       builder: (context, state) {
         if (state is SuccessGetAllUserFromBox) {
           List<UsersModel> userList = state.resultModel;
@@ -32,18 +42,27 @@ class _BottomSheetUsersWidgetState extends State<BottomSheetUsersWidget> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Pilih Staff Pembuat"),
+                        const Text("Pilih Staff Pembuat"),
                         IconButton(
                             onPressed: () {
                               print(
                                   ">>> tapp selected User : ${selectedUser?.firstname ?? ""}");
                               if (selectedUser != null) {
-                                BlocProvider.of<UsersBloc>(context).add(
-                                    selectedUserEvent(user: selectedUser!));
+                                // BlocProvider.of<UsersBloc>(context).add(
+                                //     selectedUserEvent(user: selectedUser!));
+                                // context.read<UsersBloc>().add(
+                                //     selectedUserEvent(user: selectedUser!));
+                                // Navigator.of(context).pop(MaterialPageRoute(
+                                //   builder: (context) => DetailTransactionScreen(
+                                //       selectedUser: selectedUser),
+                                // ));
+                                // Navigator.of(context)
+                                //     // ..pop()
+                                //     .pop(context, selectedUser);
                               }
-                              Navigator.of(context).pop();
+                              // Navigator.of(context).pop();
                             },
-                            icon: Icon(Icons.done)),
+                            icon: const Icon(Icons.done)),
                       ],
                     ),
                     Divider(

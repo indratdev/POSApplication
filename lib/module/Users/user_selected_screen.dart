@@ -19,7 +19,7 @@ class _UserSelectedScreenState extends State<UserSelectedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pilih Staff"),
+        title: const Text("Pilih Staff"),
         centerTitle: true,
         actions: [
           IconButton(
@@ -36,7 +36,9 @@ class _UserSelectedScreenState extends State<UserSelectedScreen> {
       ),
       body: BlocBuilder<UsersBloc, UsersState>(
         builder: (context, state) {
-          if (state is SuccessGetAllUser) {
+          // if (state is SuccessGetAllUser) { // get user from firebase
+          // get user from box
+          if (state is SuccessGetAllUserFromBox) {
             List<UsersModel> listUsers = state.resultModel;
 
             if (listUsers.isEmpty) {

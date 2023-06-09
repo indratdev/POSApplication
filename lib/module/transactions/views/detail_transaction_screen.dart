@@ -11,12 +11,15 @@ import 'package:posapplication/shared/widgets/custom_widgets.dart';
 import '../../../shared/constants/constants.dart';
 import '../../../shared/routes/app_routes.dart';
 import '../../blocs/export_bloc.dart';
+import '../../export.dart';
 
 class DetailTransactionScreen extends StatefulWidget {
   OrdersModel? orderCustomer;
+  UsersModel? selectedUser;
 
   DetailTransactionScreen({
     this.orderCustomer,
+    this.selectedUser,
     super.key,
   });
 
@@ -31,17 +34,29 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
   String statusImage = "";
   Map<String, dynamic> statusMap = {};
   List<UsersModel> usersList = [];
+  // final UsersBloc usersBloc = UsersBloc();
 
   @override
   void initState() {
     checkImageStatus();
+    // fillSelectedUser();
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
+    // usersBloc.close();
   }
+
+  // fillSelectedUser() {
+  //   print(">>> fillSelectedUser runnn...");
+  //   if (widget.selectedUser != null) {
+  //     print(">>> fillSelectedUser detail runnn...");
+  //     widget.orderCustomer?.userHandleBy = widget.selectedUser?.firstname;
+  //     widget.orderCustomer?.userHandleID = widget.selectedUser?.userID;
+  //   }
+  // }
 
   checkImageStatus() {
     if (widget.orderCustomer!.status == StatusOrder.waiting.name) {
@@ -109,40 +124,41 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: BlocListener<OrdersBloc, OrdersState>(
-            listener: (context, state) {
-              if (state is SuccessUpdateStatusOrder) {
-                CustomWidgets.showMessageAlertWithF(
-                    context, "Pesanan berhasil diperbaharui", true, () {
-                  // return to dashboard
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, AppRoutes.ownerBottomNav, (route) => false);
-                });
-              }
-            },
-            child: BlocBuilder<UsersBloc, UsersState>(
-              builder: (context, state) {
-                if (state is SuccessSelectedUser) {
-                  print(">>> state SuccessSelectedUser jalan....");
-                  widget.orderCustomer?.userHandleBy = state.user.firstname;
-                  widget.orderCustomer?.userHandleID = state.user.userID;
-                }
+          child: BlocBuilder<UsersBloc, UsersState>(
+            builder: (context, state) {
+              // if (state is SuccessSelectedUser) {
+              //   print(">>> state SuccessSelectedUser jalan....");
+              //   widget.orderCustomer?.userHandleBy = state.user.firstname;
+              //   widget.orderCustomer?.userHandleID = state.user.userID;
+              // }
 
-                if (state is SuccessGetAllUserFromBox) {
-                  usersList = state.resultModel;
-                }
-                return BlocListener<OrdersBloc, OrdersState>(
-                  listener: (context, state) {
-                    if (state is SuccessUpdateStatusOrder) {
-                      Navigator.pop(context);
-                      CustomWidgets.showMessageAlertWithF(
-                          context, state.result, true, () {
-                        Navigator.pushNamedAndRemoveUntil(context,
-                            AppRoutes.ownerBottomNav, (route) => false);
-                      });
-                    }
-                  },
-                  child: Column(
+              if (state is SuccessGetAllUserFromBox) {
+                usersList = state.resultModel;
+              }
+
+              return BlocConsumer<OrdersBloc, OrdersState>(
+                listener: (context, state) {
+                  if (state is SuccessUpdateStatusOrder) {
+                    Navigator.pop(context);
+                    CustomWidgets.showMessageAlertWithF(
+                        context, state.result, true, () {
+                      // Navigator.of(context).pushAndRemoveUntil(
+                      //     MaterialPageRoute(
+                      //         builder: (context) =>
+                      //             OwnerBottomNavigationScreen()),
+                      //     (Route route) => false);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, AppRoutes.ownerBottomNav, (route) => false);
+                    });
+                  }
+                },
+                builder: (context, state) {
+                  if (state is SuccessSelectedStaffHandle) {
+                    widget.orderCustomer?.userHandleBy = state.result.firstname;
+                    widget.orderCustomer?.userHandleID = state.result.userID;
+                  }
+
+                  return Column(
                     children: [
                       // no pesanan
                       Container(
@@ -446,7 +462,7 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                                                 widget.orderCustomer!,
                                           ));
 
-                                          Navigator.pop(context);
+                                          // Navigator.pop(context);
                                         });
                                       },
                                       child: const Text("Lanjut Proses"))
@@ -455,13 +471,14 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                         ),
                       ),
                     ],
-                  ),
-                );
-              },
-            ),
+                  );
+                },
+              );
+            },
           ),
         ),
       ),
+      // ),
     );
   }
 }

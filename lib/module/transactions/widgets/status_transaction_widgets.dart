@@ -16,7 +16,6 @@ class StatusTransactionWidgets extends StatelessWidget {
     required this.statusMap,
     required double width,
     required this.orderCustomer,
-    // this.usersList,
   }) : _width = width;
 
   @override
@@ -31,14 +30,8 @@ class StatusTransactionWidgets extends StatelessWidget {
           WaitingStatusWidget(
             widthIcon: _widthIcon,
             orderCustomer: orderCustomer,
-            // userList: usersList!,
           )
         ],
-
-        // // waiting old
-        // if (orderCustomer?.status == StatusOrder.waiting.name) ...[
-        //   OpenStatusWidget(widthIcon: _widthIcon, orderCustomer: orderCustomer)
-        // ],
 
         // progress
         if (orderCustomer?.status == StatusOrder.progress.name) ...[

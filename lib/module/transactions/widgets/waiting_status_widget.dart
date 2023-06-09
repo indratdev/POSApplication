@@ -5,6 +5,7 @@ import 'package:posapplication/data/model/orders_model.dart';
 import 'package:posapplication/data/model/users_model.dart';
 import 'package:posapplication/module/blocs/users_bloc/users_bloc.dart';
 import 'package:posapplication/module/export.dart';
+import 'package:posapplication/shared/routes/app_routes.dart';
 import 'package:posapplication/shared/utils/TextUtil/text_util.dart';
 
 import '../../../shared/constants/constants.dart';
@@ -45,18 +46,18 @@ class _WaitingStatusWidgetState extends State<WaitingStatusWidget> {
                 BlocProvider.of<UsersBloc>(context)
                     .add(GetAllUsersFromBoxEvent());
 
-                // Builder(builder: (context) => BottomSheetUsersWidget());
+                Navigator.pushNamed(context, AppRoutes.userSelected);
 
-                showModalBottomSheet(
-                  isScrollControlled: true,
-
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(defaultBorderRadius),
-                  ),
-                  context: context,
-                  // builder: (context) => _buildBottomSheetContent(),
-                  builder: (context) => const BottomSheetUsersWidget(),
-                );
+                // showModalBottomSheet(
+                //   isScrollControlled: true,
+                //   shape: RoundedRectangleBorder(
+                //     borderRadius: BorderRadius.circular(defaultBorderRadius),
+                //   ),
+                //   context: context,
+                //   builder: (context) => const BottomSheetUsersWidget(),
+                // ).then((value) {
+                //   print(">>>> hasil schowmodal :: ${value}");
+                // });
               },
               child: const Text("Pilih Staff"),
             ),
