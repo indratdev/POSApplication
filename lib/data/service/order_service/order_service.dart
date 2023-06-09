@@ -314,9 +314,14 @@ class OrderService {
         .doc(orderModel.orderID)
         .update({
           "status": status,
+          "dateTimeOrder": orderModel.dateTimeOrder,
+          "dateTimeWaiting": orderModel.dateTimeWaiting,
           "dateTimeProccess": orderModel.dateTimeProccess,
           "dateTimeReady": orderModel.dateTimeReady,
-          "dateTimeOrder": orderModel.dateTimeOrder,
+          "dateTimeOrderComplete": orderModel.dateTimeOrderComplete,
+          "dateTimeBillIsReady": orderModel.dateTimeBillIsReady,
+          "dateTimePaymentComplete": orderModel.dateTimePaymentComplete,
+          "dateTimeCancel": orderModel.dateTimeCancel,
           "userHandleBy": orderModel.userHandleBy,
           "userHandleID": orderModel.userHandleID,
           "userSenderBy": orderModel.userSenderBy,

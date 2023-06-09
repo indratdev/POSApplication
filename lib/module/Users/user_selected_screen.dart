@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:posapplication/shared/constants/constants.dart';
 
 import '../../../../data/model/users_model.dart';
 import '../blocs/export_bloc.dart';
@@ -60,7 +61,7 @@ class _UserSelectedScreenState extends State<UserSelectedScreen> {
                   },
                   child: ListTile(
                     tileColor: (selectedIndex == index)
-                        ? Colors.amber
+                        ? sageColor
                         : Colors.transparent,
                     title: Text("${data.firstname} ${data.lastname}"),
                     trailing: Text(data.role.toString()),
