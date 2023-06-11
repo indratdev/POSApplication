@@ -60,7 +60,7 @@ class CustomWidgets {
                       child: Image.asset(warningImage),
                     ),
                     sbHeight20,
-                    Text(content),
+                    Text(content, textAlign: TextAlign.center),
                     sbHeight20,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

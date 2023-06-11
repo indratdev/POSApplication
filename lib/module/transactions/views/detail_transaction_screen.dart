@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:posapplication/data/model/orders_model.dart';
-import 'package:posapplication/data/model/users_model.dart';
 
 import 'package:posapplication/module/transactions/widgets/status_transaction_widgets.dart';
 import 'package:posapplication/shared/utils/DateUtil/dateutil.dart';
 import 'package:posapplication/shared/utils/TextUtil/text_util.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
 
+import '../../../data/model/orders_model.dart';
+import '../../../data/model/users_model.dart';
 import '../../../shared/constants/constants.dart';
 import '../../../shared/routes/app_routes.dart';
 import '../../blocs/export_bloc.dart';
-import '../../export.dart';
+import '../export.dart';
 
 class DetailTransactionScreen extends StatefulWidget {
   OrdersModel? orderCustomer;
@@ -49,15 +48,6 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
     // usersBloc.close();
   }
 
-  // fillSelectedUser() {
-  //   print(">>> fillSelectedUser runnn...");
-  //   if (widget.selectedUser != null) {
-  //     print(">>> fillSelectedUser detail runnn...");
-  //     widget.orderCustomer?.userHandleBy = widget.selectedUser?.firstname;
-  //     widget.orderCustomer?.userHandleID = widget.selectedUser?.userID;
-  //   }
-  // }
-
   checkImageStatus() {
     if (widget.orderCustomer!.status == StatusOrder.waiting.name) {
       statusMap["image"] = workProcess;
@@ -78,75 +68,6 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
     if (widget.orderCustomer!.status == StatusOrder.ready.name) {
       statusMap["image"] = excellence;
       statusMap["description"] = "Transaksi Berhasil";
-    }
-  }
-
-  // continueProcess() {
-  //   CustomWidgets.showConfirmation(
-  //       context, "Apakah anda ingin melanjutkan proses ini ?", () {
-  //     if (widget.orderCustomer != null) {
-  //       BlocProvider.of<OrdersBloc>(context).add(UpdateStatusOrders(
-  //         status: StatusOrder.progress,
-  //         orderCustomer: widget.orderCustomer!,
-  //       ));
-  //     }
-  //   });
-  // }
-
-  // canceledProcess() {
-  //   CustomWidgets.showConfirmation(
-  //       context, "Apakah anda ingin membatalkan proses ini ?", () {
-  //     if (widget.orderCustomer != null) {
-  //       // BlocProvider.of<OrdersBloc>(context).add(UpdateStatusOrders(
-  //       //   status: StatusOrder.progress,
-  //       //   orderCustomer: widget.orderCustomer!,
-  //       // ));
-  //     }
-  //   });
-  // }
-
-  buttonStatusWidget(double widht) {
-    // if status = waiting and will be update user handle/maker
-    if (widget.orderCustomer!.status == StatusOrder.waiting.name &&
-        widget.orderCustomer?.userHandleBy == "") {
-      return StatusTransactionWidgets(
-        orderCustomer: widget.orderCustomer,
-        statusMap: statusMap,
-        width: widht,
-      );
-      // if status = waiting and user handle/maker has fill
-    } else if (widget.orderCustomer!.status == StatusOrder.waiting.name) {
-      return ElevatedButton(
-        onPressed: () {
-          CustomWidgets.showConfirmation(
-              context, "Apakah anda yakin melanjutkan proses ini ?", () {
-            // update time waiting
-            widget.orderCustomer!.dateTimeWaiting = DateTime.now();
-
-            BlocProvider.of<OrdersBloc>(context).add(UpdateStatusOrders(
-              status: StatusOrder.progress,
-              orderCustomer: widget.orderCustomer!,
-            ));
-          });
-        },
-        child: const Text("Lanjut Proses"),
-      );
-      // if status = progress
-    } else if (widget.orderCustomer!.status == StatusOrder.progress.name) {
-      return ElevatedButton(
-        onPressed: () {
-          CustomWidgets.showConfirmation(
-              context, "Apakah anda yakin menyelesaikan proses ini ?", () {
-            BlocProvider.of<OrdersBloc>(context).add(UpdateStatusOrders(
-              status: StatusOrder.ready,
-              orderCustomer: widget.orderCustomer!,
-            ));
-          });
-        },
-        child: const Text("Pesanan Selesai"),
-      );
-    } else {
-      return const SizedBox();
     }
   }
 
@@ -197,7 +118,7 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                       // no pesanan
                       Container(
                         alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(13),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -308,7 +229,8 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                                   ),
                                 ),
                                 Text(
-                                  widget.orderCustomer!.userHandleBy ?? "",
+                                  widget.orderCustomer!.userHandleBy ??
+                                      "Staff Belum dipilih",
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 14,
@@ -356,17 +278,17 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                       // container proses
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 18),
-                        // color: Colors.amber,
                         width: double.infinity,
-                        // height: MediaQuery.of(context).size.height / 2,
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
                               Text(
-                                '"Pesanan ini masih dalam status ${widget.orderCustomer?.status ?? ''}" \n Anda dapat melihat catatan untuk kemudahan',
+                                '"Pesanan ini masih dalam status ${widget.orderCustomer?.status ?? ''}" \n Anda dapat melihat catatan untuk kemudahan"',
                                 textAlign: TextAlign.center,
                               ),
-                              const SizedBox(height: 18),
+                              const SizedBox(height: 10),
+
+                              // kalau pesanan cancel & waiting progress status tidak tampil
                               (widget.orderCustomer!.status ==
                                           StatusOrder.cancel.name ||
                                       widget.orderCustomer!.status ==
@@ -477,31 +399,12 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
 
                               // kalau user handlenya kosong harus diisi, kalau sudah ada bisa lanjut ke
                               // proses selanjutnya
-                              buttonStatusWidget(_width)
 
-                              // (widget.orderCustomer?.userHandleBy == "")
-                              //     ? StatusTransactionWidgets(
-                              //         orderCustomer: widget.orderCustomer,
-                              //         statusMap: statusMap,
-                              //         width: _width,
-                              //         // usersList: usersList,
-                              //       )
-                              //     : ElevatedButton(
-                              //         onPressed: () {
-                              //           CustomWidgets.showConfirmation(context,
-                              //               "Apakah anda yakin melanjutkan proses ini ?",
-                              //               () {
-                              //             BlocProvider.of<OrdersBloc>(context)
-                              //                 .add(UpdateStatusOrders(
-                              //               status: StatusOrder.progress,
-                              //               orderCustomer:
-                              //                   widget.orderCustomer!,
-                              //             ));
-
-                              //             // Navigator.pop(context);
-                              //           });
-                              //         },
-                              //         child: const Text("Lanjut Proses"))
+                              ButtonStatusWidget(
+                                width: _width,
+                                orderCustomer: widget.orderCustomer,
+                                statusMap: statusMap,
+                              )
                             ],
                           ),
                         ),

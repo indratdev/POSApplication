@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/customers_model.dart';
+import 'package:posapplication/shared/constants/constants.dart';
 
 import 'package:posapplication/shared/routes/app_routes.dart';
 
@@ -71,7 +71,7 @@ class _CustomersSelectedScreenState extends State<CustomersSelectedScreen> {
                   },
                   child: ListTile(
                     tileColor: (selectedIndex == index)
-                        ? Colors.amber
+                        ? sageColor
                         : Colors.transparent,
                     title: Text(data.email ?? ""),
                     subtitle: Text("${data.fullname}"),

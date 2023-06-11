@@ -24,6 +24,8 @@ class _ListTransactionScreenState extends State<ListTransactionScreen> {
     widget.dataList!
         .sort((a, b) => a.dateTimeOrder!.compareTo(b.dateTimeOrder!));
 
+    print(">>> print datalist : ${widget.dataList}");
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.status.toUpperCase()),

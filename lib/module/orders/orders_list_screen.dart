@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/export_model.dart';
 import 'package:posapplication/data/model/orders_model.dart';
+import 'package:posapplication/shared/constants/constants.dart';
 
 import '../blocs/export_bloc.dart';
 
@@ -62,7 +63,7 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
               Flexible(
                 flex: 1,
                 child: Container(
-                  color: Colors.grey.shade300,
+                  color: Colors.grey.shade100,
                   child: ListView.builder(
                     itemCount: listCategory.length,
                     scrollDirection: Axis.horizontal,
@@ -86,8 +87,8 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                           margin: EdgeInsets.symmetric(horizontal: 5),
                           decoration: BoxDecoration(
                               color: (selectedIndexCategory == index)
-                                  ? Colors.amber
-                                  : Colors.brown.shade50,
+                                  ? sageColor
+                                  : inActiveIconColor.withOpacity(0.3),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8))),
                           child: Text(data.categoryName),

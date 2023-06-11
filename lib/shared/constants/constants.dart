@@ -25,6 +25,7 @@ const double defaultBorderRadius = 13.0;
 
 // color
 const color1 = Color(0xFF3B2D60);
+const errorMessageColor = Color(0xFFFF3333);
 const Color activeIconColor = Color(0xFF198754);
 // const Color inActiveIconColor = Color(0xFFd3d3d3);
 const Color inActiveIconColor = Colors.grey;

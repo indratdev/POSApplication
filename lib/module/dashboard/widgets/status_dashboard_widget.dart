@@ -26,6 +26,10 @@ class StatusDashboardWidget extends StatelessWidget {
         List<OrdersModel>? listData =
             dataList?.where((element) => element.status == status).toList();
 
+        print(">>> status ${status}");
+        print(">>> datalist ${dataList!.first.orderID}");
+        print(">>> listData ${listData!.first.orderID}");
+
         PersistentNavBarNavigator.pushNewScreen(
           context,
           screen: ListTransactionScreen(
