@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:posapplication/module/transactions/widgets/status_transaction_widgets.dart';
 import 'package:posapplication/shared/utils/DateUtil/dateutil.dart';
 import 'package:posapplication/shared/utils/TextUtil/text_util.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
@@ -38,8 +37,11 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
   @override
   void initState() {
     checkImageStatus();
-    // fillSelectedUser();
+
     super.initState();
+
+    print(" table :: ${widget.orderCustomer?.dataTable?.tableID}");
+    print(" maker :: ${widget.orderCustomer?.userHandleBy}");
   }
 
   @override
@@ -108,6 +110,11 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                   }
                 },
                 builder: (context, state) {
+                  if (state is SuccessSelectedTable) {
+                    print("SuccessSelectedTable :: ${state.result.tableID}");
+                    widget.orderCustomer?.dataTable = state.result;
+                  }
+
                   if (state is SuccessSelectedStaffHandle) {
                     widget.orderCustomer?.userHandleBy = state.result.firstname;
                     widget.orderCustomer?.userHandleID = state.result.userID;
@@ -153,8 +160,15 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                                 fontSize: 14,
                               ),
                             ),
-                            Text(widget.orderCustomer!.dataTable?.tableName ??
-                                "Belum Pilih Meja"),
+
+                            (widget.orderCustomer!.dataTable?.tableID == "")
+                                ? const Text(
+                                    "Belum Dipilih",
+                                    style: TextStyle(color: errorMessageColor),
+                                  )
+                                : Text(widget
+                                        .orderCustomer!.dataTable?.tableName ??
+                                    ""),
                           ],
                         ),
                       ),
@@ -228,14 +242,20 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                                     fontSize: 14,
                                   ),
                                 ),
-                                Text(
-                                  widget.orderCustomer!.userHandleBy ??
-                                      "Staff Belum dipilih",
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
-                                  ),
-                                ),
+                                (widget.orderCustomer!.userHandleBy == "")
+                                    ? const Text(
+                                        "Belum Dipilih",
+                                        style:
+                                            TextStyle(color: errorMessageColor),
+                                      )
+                                    : Text(
+                                        widget.orderCustomer!.userHandleBy ??
+                                            "",
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14,
+                                        ),
+                                      ),
                               ],
                             ),
                           ],

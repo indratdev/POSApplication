@@ -314,6 +314,7 @@ class OrderService {
         .doc(orderModel.orderID)
         .update({
           "status": status,
+          "dataTable": orderModel.dataTable,
           "dateTimeOrder": orderModel.dateTimeOrder,
           "dateTimeWaiting": orderModel.dateTimeWaiting,
           "dateTimeProccess": orderModel.dateTimeProccess,

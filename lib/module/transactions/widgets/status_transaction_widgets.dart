@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:posapplication/data/model/users_model.dart';
+import 'package:posapplication/module/transactions/widgets/waiting_choose_table_widget.dart';
 import 'package:posapplication/module/transactions/widgets/waiting_status_widget.dart';
 
 import '../../../data/model/orders_model.dart';
@@ -25,8 +26,29 @@ class StatusTransactionWidgets extends StatelessWidget {
 
     return Column(
       children: [
-        // waiting
-        if (orderCustomer?.status == StatusOrder.waiting.name) ...[
+        // Waiting, Haven't chosen a table number yet  & Haven't chosen a user maker yet
+        if (orderCustomer?.status == StatusOrder.waiting.name &&
+            orderCustomer?.dataTable?.tableID == "" &&
+            orderCustomer?.userHandleBy == "") ...[
+          WaitingChooseTableWidget(
+            widthIcon: _widthIcon,
+            orderCustomer: orderCustomer,
+          )
+        ],
+        // Waiting & user maker has chosen,  Haven't chosen a table number yet
+        if (orderCustomer?.status == StatusOrder.waiting.name &&
+            orderCustomer?.dataTable?.tableID == "" &&
+            orderCustomer?.userHandleBy != "") ...[
+          WaitingChooseTableWidget(
+            widthIcon: _widthIcon,
+            orderCustomer: orderCustomer,
+          )
+        ],
+
+        // waiting & table has chosen, Haven't user maker yet
+        if (orderCustomer?.status == StatusOrder.waiting.name &&
+            orderCustomer?.dataTable?.tableID != "" &&
+            orderCustomer?.userHandleBy == "") ...[
           WaitingStatusWidget(
             widthIcon: _widthIcon,
             orderCustomer: orderCustomer,

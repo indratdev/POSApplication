@@ -24,7 +24,16 @@ class ButtonStatusWidget extends StatefulWidget {
 class _ButtonStatusWidgetState extends State<ButtonStatusWidget> {
   @override
   Widget build(BuildContext context) {
+    // if status == waiting && Haven't chosen a table number yet
     if (widget.orderCustomer!.status == StatusOrder.waiting.name &&
+        widget.orderCustomer!.dataTable?.tableID == "") {
+      // return ElevatedButton(onPressed: () {}, child: Text("Pilih table"));
+      return StatusTransactionWidgets(
+        statusMap: widget.statusMap ?? {},
+        width: widget.width,
+        orderCustomer: widget.orderCustomer,
+      );
+    } else if (widget.orderCustomer!.status == StatusOrder.waiting.name &&
         widget.orderCustomer?.userHandleBy == "") {
       return StatusTransactionWidgets(
         orderCustomer: widget.orderCustomer,
@@ -39,6 +48,8 @@ class _ButtonStatusWidgetState extends State<ButtonStatusWidget> {
               context, "Apakah anda yakin melanjutkan proses ini ?", () {
             // update time waiting
             widget.orderCustomer!.dateTimeWaiting = DateTime.now();
+
+            // print(widget.orderCustomer?.dataTable?.tableID);
 
             BlocProvider.of<OrdersBloc>(context).add(UpdateStatusOrders(
               status: StatusOrder.progress,
