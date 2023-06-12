@@ -146,24 +146,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
               await hiveRepository
                   .createProfileCompanytoBox(ProfileModel.fromJson(profiles));
-
-              // set current user login
-              // await hiveRepository
-              //     .createUserLoginToHive(UsersModel.fromJson(data));
             }
 
             // if current login user box empty, check from firebase
             if (currentUserBox.isEmpty) {
+              print(">>>run currentUserBox.isEmpty ");
               await hiveRepository
                   .createUserLoginToHive(UsersModel.fromJson(data));
             }
 
             // cek ops daily init
             if (opsDailytBox.isEmpty) {
+              print(">>>run opsDailytBox.isEmpty ");
               List<UsersModel> userList = await userRepository.readAllUser();
               await hiveRepository.createOpsDailytoBox(OpsDailyModel(
-                // initDate: DateUtil.convertyyyyMMdd(
-                //     DateTime.now().subtract(Duration(days: 1))),
                 initDate: DateUtil.convertyyyyMMdd(DateTime.now()),
                 userList: userList,
               ));
@@ -177,6 +173,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                   result.initDate!, DateUtil.getDateyyyyMMdd())) {
                 // do nothing
               } else {
+                print(">>>run else");
                 // tanggal di hive beda dengan sekarang
                 // insert baru ambil dari firebase
                 List<UsersModel> userList = await userRepository.readAllUser();
@@ -195,6 +192,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 ));
 
                 // insert user
+                await hiveRepository.deleteUsersBox();
                 await hiveRepository.createUserFromFirebaseToHive(userList);
               }
             }

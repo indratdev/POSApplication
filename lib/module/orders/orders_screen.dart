@@ -58,7 +58,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
     //fill status
     for (var element in selectedOrders) {
-      if (selectedStaffHandle == null) {
+      print(">>> selectedTable : ${selectedTable?.tableID}");
+      // kalau staff handle atau table id masih kosong, statusnya jadi waiting
+      if (selectedStaffHandle == null ||
+          selectedTable?.tableID == "" ||
+          selectedTable?.tableID == null) {
         element.status = StatusOrder.waiting.name.toString();
       } else {
         element.status = StatusOrder.progress.name.toString();
@@ -205,8 +209,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
                       // staff handle
                       InkWell(
                         onTap: () {
+                          // BlocProvider.of<UsersBloc>(context)
+                          //     .add(GetAllUsersEvent()); // call bloc customer
                           BlocProvider.of<UsersBloc>(context)
-                              .add(GetAllUsersEvent()); // call bloc customer
+                              .add(GetAllUsersFromBoxEvent());
 
                           PersistentNavBarNavigator.pushNewScreen(
                             context,

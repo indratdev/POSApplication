@@ -238,6 +238,7 @@ class HiveService {
 
   deleteOpsDailyBox() async {
     if (await Hive.boxExists(opsDailyBox)) {
+      print(">>> run deleteOpsDailyBox");
       Hive.box(opsDailyBox).clear();
     }
   }

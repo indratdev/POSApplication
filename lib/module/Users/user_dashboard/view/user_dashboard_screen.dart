@@ -28,6 +28,7 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
         title: const Text("User Management"),
         centerTitle: true,
         actions: [
+          // refresh button
           IconButton(
             onPressed: () {
               context.read<UsersBloc>().add(GetAllUsersFromFirebaseEvent());
@@ -72,6 +73,7 @@ class _UserDashboardScreenState extends State<UserDashboardScreen> {
           }
 
           if (state is SuccessGetAllUserFromBox) {
+            print("run SuccessGetAllUserFromBox...");
             listUsers = state.resultModel;
             return UserListviewWidget(listUsers: listUsers);
           }
