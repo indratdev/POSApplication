@@ -4,6 +4,8 @@ import 'package:posapplication/module/export.dart';
 import 'package:posapplication/shared/utils/DateUtil/dateutil.dart';
 import 'package:posapplication/shared/widgets/nodata_widget.dart';
 
+import '../../../shared/utils/TextUtil/text_util.dart';
+
 class ListTransactionScreen extends StatefulWidget {
   List<OrdersModel>? dataList;
   String status;
@@ -82,7 +84,8 @@ class _ListTransactionScreenState extends State<ListTransactionScreen> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(datas.dataTable?.tableName.toString() ?? ""),
-                              Text(datas.status.toUpperCase().toString()),
+                              // Text(datas.status.toUpperCase().toString()),
+                              Text(TextUtil.subStringbyUpperCase(datas.status))
                             ],
                           ),
                         ),

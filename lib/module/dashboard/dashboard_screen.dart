@@ -64,7 +64,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         statusItem[element.status] = 1;
       }
     }
-    // print(statusItem);
+    print(statusItem);
   }
 
   @override
@@ -134,8 +134,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       colorStatus: Colors.amber.shade300,
                     ),
                     StatusDashboardWidget(
-                      status: TextUtil.subStringbyUpperCase(
-                          StatusOrder.orderCompleted.name),
+                      status: StatusOrder.orderCompleted.name,
                       dataList: resultData,
                       amountOfData: statusItem[
                               StatusOrder.orderCompleted.name.toString()] ??
@@ -143,8 +142,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       colorStatus: Colors.green.shade300,
                     ),
                     StatusDashboardWidget(
-                      status: TextUtil.subStringbyUpperCase(
-                          StatusOrder.billIsReady.name),
+                      status: StatusOrder.billIsReady.name,
                       dataList: resultData,
                       amountOfData:
                           statusItem[StatusOrder.billIsReady.name.toString()] ??
@@ -152,8 +150,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       colorStatus: Colors.green.shade300,
                     ),
                     StatusDashboardWidget(
-                      status: TextUtil.subStringbyUpperCase(
-                          StatusOrder.paymentCompleted.name),
+                      status: StatusOrder.paymentCompleted.name,
                       dataList: resultData,
                       amountOfData: statusItem[
                               StatusOrder.paymentCompleted.name.toString()] ??

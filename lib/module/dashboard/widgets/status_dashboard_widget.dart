@@ -3,6 +3,8 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:posapplication/data/model/orders_model.dart';
 import 'package:posapplication/module/export.dart';
 
+import '../../../shared/utils/TextUtil/text_util.dart';
+
 class StatusDashboardWidget extends StatelessWidget {
   String status;
   Color? colorStatus;
@@ -26,9 +28,8 @@ class StatusDashboardWidget extends StatelessWidget {
         List<OrdersModel>? listData =
             dataList?.where((element) => element.status == status).toList();
 
-        print(">>> status ${status}");
-        print(">>> datalist ${dataList!.first.orderID}");
-        print(">>> listData ${listData!.first.orderID}");
+        // print(">>> listData : ${listData?.length ?? 0}");
+        // print(">>> status ${status}");
 
         PersistentNavBarNavigator.pushNewScreen(
           context,
@@ -39,12 +40,6 @@ class StatusDashboardWidget extends StatelessWidget {
           withNavBar: false,
           pageTransitionAnimation: PageTransitionAnimation.cupertino,
         );
-        // Navigator.of(context).push(MaterialPageRoute(
-        //   builder: (context) => ListTransactionScreen(
-        //     status: status,
-        //     dataList: listData,
-        //   ),
-        // ));
       },
       child: Container(
         alignment: Alignment.center,
@@ -69,7 +64,8 @@ class StatusDashboardWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 3),
               child: Text(
-                status.toUpperCase(),
+                TextUtil.subStringbyUpperCase(status),
+                // status,
                 overflow: TextOverflow.clip,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
