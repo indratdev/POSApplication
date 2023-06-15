@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:posapplication/data/model/orders_model.dart';
 import 'package:posapplication/module/export.dart';
 import 'package:posapplication/shared/utils/DateUtil/dateutil.dart';
+import 'package:posapplication/shared/widgets/custom_widgets.dart';
 import 'package:posapplication/shared/widgets/nodata_widget.dart';
 
 import '../../../shared/utils/TextUtil/text_util.dart';
@@ -30,7 +31,7 @@ class _ListTransactionScreenState extends State<ListTransactionScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.status.toUpperCase()),
+        title: Text(TextUtil.subStringbyUpperCase(widget.status)),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -51,12 +52,23 @@ class _ListTransactionScreenState extends State<ListTransactionScreen> {
                   OrdersModel datas = widget.dataList![index];
                   return InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                DetailTransactionScreen(orderCustomer: datas),
-                          ));
+                      if (datas.status == StatusOrder.billIsReady.name) {
+                        print("testt");
+                        CustomWidgets.showModalPaymentWidget(context);
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) =>
+                        //           PayOrderScreen(orderCustomer: datas),
+                        //     ));
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  DetailTransactionScreen(orderCustomer: datas),
+                            ));
+                      }
                     },
                     child: Row(
                       children: [

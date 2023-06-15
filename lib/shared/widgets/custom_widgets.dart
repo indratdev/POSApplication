@@ -235,6 +235,41 @@ class CustomWidgets {
         });
   }
 
+  static showModalPaymentWidget(BuildContext context) {
+    showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      context: context,
+      builder: (context) {
+        return Wrap(
+          children: [
+            ListTile(
+              leading: Icon(Icons.wallet_outlined),
+              title: Text('Tunai / Cash'),
+              subtitle: Text("Menggunakan uang tunai"),
+              trailing: Icon(Icons.arrow_forward_ios),
+            ),
+            ListTile(
+              leading: Icon(Icons.wallet_outlined),
+              title: Text('Tunai / Cash'),
+              subtitle: Text("Menggunakan uang tunai"),
+              trailing: Icon(Icons.arrow_forward_ios),
+            ),
+            // ListTile(
+            //   leading: Icon(Icons.copy),
+            //   title: Text('Copy Link'),
+            // ),
+            // ListTile(
+            //   leading: Icon(Icons.edit),
+            //   title: Text('Edit'),
+            // ),
+          ],
+        );
+      },
+    );
+  }
+
   static showSnackBarCustom(BuildContext context, String message) {
     return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

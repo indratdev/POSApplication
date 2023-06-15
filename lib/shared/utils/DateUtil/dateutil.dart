@@ -23,6 +23,11 @@ class DateUtil {
     return DateFormat('EEEE, dd MMMM yyyy').format(time);
   }
 
+  // ex : Sunday, 17 May 2023 HH:mm:ss
+  static String convertToDayAndDateTimeFull(DateTime time) {
+    return DateFormat('EEEE, dd MMMM yyyy HH:mm:ss').format(time);
+  }
+
   static bool compareDate(String date1, String date2) {
     return (date1 == date2) ? true : false;
   }

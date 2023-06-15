@@ -55,9 +55,13 @@ class _CoverAuthScreenState extends State<CoverAuthScreen> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.red),
-                            onPressed: () =>
-                                Navigator.pushNamed(context, AppRoutes.login),
-                            child: Text("LOGIN"),
+                            onPressed: () {
+                              print("login click...");
+                              // Navigator.pushNamed(context, AppRoutes.login);
+                              Navigator.of(context)
+                                  .pushReplacementNamed(AppRoutes.login);
+                            },
+                            child: const Text("LOGIN"),
                           ),
                         ),
                       ),

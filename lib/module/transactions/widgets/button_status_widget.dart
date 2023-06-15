@@ -27,7 +27,6 @@ class _ButtonStatusWidgetState extends State<ButtonStatusWidget> {
     // if status == waiting && Haven't chosen a table number yet
     if (widget.orderCustomer!.status == StatusOrder.waiting.name &&
         widget.orderCustomer!.dataTable?.tableID == "") {
-      // return ElevatedButton(onPressed: () {}, child: Text("Pilih table"));
       return StatusTransactionWidgets(
         statusMap: widget.statusMap ?? {},
         width: widget.width,
@@ -125,7 +124,43 @@ class _ButtonStatusWidgetState extends State<ButtonStatusWidget> {
               }),
         ],
       );
-    } else {
+      // if status order completed
+    } else if (widget.orderCustomer!.status ==
+        StatusOrder.orderCompleted.name) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          //batal proses
+          CancelButtonWidget(
+            widget: widget,
+            contentMessage: "Apakah anda yakin mengubah status menjadi ready ?",
+            voidCallback: () =>
+                BlocProvider.of<OrdersBloc>(context).add(UpdateStatusOrders(
+              status: StatusOrder.ready,
+              orderCustomer: widget.orderCustomer!,
+            )),
+          ),
+
+          ProcessedButtonWidget(
+              widget: widget,
+              textLabel: "Pesanan Sudah Diantar",
+              contentMessage: "Apakah anda yakin menyelesaikan proses ini ?",
+              voidCallback: () {
+                // update dateTimeOrderComplete
+                widget.orderCustomer?.dateTimeOrderComplete = DateTime.now();
+
+                BlocProvider.of<OrdersBloc>(context).add(UpdateStatusOrders(
+                  status: StatusOrder.billIsReady,
+                  orderCustomer: widget.orderCustomer!,
+                ));
+              }),
+        ],
+      );
+    }
+    // else if (widget.orderCustomer!.status == StatusOrder.billIsReady.name) {
+
+    // }
+    else {
       return const SizedBox();
     }
 
