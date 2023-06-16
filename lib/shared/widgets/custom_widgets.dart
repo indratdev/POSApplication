@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:posapplication/data/model/orders_model.dart';
 
+import '../../module/export.dart';
 import '../constants/constants.dart';
 
 class CustomWidgets {
@@ -235,7 +237,7 @@ class CustomWidgets {
         });
   }
 
-  static showModalPaymentWidget(BuildContext context) {
+  static showModalPaymentWidget(BuildContext context, OrdersModel? orders) {
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
@@ -245,15 +247,23 @@ class CustomWidgets {
         return Wrap(
           children: [
             ListTile(
-              leading: Icon(Icons.wallet_outlined),
-              title: Text('Tunai / Cash'),
-              subtitle: Text("Menggunakan uang tunai"),
-              trailing: Icon(Icons.arrow_forward_ios),
-            ),
+                leading: Icon(Icons.wallet_outlined),
+                title: Text('Tunai / Cash'),
+                subtitle: Text("Menggunakan uang tunai"),
+                trailing: Icon(Icons.arrow_forward_ios),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PayOrderScreen(orderCustomer: orders),
+                      ));
+                }),
             ListTile(
               leading: Icon(Icons.wallet_outlined),
-              title: Text('Tunai / Cash'),
-              subtitle: Text("Menggunakan uang tunai"),
+              title: Text('Kartu Debit'),
+              subtitle: Text("Menggunakan kartu debit"),
               trailing: Icon(Icons.arrow_forward_ios),
             ),
             // ListTile(
