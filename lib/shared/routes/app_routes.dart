@@ -50,7 +50,10 @@ class AppRoutes {
   // transactions
   static const String listTransaction = "/listTransaction";
   static const String detailTransaction = "/detailTransaction";
-  static const String payTransaction = "/payTransaction";
+
+  // payments
+  static const String confirmationPayment = '/confirmationPayment';
+  static const String cashPayment = "/cashPaymentTransaction";
 
   Map<String, WidgetBuilder> getRoutes = {
     first: (_) => CoverAuthScreen(),
@@ -81,6 +84,8 @@ class AppRoutes {
     ordersConfirmation: (_) => OrdersConfirmationScreen(),
     listTransaction: (_) => ListTransactionScreen(status: ""),
     detailTransaction: (_) => DetailTransactionScreen(),
-    payTransaction: (_) => PayOrderScreen(),
+    confirmationPayment: (_) => ConfirmationPaymentScreen(),
+    cashPayment: (_) =>
+        CashPaymentTransactionScreen(totalTranscationAmount: 0.0),
   };
 }

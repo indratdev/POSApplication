@@ -54,13 +54,13 @@ class _ListTransactionScreenState extends State<ListTransactionScreen> {
                     onTap: () {
                       if (datas.status == StatusOrder.billIsReady.name) {
                         print("testt");
-                        CustomWidgets.showModalPaymentWidget(context, datas);
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) =>
-                        //           PayOrderScreen(orderCustomer: datas),
-                        //     ));
+                        // CustomWidgets.showModalPaymentWidget(context, datas);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ConfirmationPaymentScreen(
+                                  orderCustomer: datas),
+                            ));
                       } else {
                         Navigator.push(
                             context,

@@ -39,6 +39,10 @@ const Color mustardColor = Color(0xFFe3b448);
 const Color sageColor = Color(0xFFcbd18f);
 const Color forestGreenColor = Color(0xFF3a6b35);
 
+// text color
+const Color blackTextColor = Color(0xFF212427);
+Color blackOpacity06TextColor = const Color(0xFF212427).withOpacity(0.6);
+
 // #e3b448, #cbd18f, #3a6b35
 // #1d3c45, #d2601a, #fff1e1
 

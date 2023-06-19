@@ -237,7 +237,8 @@ class CustomWidgets {
         });
   }
 
-  static showModalPaymentWidget(BuildContext context, OrdersModel? orders) {
+  static showModalPaymentWidget(BuildContext context, OrdersModel? orders,
+      double totalTranscationAmount) {
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
@@ -256,8 +257,9 @@ class CustomWidgets {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            PayOrderScreen(orderCustomer: orders),
+                        builder: (context) => CashPaymentTransactionScreen(
+                            orderCustomer: orders,
+                            totalTranscationAmount: totalTranscationAmount),
                       ));
                 }),
             ListTile(

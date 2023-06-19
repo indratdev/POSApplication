@@ -1,24 +1,23 @@
-import 'package:dartz/dartz_unsafe.dart';
 import 'package:flutter/material.dart';
 import 'package:posapplication/shared/utils/DateUtil/dateutil.dart';
 
-import '../../../data/model/export_model.dart';
 import '../../../data/model/orders_model.dart';
 import '../../../shared/widgets/export_widget.dart';
 
-class PayOrderScreen extends StatefulWidget {
+class ConfirmationPaymentScreen extends StatefulWidget {
   OrdersModel? orderCustomer;
 
-  PayOrderScreen({
+  ConfirmationPaymentScreen({
     super.key,
     this.orderCustomer,
   });
 
   @override
-  State<PayOrderScreen> createState() => _PayOrderScreenState();
+  State<ConfirmationPaymentScreen> createState() =>
+      _ConfirmationPaymentScreenState();
 }
 
-class _PayOrderScreenState extends State<PayOrderScreen> {
+class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
   final Map<String, dynamic> detailOrder = {};
   List<Map<String, dynamic>> finalItem = [];
 
@@ -97,7 +96,7 @@ class _PayOrderScreenState extends State<PayOrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Pembayaran Transaksi"),
+        title: const Text("Konfimasi Pembayaran"),
         centerTitle: true,
       ),
       body: Container(
@@ -210,44 +209,13 @@ class _PayOrderScreenState extends State<PayOrderScreen> {
                           child: SizedBox(
                             child: ElevatedButton(
                               onPressed: () {
-                                showModalBottomSheet(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  context: context,
-                                  builder: (context) {
-                                    return Wrap(
-                                      children: [
-                                        ListTile(
-                                          leading: Icon(Icons.wallet_outlined),
-                                          title: Text('Tunai / Cash'),
-                                          subtitle:
-                                              Text("Menggunakan uang tunai"),
-                                          trailing:
-                                              Icon(Icons.arrow_forward_ios),
-                                        ),
-                                        ListTile(
-                                          leading: Icon(Icons.wallet_outlined),
-                                          title: Text('Tunai / Cash'),
-                                          subtitle:
-                                              Text("Menggunakan uang tunai"),
-                                          trailing:
-                                              Icon(Icons.arrow_forward_ios),
-                                        ),
-                                        // ListTile(
-                                        //   leading: Icon(Icons.copy),
-                                        //   title: Text('Copy Link'),
-                                        // ),
-                                        // ListTile(
-                                        //   leading: Icon(Icons.edit),
-                                        //   title: Text('Edit'),
-                                        // ),
-                                      ],
-                                    );
-                                  },
+                                CustomWidgets.showModalPaymentWidget(
+                                  context,
+                                  widget.orderCustomer,
+                                  datas.last.entries.first.value,
                                 );
                               },
-                              child: Text("BAYAR"),
+                              child: const Text("LANJUT"),
                             ),
                           ),
                         )
