@@ -18,7 +18,11 @@ enum StatusOrder {
 @JsonSerializable()
 class OrdersModel {
   String orderID;
+
   double totalOrdersPrice;
+  double payAmountUser;
+  double changeMoney;
+
   int itemCountOrder;
   String status;
   DateTime? dateTimeOrder;
@@ -45,7 +49,9 @@ class OrdersModel {
 
   OrdersModel({
     this.orderID = "",
-    this.totalOrdersPrice = 0,
+    this.totalOrdersPrice = 0.0,
+    this.payAmountUser = 0.0,
+    this.changeMoney = 0.0,
     this.itemCountOrder = 0,
     this.status = "open",
     this.dataItem,
@@ -81,6 +87,8 @@ class OrdersModel {
 
   OrdersModel.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
       : totalOrdersPrice = doc.data()!["totalOrdersPrice"],
+        payAmountUser = doc.data()!["payAmountUser"],
+        changeMoney = doc.data()!["changeMoney"],
         orderID = doc.data()!["orderID"],
         dataItem = (doc.data()!['listDataItem'] as List<dynamic>?)
             ?.map((e) => ItemsModel.fromJson(e as Map<String, dynamic>))

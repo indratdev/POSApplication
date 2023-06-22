@@ -269,6 +269,8 @@ class OrderService {
           "addByID": orderData.first.addByID,
           "status": orderData.first.status,
           "totalOrdersPrice": orderData.first.totalOrdersPrice,
+          "payAmountUser": orderData.first.payAmountUser,
+          "changeMoney": orderData.first.changeMoney,
         })
         .then(
             (value) => myEither = const Right("Create New Order Successfully!"))
@@ -329,6 +331,8 @@ class OrderService {
           "userSenderID": orderModel.userSenderID,
           "userPaymentBy": orderModel.userPaymentBy,
           "userPaymentID": orderModel.userPaymentID,
+          "payAmountUser": orderModel.payAmountUser,
+          "changeMoney": orderModel.changeMoney,
 
           // "dateTimeWaiting": orderModel.dateTimeWaiting,
         })

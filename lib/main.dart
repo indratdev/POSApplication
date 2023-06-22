@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:posapplication/data/service/hive_service/hive_init.dart';
 import 'package:posapplication/module/blocs/export_bloc.dart';
+import 'package:posapplication/module/blocs/payment_bloc/payment_bloc.dart';
 
 import 'package:posapplication/shared/routes/app_routes.dart';
 
@@ -51,6 +52,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => OrdersBloc(),
+        ),
+        BlocProvider(
+          create: (context) => PaymentBloc(),
         ),
       ],
       child: MaterialApp(

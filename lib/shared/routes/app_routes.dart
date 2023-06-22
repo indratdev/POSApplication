@@ -54,6 +54,7 @@ class AppRoutes {
   // payments
   static const String confirmationPayment = '/confirmationPayment';
   static const String cashPayment = "/cashPaymentTransaction";
+  static const String paymentCompleted = "/paymentCompleted";
 
   Map<String, WidgetBuilder> getRoutes = {
     first: (_) => CoverAuthScreen(),
@@ -87,5 +88,6 @@ class AppRoutes {
     confirmationPayment: (_) => ConfirmationPaymentScreen(),
     cashPayment: (_) =>
         CashPaymentTransactionScreen(totalTranscationAmount: 0.0),
+    paymentCompleted: (_) => PaymentCompletedScreen(),
   };
 }

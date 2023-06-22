@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:posapplication/module/blocs/payment_bloc/payment_bloc.dart';
+import 'package:posapplication/shared/routes/app_routes.dart';
 import 'package:posapplication/shared/utils/DateUtil/dateutil.dart';
 
 import '../../../data/model/orders_model.dart';
@@ -296,16 +299,22 @@ class _CashPaymentTransactionScreenState
                   // ),
                   ElevatedButton(
                     onPressed: () {
-                      print("====================");
+                      Navigator.pushNamed(context, AppRoutes.paymentCompleted);
+                      BlocProvider.of<PaymentBloc>(context).add(PayEvent(
+                        totalOrdersPrice: widget.totalTranscationAmount,
+                        payAmountUser: double.parse(totalPayment),
+                        orders: widget.orderCustomer!,
+                      ));
+                      // print("====================");
 
-                      var ress = double.parse(totalPayment) -
-                          widget.totalTranscationAmount;
-                      print(
-                          "${double.parse(totalPayment)} - ${widget.totalTranscationAmount} = $ress");
+                      // var ress = double.parse(totalPayment) -
+                      //     widget.totalTranscationAmount;
+                      // print(
+                      //     "${double.parse(totalPayment)} - ${widget.totalTranscationAmount} = $ress");
 
-                      print("====================");
+                      // print("====================");
                     },
-                    child: Text("BAYAR"),
+                    child: const Text("BAYAR"),
                   )
                 ],
               ),
