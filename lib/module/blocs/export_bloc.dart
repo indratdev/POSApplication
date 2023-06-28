@@ -6,3 +6,4 @@ export 'package:posapplication/module/blocs/owner_bloc/owner_bloc.dart';
 export 'package:posapplication/module/blocs/users_bloc/users_bloc.dart';
 export 'package:posapplication/module/blocs/settings_bloc/settings_bloc.dart';
 export 'package:posapplication/module/blocs/tables_bloc/tables_bloc.dart';
+export 'package:posapplication/module/blocs/payments_bloc/payments_bloc.dart';

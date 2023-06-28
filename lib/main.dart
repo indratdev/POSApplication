@@ -1,10 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:posapplication/data/service/hive_service/hive_init.dart';
 import 'package:posapplication/module/blocs/export_bloc.dart';
-import 'package:posapplication/module/blocs/payment_bloc/payment_bloc.dart';
+import 'package:posapplication/shared/constants/constants.dart';
 
 import 'package:posapplication/shared/routes/app_routes.dart';
 
@@ -54,12 +52,13 @@ class MyApp extends StatelessWidget {
           create: (context) => OrdersBloc(),
         ),
         BlocProvider(
-          create: (context) => PaymentBloc(),
+          create: (context) => PaymentsBloc(),
         ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: AppRoutes().getRoutes,
+        theme: ThemeData(scaffoldBackgroundColor: thirdGreen),
       ),
     );
   }

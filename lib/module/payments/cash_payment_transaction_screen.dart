@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:posapplication/module/blocs/payment_bloc/payment_bloc.dart';
-import 'package:posapplication/shared/routes/app_routes.dart';
+
 import 'package:posapplication/shared/utils/DateUtil/dateutil.dart';
 
 import '../../../data/model/orders_model.dart';
 import '../../../shared/widgets/export_widget.dart';
+import '../../domain/payments_repository.dart';
 import '../../shared/constants/constants.dart';
+import '../../shared/routes/app_routes.dart';
+import '../blocs/export_bloc.dart';
 
 class CashPaymentTransactionScreen extends StatefulWidget {
   OrdersModel? orderCustomer;
@@ -243,8 +244,11 @@ class _CashPaymentTransactionScreenState
             ),
             Spacer(),
             Container(
-              padding: EdgeInsets.all(8),
-              color: lightPeachColor,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: lightPeachColor,
+              ),
+              padding: EdgeInsets.all(12),
               child: Column(
                 children: [
                   Container(
@@ -299,20 +303,24 @@ class _CashPaymentTransactionScreenState
                   // ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, AppRoutes.paymentCompleted);
-                      BlocProvider.of<PaymentBloc>(context).add(PayEvent(
-                        totalOrdersPrice: widget.totalTranscationAmount,
-                        payAmountUser: double.parse(totalPayment),
-                        orders: widget.orderCustomer!,
-                      ));
-                      // print("====================");
+                      Map<String, dynamic> result = PaymentsRepository()
+                          .isLessPayment(widget.totalTranscationAmount,
+                              double.parse(totalPayment));
 
-                      // var ress = double.parse(totalPayment) -
-                      //     widget.totalTranscationAmount;
-                      // print(
-                      //     "${double.parse(totalPayment)} - ${widget.totalTranscationAmount} = $ress");
+                      if (result['status'] == false) {
+                        CustomWidgets.showMessageAlertBasic(
+                            context, result['description'], false);
+                      } else {
+                        Navigator.pushNamed(
+                            context, AppRoutes.paymentCompleted);
 
-                      // print("====================");
+                        context.read<PaymentsBloc>().add(CashPaymentEvent(
+                              orders: widget.orderCustomer!,
+                              totalTranscationAmount:
+                                  widget.totalTranscationAmount,
+                              totalPaymentAmount: double.parse(totalPayment),
+                            ));
+                      }
                     },
                     child: const Text("BAYAR"),
                   )

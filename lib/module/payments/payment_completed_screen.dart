@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:posapplication/module/blocs/payment_bloc/payment_bloc.dart';
+import 'package:posapplication/module/blocs/payments_bloc/payments_bloc.dart';
 import 'package:posapplication/shared/utils/TextUtil/text_util.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
 
@@ -13,13 +13,13 @@ class PaymentCompletedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<PaymentBloc, PaymentState>(
+      body: BlocBuilder<PaymentsBloc, PaymentsState>(
         builder: (context, state) {
-          if (state is LoadingPay) {
+          if (state is LoadingCashPayment) {
             CustomWidgets.showLoadingWidgetContainer(context);
           }
 
-          if (state is SuccessPay) {
+          if (state is SuccessCashPayment) {
             double changeMoney = state.changeMoney;
             OrdersModel data = state.orders;
 

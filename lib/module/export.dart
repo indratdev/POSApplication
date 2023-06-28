@@ -27,5 +27,5 @@ export 'package:posapplication/module/orders/orders_confirmation_screen.dart';
 export 'package:posapplication/module/transactions/views/list_transaction_screen.dart';
 export 'package:posapplication/module/transactions/views/detail_transaction_screen.dart';
 export 'package:posapplication/module/payments/confirmation_payment_screen.dart';
-export 'package:posapplication/module/payments/cash_payment_transaction.dart';
+export 'package:posapplication/module/payments/cash_payment_transaction_screen.dart';
 export 'package:posapplication/module/payments/payment_completed_screen.dart';

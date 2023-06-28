@@ -24,6 +24,15 @@ const SizedBox sbHeight30 = SizedBox(height: 30);
 const double defaultBorderRadius = 13.0;
 
 // color
+// ------- main color -----------
+const Color mainGreen = Color(0xFF5D9C59);
+const Color secondGreen = Color(0xFFC7E8CA);
+const Color thirdGreen = Color(0xFFDDF7E3);
+const Color redColors = Color(0xFFDF2E38);
+const Color mainWhite = Color(0xFFFDFAF6);
+
+// ------- end main color -------
+
 const color1 = Color(0xFF3B2D60);
 const errorMessageColor = Color(0xFFFF3333);
 const Color activeIconColor = Color(0xFF198754);

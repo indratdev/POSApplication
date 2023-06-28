@@ -345,7 +345,7 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                                                       widget.orderCustomer!
                                                               .status ==
                                                           StatusOrder
-                                                              .waiting.name)
+                                                              .ready.name)
                                                   ? Colors.blue
                                                   : null,
                                             ),
@@ -415,6 +415,40 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                                         ),
                                       ],
                                     ),
+                              const SizedBox(height: 12),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Column(
+                                    children: [
+                                      Icon(
+                                        // (status == 0 || status == 2)
+                                        (widget.orderCustomer!.status ==
+                                                    StatusOrder.waiting.name ||
+                                                widget.orderCustomer!.status ==
+                                                    StatusOrder.progress.name)
+                                            ? Icons.circle_outlined
+                                            : Icons.circle,
+                                        color:
+                                            // (status == 0 || status == 2)
+                                            (widget.orderCustomer!.status ==
+                                                        StatusOrder
+                                                            .waiting.name ||
+                                                    widget.orderCustomer!
+                                                            .status ==
+                                                        StatusOrder
+                                                            .progress.name)
+                                                ? null
+                                                : Colors.blue,
+                                      ),
+                                      Text(
+                                        TextUtil.subStringbyUpperCase(
+                                            StatusOrder.orderCompleted.name),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                               const SizedBox(height: 55),
 
                               // kalau user handlenya kosong harus diisi, kalau sudah ada bisa lanjut ke
