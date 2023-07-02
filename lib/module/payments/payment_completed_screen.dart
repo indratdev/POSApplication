@@ -26,12 +26,12 @@ class PaymentCompletedScreen extends StatelessWidget {
             return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("PEMBAYARAN SELESAI"),
+                  const Text("PEMBAYARAN SELESAI"),
                   Text(
                     "No. Order : ${TextUtil.substringAndEclipsText(data.orderID)}",
                   ),
-                  Divider(),
-                  Text("UANG KEMBALIAN"),
+                  const Divider(),
+                  const Text("UANG KEMBALIAN"),
                   Text("RP. $changeMoney"),
                   Row(
                     children: [

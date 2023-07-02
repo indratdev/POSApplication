@@ -153,13 +153,13 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                 future: loadDataTransaction(),
                 builder: (context, snapshot) {
                   // 1 . // WHILE THE CALL IS BEING MADE AKA LOADING
-                  if (ConnectionState.active != null && !snapshot.hasData) {
+                  if (!snapshot.hasData) {
                     return const Center(
                         child: CircularProgressIndicator.adaptive());
                   }
 
                   // 2. // WHEN THE CALL IS DONE BUT HAPPENS TO HAVE AN ERROR
-                  if (ConnectionState.done != null && snapshot.hasError) {
+                  if (snapshot.hasError) {
                     return const Center(child: Text('Something went wrong :('));
                   }
 
@@ -199,7 +199,7 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                         Text(
                           "TOTAL :  ${datas.last.entries.first.value.toString()}",
                           textAlign: TextAlign.left,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.w500,
                             // fontSize: 14,
                           ),

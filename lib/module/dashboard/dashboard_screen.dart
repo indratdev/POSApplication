@@ -3,14 +3,13 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/orders_model.dart';
 
 import 'package:posapplication/domain/hive_repository.dart';
 
 import 'package:posapplication/module/dashboard/widgets/status_dashboard_widget.dart';
+import 'package:posapplication/shared/constants/constants.dart';
 
-import 'package:posapplication/shared/utils/TextUtil/text_util.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
 
 import '../../shared/utils/firebase_utils/firebase_utils.dart';
@@ -40,7 +39,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   colletionDataFB(QuerySnapshot<Map<String, dynamic>>? dataList) {
-    // print(">>> colletionDataFB run...");
     resultData = [];
 
     if (dataList != null) {
@@ -64,7 +62,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
         statusItem[element.status] = 1;
       }
     }
-    print(statusItem);
   }
 
   @override
@@ -108,30 +105,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 return GridView.count(
                   primary: false,
                   scrollDirection: Axis.vertical,
-                  padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+                  padding: const EdgeInsets.all(10),
                   crossAxisCount: 2,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 12,
                   children: [
                     StatusDashboardWidget(
                       status: StatusOrder.waiting.name,
                       dataList: resultData,
                       amountOfData:
                           statusItem[StatusOrder.waiting.name.toString()] ?? 0,
-                      colorStatus: Colors.blueAccent.shade200,
+                      colorStatus: waitingColor,
                     ),
                     StatusDashboardWidget(
                       status: StatusOrder.progress.name,
                       dataList: resultData,
                       amountOfData:
                           statusItem[StatusOrder.progress.name.toString()] ?? 0,
+                      colorStatus: progressColor,
                     ),
                     StatusDashboardWidget(
                       status: StatusOrder.ready.name,
                       dataList: resultData,
                       amountOfData:
                           statusItem[StatusOrder.ready.name.toString()] ?? 0,
-                      colorStatus: Colors.amber.shade300,
+                      colorStatus: readyColor,
                     ),
                     StatusDashboardWidget(
                       status: StatusOrder.orderCompleted.name,
@@ -139,7 +137,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       amountOfData: statusItem[
                               StatusOrder.orderCompleted.name.toString()] ??
                           0,
-                      colorStatus: Colors.green.shade300,
+                      colorStatus: orderCompletedColor,
                     ),
                     StatusDashboardWidget(
                       status: StatusOrder.billIsReady.name,
@@ -147,7 +145,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       amountOfData:
                           statusItem[StatusOrder.billIsReady.name.toString()] ??
                               0,
-                      colorStatus: Colors.green.shade300,
+                      colorStatus: billIsReadyColor,
                     ),
                     StatusDashboardWidget(
                       status: StatusOrder.paymentCompleted.name,
@@ -155,14 +153,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       amountOfData: statusItem[
                               StatusOrder.paymentCompleted.name.toString()] ??
                           0,
-                      colorStatus: Colors.green.shade300,
+                      colorStatus: paymentCompleteColor,
                     ),
                     StatusDashboardWidget(
                       status: StatusOrder.cancel.name,
                       dataList: resultData,
                       amountOfData:
                           statusItem[StatusOrder.cancel.name.toString()] ?? 0,
-                      colorStatus: Colors.redAccent.shade200,
+                      colorStatus: cancelColor,
                     ),
                   ],
                 );

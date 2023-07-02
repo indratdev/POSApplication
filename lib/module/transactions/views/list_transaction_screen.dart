@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:posapplication/data/model/orders_model.dart';
 import 'package:posapplication/module/export.dart';
 import 'package:posapplication/shared/utils/DateUtil/dateutil.dart';
-import 'package:posapplication/shared/widgets/custom_widgets.dart';
 import 'package:posapplication/shared/widgets/nodata_widget.dart';
 
 import '../../../shared/utils/TextUtil/text_util.dart';
@@ -26,8 +25,6 @@ class _ListTransactionScreenState extends State<ListTransactionScreen> {
   Widget build(BuildContext context) {
     widget.dataList!
         .sort((a, b) => a.dateTimeOrder!.compareTo(b.dateTimeOrder!));
-
-    print(">>> print datalist : ${widget.dataList}");
 
     return Scaffold(
       appBar: AppBar(

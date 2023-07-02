@@ -18,6 +18,8 @@ class SeparatorDashWidget extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 5),
           child: Flex(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            direction: Axis.horizontal,
             children: List.generate(dashCount, (_) {
               return SizedBox(
                 width: dashWidth,
@@ -27,8 +29,6 @@ class SeparatorDashWidget extends StatelessWidget {
                 ),
               );
             }),
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            direction: Axis.horizontal,
           ),
         );
       },

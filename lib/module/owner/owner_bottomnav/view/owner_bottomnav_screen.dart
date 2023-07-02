@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:posapplication/module/orders/orders_screen.dart';
 import 'package:posapplication/module/dashboard/dashboard_screen.dart';
 import 'package:posapplication/module/settings/settings_list/view/settings_list_screen.dart';
+import 'package:posapplication/shared/constants/constants.dart';
 
 class OwnerBottomNavigationScreen extends StatefulWidget {
   const OwnerBottomNavigationScreen({super.key});
@@ -21,8 +21,6 @@ class _OwnerBottomNavigationScreenState
   @override
   void initState() {
     super.initState();
-    // controller
-    //     .checkProfileBoxAndFirebase(); // check is profile box or firebase already exist
   }
 
   @override
@@ -34,7 +32,7 @@ class _OwnerBottomNavigationScreenState
       screens: _buildScreens(),
       items: _navBarsItems(),
       confineInSafeArea: true,
-      backgroundColor: Colors.white, // Default is Colors.white.
+      backgroundColor: mainWhite,
       handleAndroidBackButtonPress: true, // Default is true.
       resizeToAvoidBottomInset:
           true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
@@ -43,7 +41,8 @@ class _OwnerBottomNavigationScreenState
           true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
       decoration: NavBarDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        colorBehindNavBar: Colors.white,
+        // colorBehindNavBar: Colors.white,
+        colorBehindNavBar: mainGreen,
       ),
       popAllScreensOnTapOfSelectedTab: true,
       popActionScreens: PopActionScreensType.all,
@@ -66,9 +65,9 @@ class _OwnerBottomNavigationScreenState
 
 List<Widget> _buildScreens() {
   return [
-    DashboardScreen(),
-    OrdersScreen(),
-    SettingsListScreen(),
+    const DashboardScreen(),
+    const OrdersScreen(),
+    const SettingsListScreen(),
   ];
 }
 
@@ -77,19 +76,19 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
     PersistentBottomNavBarItem(
       icon: const Icon(CupertinoIcons.home),
       title: ("Dashboard"),
-      activeColorPrimary: CupertinoColors.activeBlue,
+      activeColorPrimary: mainGreen,
       inactiveColorPrimary: CupertinoColors.systemGrey,
     ),
     PersistentBottomNavBarItem(
       icon: const Icon(CupertinoIcons.add),
       title: ("Transaction"),
-      activeColorPrimary: CupertinoColors.activeBlue,
+      activeColorPrimary: mainGreen,
       inactiveColorPrimary: CupertinoColors.systemGrey,
     ),
     PersistentBottomNavBarItem(
       icon: const Icon(CupertinoIcons.settings),
       title: ("Settings"),
-      activeColorPrimary: CupertinoColors.activeBlue,
+      activeColorPrimary: mainGreen,
       inactiveColorPrimary: CupertinoColors.systemGrey,
     ),
   ];

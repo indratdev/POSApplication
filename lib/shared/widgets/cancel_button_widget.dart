@@ -5,10 +5,10 @@ import '../../module/transactions/export.dart';
 import '../constants/constants.dart';
 
 class CancelButtonWidget extends StatelessWidget {
-  String contentMessage;
-  void Function()? voidCallback;
+  final String contentMessage;
+  final void Function()? voidCallback;
 
-  CancelButtonWidget({
+  const CancelButtonWidget({
     super.key,
     required this.widget,
     required this.contentMessage,

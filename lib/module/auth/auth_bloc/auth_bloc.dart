@@ -1,7 +1,5 @@
 import 'dart:developer';
 
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:posapplication/data/model/ops_daily_model.dart';
 import 'package:posapplication/data/model/profile_model.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/export_model.dart';
 import 'package:posapplication/data/model/orders_model.dart';
 import 'package:posapplication/shared/constants/constants.dart';
@@ -83,14 +82,14 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                         },
                         child: Container(
                           alignment: Alignment.center,
-                          padding: EdgeInsets.all(8),
-                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          padding: const EdgeInsets.all(8),
+                          margin: const EdgeInsets.symmetric(horizontal: 5),
                           decoration: BoxDecoration(
                               color: (selectedIndexCategory == index)
                                   ? sageColor
                                   : inActiveIconColor.withOpacity(0.3),
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(8))),
+                                  const BorderRadius.all(Radius.circular(8))),
                           child: Text(data.categoryName),
                         ),
                       );
@@ -154,7 +153,7 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                                 selectedItemModel: datas,
                               ));
                         },
-                        icon: Icon(Icons.remove_circle),
+                        icon: const Icon(Icons.remove_circle),
                       ),
                       // title: Text(data.itemName),
                       title: ListTile(
@@ -224,7 +223,7 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                                 selectedItemModel: datas,
                               ));
                         },
-                        icon: Icon(Icons.add_circle),
+                        icon: const Icon(Icons.add_circle),
                       ),
                     );
                   },
@@ -255,7 +254,7 @@ class _OrdersListScreenState extends State<OrdersListScreen> {
                                 print(">>> tidak data isi");
                               }
                             },
-                            child: Text("PESAN"),
+                            child: const Text("PESAN"),
                           )
                         ],
                       ),

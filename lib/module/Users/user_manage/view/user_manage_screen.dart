@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/users_model.dart';
 import 'package:posapplication/shared/utils/general_function.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
@@ -90,8 +89,8 @@ class _UserManageScreenState extends State<UserManageScreen> {
                         Navigator.pop(context);
                       });
                     },
-                    icon: Icon(Icons.delete_forever))
-                : SizedBox()
+                    icon: const Icon(Icons.delete_forever))
+                : const SizedBox()
           ],
         ),
         body: BlocListener<UsersBloc, UsersState>(
@@ -158,7 +157,7 @@ class _UserManageScreenState extends State<UserManageScreen> {
                           Validator.rule(value, required: true),
                       controller: emailController,
                       decoration: InputDecoration(
-                        label: Text("Email"),
+                        label: const Text("Email"),
                         fillColor: Colors.grey.shade300,
                         filled: (widget.isUpdate) ? true : false,
                         // focusColor: (widget.isUpdate) ? Colors.grey : null,
@@ -234,7 +233,7 @@ class _UserManageScreenState extends State<UserManageScreen> {
                                 child: SizedBox(
                                 height: MediaQuery.of(context).size.height / 16,
                                 child: ElevatedButton(
-                                  child: Text("SIMPAN"),
+                                  child: const Text("SIMPAN"),
                                   onPressed: () =>
                                       addOrUpdateUser(isUpdate: false),
                                   // onPressed: _addData,
@@ -268,13 +267,17 @@ class _UserManageScreenState extends State<UserManageScreen> {
 List<DropdownMenuItem<String>> get dropdownItems {
   List<DropdownMenuItem<String>> menuItems = [
     DropdownMenuItem(
-        child: Text("Admin"), value: RoleUsers.admin.name.toString()),
+        value: RoleUsers.admin.name.toString(),
+        child: const Text("Admin")),
     DropdownMenuItem(
-        child: Text("Cashier"), value: RoleUsers.cashier.name.toString()),
+        value: RoleUsers.cashier.name.toString(),
+        child: const Text("Cashier")),
     DropdownMenuItem(
-        child: Text("Staff"), value: RoleUsers.staff.name.toString()),
+        value: RoleUsers.staff.name.toString(),
+        child: const Text("Staff")),
     DropdownMenuItem(
-        child: Text("Maker"), value: RoleUsers.maker.name.toString()),
+        value: RoleUsers.maker.name.toString(),
+        child: const Text("Maker")),
   ];
   return menuItems;
 }

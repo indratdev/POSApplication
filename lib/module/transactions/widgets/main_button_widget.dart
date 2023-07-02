@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:posapplication/shared/constants/constants.dart';
 
-import '../../../shared/routes/app_routes.dart';
-
 enum ButtonName {
-  login,
-  register,
+  mainButton,
+  secondButton,
 }
 
 class MainButtonWidget extends StatelessWidget {
   ButtonName buttonName;
+  // Color? customColor;
+  String textLabel;
+  Function()? onPress;
 
   MainButtonWidget({
     super.key,
     required this.buttonName,
+    required this.textLabel,
+    this.onPress,
+    // this.customColor,
   });
 
   @override
@@ -25,22 +29,29 @@ class MainButtonWidget extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           elevation: 3,
           shadowColor: blackTextColor,
-          backgroundColor: (buttonName.name == ButtonName.login.name)
+          backgroundColor: (buttonName.name == ButtonName.mainButton.name)
               ? mainGreen
               : mainWhite,
+          // (customColor != null)
+          //     ? customColor
+          //     : ((buttonName.name == ButtonName.login.name))
+          //         ? mainGreen
+          //         : mainWhite,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
         ),
-        onPressed: () {
-          (buttonName.name == ButtonName.login.name)
-              ? Navigator.pushNamed(context, AppRoutes.login)
-              : Navigator.pushNamed(context, AppRoutes.register);
-        },
+        onPressed: onPress,
+        // () {
+        //   (buttonName.name == ButtonName.mainButton.name)
+        //       ? Navigator.pushNamed(context, AppRoutes.login)
+        //       : Navigator.pushNamed(context, AppRoutes.register);
+        // },
         child: Text(
-          (buttonName.name == ButtonName.login.name) ? "LOGIN" : "DAFTAR",
+          // (buttonName.name == ButtonName.login.name) ? "LOGIN" : "DAFTAR",
+          textLabel,
           style: TextStyle(
-            color: (buttonName.name == ButtonName.login.name)
+            color: (buttonName.name == ButtonName.mainButton.name)
                 ? mainWhite
                 : mainGreen,
           ),

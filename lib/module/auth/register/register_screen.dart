@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/module/auth/register/widgets/export.dart';
+import 'package:posapplication/module/transactions/widgets/custom_textformfield_widget.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
 import 'package:posapplication/shared/utils/validator/validator.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
 
 import '../../blocs/export_bloc.dart';
+import '../../transactions/export.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -15,6 +16,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final _keyRegister = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController rePasswordController = TextEditingController();
@@ -40,9 +42,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    rePasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
       body: SafeArea(
         child: SingleChildScrollView(
           child: BlocConsumer<AuthBloc, AuthState>(
@@ -74,95 +83,71 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   children: <Widget>[
                     Container(
                       margin: const EdgeInsets.only(top: 50, bottom: 10),
-                      color: Colors.amber,
                       alignment: Alignment.center,
                       child: Column(
-                        children: const <Widget>[
-                          Text("Daftar"),
-                          SizedBox(height: 10),
-                          Text(
-                            "Buat akun gratis!",
-                            textAlign: TextAlign.center,
-                          ),
+                        children: <Widget>[
+                          SizedBox(
+                              height: MediaQuery.of(context).size.width / 8,
+                              child: const FittedBox(
+                                  fit: BoxFit.fill,
+                                  child: Text(
+                                    "Hello Again!",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500),
+                                  ))),
+                          const SizedBox(height: 8),
+                          SizedBox(
+                              height: MediaQuery.of(context).size.width / 18,
+                              child: const FittedBox(
+                                  fit: BoxFit.fill,
+                                  child: Text("Create a free account!"))),
                         ],
                       ),
                     ),
                     Form(
+                      key: _keyRegister,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                         child: Column(
                           children: [
-                            TextFormField(
-                              enableInteractiveSelection: true,
-                              validator: (value) =>
-                                  Validator.emailValidator(value),
-                              controller: emailController,
-                              decoration: InputDecoration(
-                                hintText: "Ketik Email Anda",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                fillColor: Colors.white70,
-                              ),
+                            CustomTextFormFieldWidget(
+                              textFieldController: emailController,
+                              typeTextField: TypeTextField.email,
+                              hintText: "Ketik Email Anda",
                             ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              child: TextField(
-                                controller: passwordController,
-                                obscureText: true,
-                                decoration: InputDecoration(
-                                  hintText: "Ketik Kata Sandi / Password",
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  fillColor: Colors.white70,
-                                ),
-                              ),
+                            CustomTextFormFieldWidget(
+                              textFieldController: passwordController,
+                              typeTextField: TypeTextField.password,
+                              hintText: "Ketik Kata Sandi / Password",
                             ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              child: TextField(
-                                controller: rePasswordController,
-                                obscureText: true,
-                                decoration: InputDecoration(
-                                  hintText: "Ketik Ulang Kata Sandi / Password",
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  fillColor: Colors.white70,
-                                ),
-                              ),
+                            CustomTextFormFieldWidget(
+                              textFieldController: rePasswordController,
+                              typeTextField: TypeTextField.password,
+                              hintText: "Ketik Ulang Kata Sandi / Password",
                             ),
                           ],
                         ),
                       ),
                     ),
-                    SizedBox(height: 50),
-                    Container(
+                    const SizedBox(height: 50),
+                    SizedBox(
                       // padding: const EdgeInsets.only(top: 50, bottom: 50),
                       height: MediaQuery.of(context).size.width / 7,
                       width: double.infinity,
-                      child: ElevatedButton(
-                        child: Text("DAFTAR"),
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.red),
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    side:
-                                        const BorderSide(color: Colors.red)))),
-                        onPressed: () async {
-                          registerUser(
-                              emailController.text,
-                              passwordController.text,
-                              rePasswordController.text);
+                      child: MainButtonWidget(
+                        buttonName: ButtonName.mainButton,
+                        textLabel: "Daftar",
+                        onPress: () {
+                          if (_keyRegister.currentState!.validate()) {
+                            registerUser(
+                                emailController.text,
+                                passwordController.text,
+                                rePasswordController.text);
+                          }
                         },
                       ),
                     ),
-                    // SizedBox(height: 50),
-                    HaveAccountWidget()
+                    const HaveAccountWidget()
                   ],
                 ),
               );

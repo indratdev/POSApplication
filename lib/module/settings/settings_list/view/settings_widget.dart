@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:posapplication/shared/utils/TextUtil/text_util.dart';
 
 import '../../../../shared/constants/constants.dart';
 
 class SettingsWidget extends StatelessWidget {
-  String menu;
-  Widget screenToOpen;
-  Bloc? bloc;
-  Object? eventToCall;
-  IconData iconName;
+  final String menu;
+  final Widget screenToOpen;
+  final Bloc? bloc;
+  final Object? eventToCall;
+  final IconData iconName;
 
-  SettingsWidget({
+  const SettingsWidget({
     super.key,
     required this.menu,
     required this.screenToOpen,
@@ -37,8 +38,8 @@ class SettingsWidget extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
+          color: mainWhite,
+          borderRadius: BorderRadius.circular(12),
           boxShadow: [boxShadowMenu],
         ),
         child: Column(
@@ -46,17 +47,14 @@ class SettingsWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Tab(icon: Icon(iconName)),
-            const SizedBox(height: 5),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 3),
-              child: Text(
-                menu,
-                overflow: TextOverflow.clip,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
+            SizedBox(
+              height: MediaQuery.of(context).size.width / 10,
+              child: FittedBox(
+                fit: BoxFit.fill,
+                child: Text(
+                  TextUtil.clipStringTwoClause(menu),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
               ),
             ),

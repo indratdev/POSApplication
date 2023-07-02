@@ -37,6 +37,7 @@ class ItemsModel extends CategoryModel {
         // countOrder: json['countOrder'] as int? ?? 0,
       );
 
+  @override
   Map<String, dynamic> toJson() => {
         'companyID': companyID,
         'categoryID': categoryID,

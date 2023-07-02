@@ -29,9 +29,9 @@ class PaymentsRepository {
     late Either<String, bool> myEither;
 
     if (totalPayment < totalTranscationAmount) {
-      myEither = Left("Pembayaran Kurang");
+      myEither = const Left("Pembayaran Kurang");
     } else {
-      myEither = Right(true);
+      myEither = const Right(true);
     }
     return myEither;
   }

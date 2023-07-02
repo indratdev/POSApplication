@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:posapplication/data/service/hive_service/hive_init.dart';
 import 'package:posapplication/module/blocs/export_bloc.dart';
 import 'package:posapplication/shared/constants/constants.dart';
@@ -58,7 +59,17 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: AppRoutes().getRoutes,
-        theme: ThemeData(scaffoldBackgroundColor: thirdGreen),
+        theme: ThemeData(
+          scaffoldBackgroundColor: thirdGreen,
+          appBarTheme: const AppBarTheme(color: mainGreen),
+          // bottomAppBarTheme: BottomAppBarTheme(
+          //   // color: Color(0x44000000),
+          //   color: Colors.amber,
+          //   elevation: 0,
+          // ),
+          textTheme:
+              GoogleFonts.montserratTextTheme(Theme.of(context).textTheme),
+        ),
       ),
     );
   }

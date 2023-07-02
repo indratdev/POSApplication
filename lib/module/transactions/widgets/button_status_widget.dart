@@ -6,11 +6,11 @@ import '../../../shared/widgets/export_widget.dart';
 import '../../blocs/export_bloc.dart';
 
 class ButtonStatusWidget extends StatefulWidget {
-  OrdersModel? orderCustomer;
-  double width;
-  Map<String, dynamic>? statusMap;
+  final OrdersModel? orderCustomer;
+  final double width;
+  final Map<String, dynamic>? statusMap;
 
-  ButtonStatusWidget({
+  const ButtonStatusWidget({
     super.key,
     this.orderCustomer,
     required this.width,
@@ -47,8 +47,6 @@ class _ButtonStatusWidgetState extends State<ButtonStatusWidget> {
               context, "Apakah anda yakin melanjutkan proses ini ?", () {
             // update time waiting
             widget.orderCustomer!.dateTimeWaiting = DateTime.now();
-
-            // print(widget.orderCustomer?.dataTable?.tableID);
 
             BlocProvider.of<OrdersBloc>(context).add(UpdateStatusOrders(
               status: StatusOrder.progress,
@@ -156,14 +154,8 @@ class _ButtonStatusWidgetState extends State<ButtonStatusWidget> {
               }),
         ],
       );
-    }
-    // else if (widget.orderCustomer!.status == StatusOrder.billIsReady.name) {
-
-    // }
-    else {
+    } else {
       return const SizedBox();
     }
-
-    // return const Placeholder();
   }
 }

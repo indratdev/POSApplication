@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:posapplication/shared/constants/constants.dart';
-import 'package:posapplication/shared/utils/validator/validator.dart';
+import 'package:posapplication/module/transactions/export.dart';
+import 'package:posapplication/module/transactions/widgets/custom_textformfield_widget.dart';
 
 import '../../../shared/routes/app_routes.dart';
 
@@ -17,17 +15,20 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKeyLogin = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  // final NetworkConnectivity _networkConnectivity = NetworkConnectivity.instance;
-  // String string = '';
-  // Map _source = {ConnectivityResult.none: false};
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
       body: SafeArea(
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
@@ -51,103 +52,90 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(18),
                 child: Form(
-                  key: _formKey,
+                  key: _formKeyLogin,
                   child: Column(
                     children: <Widget>[
                       Container(
                         margin: const EdgeInsets.only(top: 50),
-                        color: Colors.amber,
                         alignment: Alignment.center,
                         child: Column(
-                          children: const <Widget>[
-                            Text("Hello Again!"),
-                            SizedBox(height: 10),
-                            Text(
-                              "Welcome back you've \n been missed!",
-                              textAlign: TextAlign.center,
+                          children: <Widget>[
+                            Container(
+                                margin: const EdgeInsets.only(bottom: 8),
+                                height: MediaQuery.of(context).size.width / 8,
+                                child: const FittedBox(
+                                    fit: BoxFit.fill,
+                                    child: Text(
+                                      "Hello Again!",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500),
+                                    ))),
+                            Container(
+                              margin: const EdgeInsets.only(bottom: 10),
+                              height: MediaQuery.of(context).size.width / 10,
+                              child: const FittedBox(
+                                fit: BoxFit.fill,
+                                child: Text(
+                                  "Welcome back you've \n been missed!",
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
                             ),
                           ],
                         ),
                       ),
-                      TextFormField(
-                        controller: emailController,
-                        validator: (value) => Validator.emailValidator(value),
-                        decoration: InputDecoration(
-                          hintText: "Ketik Email Anda",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          fillColor: Colors.white70,
-                        ),
+                      CustomTextFormFieldWidget(
+                        textFieldController: emailController,
+                        typeTextField: TypeTextField.email,
+                        hintText: "Ketik Email Anda",
                       ),
-                      const SizedBox(height: 20),
-                      TextFormField(
-                        controller: passwordController,
-                        validator: (value) => Validator.rule(value),
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: "Ketik Kata Sandi / Password",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          fillColor: Colors.white70,
-                        ),
+                      CustomTextFormFieldWidget(
+                        textFieldController: passwordController,
+                        typeTextField: TypeTextField.password,
+                        hintText: "Ketik Kata Sandi / Password",
                       ),
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
                           onPressed: () => Navigator.pushNamed(
                               context, AppRoutes.forgotPassword),
-                          child: const Text("Lupa Kata Sandi ?"),
+                          child: const Text("Lupa Kata Sandi?"),
                         ),
                       ),
-                      const SizedBox(height: 50),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.width / 7,
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.red),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      side: const BorderSide(
-                                          color: Colors.red)))),
-                          child: const Text("LOGIN"),
-                          onPressed: () {
-                            // if (_formKey.currentState!.validate()) {
-                            // BlocProvider.of<AuthBloc>(context).add(
-                            //     LoginUserEvent(
-                            //         email: emailController.text,
-                            //         password: passwordController.text));
+                      const SizedBox(height: 40),
+                      MainButtonWidget(
+                        buttonName: ButtonName.mainButton,
+                        textLabel: "LOGIN",
+                        onPress: () {
+                          // if (_formKey.currentState!.validate()) {
+                          // BlocProvider.of<AuthBloc>(context).add(
+                          //     LoginUserEvent(
+                          //         email: emailController.text,
+                          //         password: passwordController.text));
 
-                            // }
+                          // }
 
-                            BlocProvider.of<AuthBloc>(context).add(
-                                LoginUserEvent(
-                                    email: "owner@mail.com",
-                                    password: "123123"));
-                          },
-                        ),
+                          // only-test
+                          BlocProvider.of<AuthBloc>(context).add(LoginUserEvent(
+                              email: "owner@mail.com", password: "123123"));
+                        },
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 30),
-                        child: Text("Atau lanjutkan dengan"),
-                      ),
-                      SizedBox(height: 30),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white, width: 2),
-                          shape: BoxShape.rectangle,
-                        ),
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Image.asset(googleLogo),
-                        ),
-                      ),
-                      SizedBox(height: 50),
+                      // const Padding(
+                      //   padding: EdgeInsets.only(top: 30),
+                      //   child: Text("Atau lanjutkan dengan"),
+                      // ),
+                      // const SizedBox(height: 30),
+                      // Container(
+                      //   decoration: BoxDecoration(
+                      //     border: Border.all(color: Colors.white, width: 2),
+                      //     shape: BoxShape.rectangle,
+                      //   ),
+                      //   child: IconButton(
+                      //     onPressed: () {},
+                      //     icon: Image.asset(googleLogo),
+                      //   ),
+                      // ),
+                      // const SizedBox(height: 50),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,

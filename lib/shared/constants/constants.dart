@@ -7,6 +7,7 @@ const successImage = 'assets/images/success.webp';
 const failedImage = 'assets/images/failed.webp';
 const warningImage = 'assets/images/warning.webp';
 const noDataImage = 'assets/images/nodata.webp';
+const logoAppImage = 'assets/images/logoApp.webp';
 
 // icons
 const workProcess = 'assets/icons/work_process.webp';
@@ -30,6 +31,14 @@ const Color secondGreen = Color(0xFFC7E8CA);
 const Color thirdGreen = Color(0xFFDDF7E3);
 const Color redColors = Color(0xFFDF2E38);
 const Color mainWhite = Color(0xFFFDFAF6);
+
+const Color waitingColor = Color(0xFFFFEBEB);
+const Color progressColor = Color(0xFFADE4DB);
+const Color readyColor = Color(0xFFF6BA6F);
+const Color orderCompletedColor = Color(0xFF92B4EC);
+const Color billIsReadyColor = Color(0xFFFFFFFF);
+const Color paymentCompleteColor = Color(0xFFFFB2A6);
+const Color cancelColor = Color(0xFFFF6464);
 
 // ------- end main color -------
 

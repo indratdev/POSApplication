@@ -12,7 +12,7 @@ import '../blocs/export_bloc.dart';
 class OrdersConfirmationScreen extends StatefulWidget {
   // List<OrdersModel> orderList = [];
 
-  OrdersConfirmationScreen({
+  const OrdersConfirmationScreen({
     super.key,
   });
 
@@ -163,7 +163,7 @@ class _OrdersConfirmationScreenState extends State<OrdersConfirmationScreen> {
                   ],
                 );
               } else {
-                return SizedBox();
+                return const SizedBox();
               }
             },
           ),

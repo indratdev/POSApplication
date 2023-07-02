@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/customers_model.dart';
 
 import 'package:posapplication/module/customers/customers_manage/customers_manage_screen.dart';
@@ -26,7 +25,7 @@ class _CustomersDashboardScreenState extends State<CustomersDashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Customers Management"),
+        title: const Text("Customers Management"),
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(

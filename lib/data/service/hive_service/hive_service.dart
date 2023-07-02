@@ -22,7 +22,7 @@ class HiveService {
   Future<Box<dynamic>> isBoxAlreadyOpen(String boxName) async {
     late Box box;
     bool status = Hive.isBoxOpen(boxName);
-    print(">>> status new : $status");
+    // print(">>> status new : $status");
     if (status == false) {
       if (boxName == companyProfileBox) {
         box = await Hive.openBox(companyProfileBox);
@@ -41,7 +41,7 @@ class HiveService {
     // box = Hive.box(boxName);
     box = await Hive.openBox(boxName);
 
-    print(">> status box nya  ::: ${box.values}");
+    // print(">> status box nya  ::: ${box.values}");
 
     return box;
   }

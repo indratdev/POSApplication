@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/category_model.dart';
 
 import '../../../../shared/utils/general_function.dart';
@@ -83,8 +82,8 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
                         Navigator.pop(context);
                       });
                     },
-                    icon: Icon(Icons.delete_forever))
-                : SizedBox()
+                    icon: const Icon(Icons.delete_forever))
+                : const SizedBox()
           ],
         ),
         body: BlocListener<SettingsBloc, SettingsState>(
@@ -193,7 +192,7 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
                                   height:
                                       MediaQuery.of(context).size.height / 16,
                                   child: ElevatedButton(
-                                    child: Text("SIMPAN"),
+                                    child: const Text("SIMPAN"),
                                     onPressed: () =>
                                         addOrUpdateCategory(isUpdate: false),
                                   ),

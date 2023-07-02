@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:posapplication/data/model/customers_model.dart';
 import 'package:posapplication/data/model/orders_model.dart';
@@ -145,13 +144,14 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
                           PersistentNavBarNavigator.pushNewScreen(
                             context,
-                            screen: CustomersSelectedScreen(),
+                            screen: const CustomersSelectedScreen(),
                             withNavBar: false,
                             pageTransitionAnimation:
                                 PageTransitionAnimation.cupertino,
                           );
                         },
-                        child: ListTile(
+                        child: 
+                        ListTile(
                           minLeadingWidth: 0,
                           title: Text(selectedCustomer?.fullname ??
                               "Silahkan Pilih Pelanggan *"),
@@ -166,7 +166,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
                           PersistentNavBarNavigator.pushNewScreen(
                             context,
-                            screen: TablesSelectedScreen(),
+                            screen: const TablesSelectedScreen(),
                             withNavBar: false,
                             pageTransitionAnimation:
                                 PageTransitionAnimation.cupertino,
@@ -187,7 +187,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
                           PersistentNavBarNavigator.pushNewScreen(
                             context,
-                            screen: OrdersListScreen(),
+                            screen: const OrdersListScreen(),
                             withNavBar: false,
                             pageTransitionAnimation:
                                 PageTransitionAnimation.cupertino,
@@ -216,7 +216,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
                           PersistentNavBarNavigator.pushNewScreen(
                             context,
-                            screen: UserSelectedScreen(),
+                            screen: const UserSelectedScreen(),
                             withNavBar: false,
                             pageTransitionAnimation:
                                 PageTransitionAnimation.cupertino,
@@ -243,7 +243,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
                           PersistentNavBarNavigator.pushNewScreen(
                             context,
-                            screen: OrdersConfirmationScreen(),
+                            screen: const OrdersConfirmationScreen(),
                             withNavBar: false,
                             pageTransitionAnimation:
                                 PageTransitionAnimation.cupertino,

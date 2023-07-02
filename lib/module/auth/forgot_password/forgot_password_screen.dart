@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:posapplication/module/transactions/widgets/custom_textformfield_widget.dart';
+import 'package:posapplication/module/transactions/widgets/main_button_widget.dart';
 
 import '../../../shared/routes/app_routes.dart';
 import '../../../shared/utils/validator/validator.dart';
 import '../../../shared/widgets/custom_widgets.dart';
 import '../../blocs/export_bloc.dart';
+import '../register/widgets/export.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
-  ForgotPasswordScreen({
+  const ForgotPasswordScreen({
     super.key,
   });
 
@@ -16,13 +18,18 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKeyForgotPassword = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
       body: SafeArea(
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
@@ -51,66 +58,59 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(18),
                 child: Form(
-                  key: _formKey,
+                  key: _formKeyForgotPassword,
                   child: Column(
                     children: <Widget>[
                       Container(
-                        margin: const EdgeInsets.only(top: 50),
-                        color: Colors.amber,
+                        margin: const EdgeInsets.only(top: 30),
                         alignment: Alignment.center,
                         child: Column(
-                          children: const <Widget>[
-                            Text("Lupa Kata Sandi ?"),
-                            SizedBox(height: 10),
-                            Text(
-                              "Masukkan alamat email Anda yang terkait dengan akun Anda",
-                              textAlign: TextAlign.center,
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
+                          children: <Widget>[
+                            // Text("Lupa Kata Sandi ?"),
+                            Container(
+                                margin: const EdgeInsets.only(bottom: 8),
+                                height: MediaQuery.of(context).size.width / 12,
+                                child: const FittedBox(
+                                    fit: BoxFit.fill,
+                                    child: Text(
+                                      "Lupa Kata Sandi?",
+                                      // "Hello Again!",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500),
+                                    ))),
+
+                            Container(
+                              margin: const EdgeInsets.only(bottom: 8),
+                              height: MediaQuery.of(context).size.width / 22,
+                              child: const FittedBox(
+                                fit: BoxFit.fill,
+                                child: Text(
+                                  "Masukkan alamat email Anda",
+                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                ),
+                              ),
                             ),
                           ],
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 20),
-                        child: TextFormField(
-                          validator: (value) => Validator.emailValidator(value),
-                          controller: emailController,
-                          decoration: InputDecoration(
-                            hintText: "Ketik Email Anda",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            fillColor: Colors.white70,
-                          ),
-                        ),
+                      CustomTextFormFieldWidget(
+                        textFieldController: emailController,
+                        typeTextField: TypeTextField.email,
+                        hintText: "Ketik Email Anda",
                       ),
                       const SizedBox(height: 20),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.width / 7,
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              BlocProvider.of<AuthBloc>(context).add(
-                                  ForgotPasswordEvent(
-                                      email: emailController.text));
-                            }
-                          },
-                          child: const Text("RESET PASSWORD"),
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.red),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                side: const BorderSide(color: Colors.red),
-                              ),
-                            ),
-                          ),
-                        ),
+                      MainButtonWidget(
+                        buttonName: ButtonName.mainButton,
+                        textLabel: "RESET PASSWORD",
+                        onPress: () {
+                          if (_formKeyForgotPassword.currentState!.validate()) {
+                            BlocProvider.of<AuthBloc>(context).add(
+                                ForgotPasswordEvent(
+                                    email: emailController.text));
+                          }
+                        },
                       ),
+                      const HaveAccountWidget()
                     ],
                   ),
                 ),

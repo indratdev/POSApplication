@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:currency_picker/currency_picker.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:posapplication/data/service/hive_service/hive_service.dart';
@@ -8,6 +7,7 @@ import 'package:posapplication/module/owner/owner_profile/controller/profile_con
 import 'package:posapplication/shared/routes/app_routes.dart';
 import 'package:posapplication/shared/utils/validator/validator.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
+import 'package:posapplication/shared/widgets/twooption_button_widget.dart';
 
 import '../../../../data/model/profile_model.dart';
 import '../../../blocs/export_bloc.dart';
@@ -176,7 +176,7 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
                         validator: (value) =>
                             Validator.rule(value, required: true),
                         controller: bussinessNameController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "Nama Bisnis",
                         ),
                       ),
@@ -187,7 +187,7 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
                         validator: (value) =>
                             Validator.rule(value, required: true),
                         controller: bussinessTypeController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "Tipe Bisnis",
                         ),
                       ),
@@ -197,7 +197,8 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
                       child: TextFormField(
                         validator: (value) =>
                             Validator.rule(value, required: true),
-                        decoration: InputDecoration(hintText: "Pilih Negara"),
+                        decoration:
+                            const InputDecoration(hintText: "Pilih Negara"),
                         controller: bussinessCountryController,
                         onTap: () {
                           showCurrencyPicker(
@@ -222,7 +223,7 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
                         validator: (value) =>
                             Validator.rule(value, required: true),
                         controller: bussinessCurrencyController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "Mata Uang",
                         ),
                       ),
@@ -235,7 +236,7 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
                         controller: bussinessAddressController,
                         keyboardType: TextInputType.multiline,
                         maxLines: 4,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             hintText: "Alamat",
                             focusedBorder: OutlineInputBorder(
                                 borderSide:
@@ -248,103 +249,59 @@ class _OwnerProfileScreenState extends State<OwnerProfileScreen> {
                         validator: (value) =>
                             Validator.rule(value, required: true),
                         controller: bussinessPhoneController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "No. Telepon",
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(8, 12, 8, 12),
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: SizedBox(
-                            height: MediaQuery.of(context).size.height / 16,
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  foregroundColor: Colors.red,
-                                ),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text("BATAL")),
-                          )),
-                          const SizedBox(width: 10),
-                          (widget.isUpdate)
-                              // UPDATE
-                              ? Expanded(
-                                  child: SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height / 16,
-                                  child: ElevatedButton(
-                                    child: const Text("UPDATE"),
-                                    onPressed: () {
-                                      if (_formKeyProfile.currentState!
-                                          .validate()) {
-                                        var datas = ProfileModel(
-                                          bussinessName:
-                                              bussinessNameController.text,
-                                          bussinessAddress:
-                                              bussinessAddressController.text,
-                                          bussinessCountry:
-                                              bussinessCountryController.text,
-                                          bussinessCurrency:
-                                              bussinessCurrencyController.text,
-                                          bussinessPhone:
-                                              bussinessPhoneController.text,
-                                          bussinessType:
-                                              bussinessTypeController.text,
-                                        );
+                    (widget.isUpdate)
+                        ? TwoOptionButtonWidget(
+                            mainTitleButton: "UPDATE",
+                            mainButtonvoidCallback: () {
+                              if (_formKeyProfile.currentState!.validate()) {
+                                var datas = ProfileModel(
+                                  bussinessName: bussinessNameController.text,
+                                  bussinessAddress:
+                                      bussinessAddressController.text,
+                                  bussinessCountry:
+                                      bussinessCountryController.text,
+                                  bussinessCurrency:
+                                      bussinessCurrencyController.text,
+                                  bussinessPhone: bussinessPhoneController.text,
+                                  bussinessType: bussinessTypeController.text,
+                                );
 
-                                        BlocProvider.of<OwnerBloc>(context).add(
-                                            UpdateProfileCompanyEvent(
-                                                profileModel: datas));
+                                BlocProvider.of<OwnerBloc>(context).add(
+                                    UpdateProfileCompanyEvent(
+                                        profileModel: datas));
+                              }
+                            },
+                          )
+                        : TwoOptionButtonWidget(
+                            mainTitleButton: "SIMPAN",
+                            mainButtonvoidCallback: () {
+                              if (_formKeyProfile.currentState!.validate()) {
+                                var datas = ProfileModel(
+                                  bussinessName: bussinessNameController.text,
+                                  bussinessAddress:
+                                      bussinessAddressController.text,
+                                  bussinessCountry:
+                                      bussinessCountryController.text,
+                                  bussinessCurrency:
+                                      bussinessCurrencyController.text,
+                                  bussinessPhone: bussinessPhoneController.text,
+                                  bussinessType: bussinessTypeController.text,
+                                );
 
-                                        // print("update");
-                                      }
-                                    },
-                                  ),
-                                ))
-                              // ADD NEW
-                              : Expanded(
-                                  child: SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height / 16,
-                                  child: ElevatedButton(
-                                    child: Text("SIMPAN"),
-                                    // onPressed: _addData,
-                                    onPressed: () {
-                                      if (_formKeyProfile.currentState!
-                                          .validate()) {
-                                        var datas = ProfileModel(
-                                          bussinessName:
-                                              bussinessNameController.text,
-                                          bussinessAddress:
-                                              bussinessAddressController.text,
-                                          bussinessCountry:
-                                              bussinessCountryController.text,
-                                          bussinessCurrency:
-                                              bussinessCurrencyController.text,
-                                          bussinessPhone:
-                                              bussinessPhoneController.text,
-                                          bussinessType:
-                                              bussinessTypeController.text,
-                                        );
+                                BlocProvider.of<OwnerBloc>(context).add(
+                                    AddProfileCompanyEvent(
+                                        profileModel: datas));
 
-                                        BlocProvider.of<OwnerBloc>(context).add(
-                                            AddProfileCompanyEvent(
-                                                profileModel: datas));
-
-                                        // print(bussinessNameController.text);
-                                        // print("ok");
-                                      }
-                                    },
-                                  ),
-                                )),
-                        ],
-                      ),
-                    ),
+                                // print(bussinessNameController.text);
+                                // print("ok");
+                              }
+                            },
+                          )
                   ],
                 ),
               ),

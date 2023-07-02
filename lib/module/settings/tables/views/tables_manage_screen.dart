@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../shared/utils/validator/validator.dart';
 import '../../../../data/model/tables_model.dart';
@@ -89,8 +88,8 @@ class _TablesManageScreenState extends State<TablesManageScreen> {
                       Navigator.pop(context);
                     });
                   },
-                  icon: Icon(Icons.delete_forever))
-              : SizedBox()
+                  icon: const Icon(Icons.delete_forever))
+              : const SizedBox()
         ],
       ),
       body: BlocListener<TablesBloc, TablesState>(
@@ -253,20 +252,26 @@ class _TablesManageScreenState extends State<TablesManageScreen> {
 List<DropdownMenuItem<String>> get dropdownShapes {
   List<DropdownMenuItem<String>> menuItems = [
     DropdownMenuItem(
-        child: Text("Persegi Panjang"),
-        value: TableShape.rectangle.name.toString()),
+        value: TableShape.rectangle.name.toString(),
+        child: const Text("Persegi Panjang")),
     DropdownMenuItem(
-        child: Text("Lingkaran"), value: TableShape.circle.name.toString()),
+        value: TableShape.circle.name.toString(),
+        child: const Text("Lingkaran")),
     DropdownMenuItem(
-        child: Text("Bentuk L"), value: TableShape.lshape.name.toString()),
+        value: TableShape.lshape.name.toString(),
+        child: const Text("Bentuk L")),
     DropdownMenuItem(
-        child: Text("Bar"), value: TableShape.barseat.name.toString()),
+        value: TableShape.barseat.name.toString(),
+        child: const Text("Bar")),
     DropdownMenuItem(
-        child: Text("Oval"), value: TableShape.oval.name.toString()),
+        value: TableShape.oval.name.toString(),
+        child: const Text("Oval")),
     DropdownMenuItem(
-        child: Text("Persegi"), value: TableShape.square.name.toString()),
+        value: TableShape.square.name.toString(),
+        child: const Text("Persegi")),
     DropdownMenuItem(
-        child: Text("Lainnya"), value: TableShape.others.name.toString()),
+        value: TableShape.others.name.toString(),
+        child: const Text("Lainnya")),
   ];
   return menuItems;
 }

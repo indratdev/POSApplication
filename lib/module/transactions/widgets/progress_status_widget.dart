@@ -10,7 +10,7 @@ class ProgressStatusWidget extends StatelessWidget {
   final OrdersModel? orderCustomer;
   final int _widthIcon;
 
-  ProgressStatusWidget({
+  const ProgressStatusWidget({
     super.key,
     required int widthIcon,
     required this.orderCustomer,

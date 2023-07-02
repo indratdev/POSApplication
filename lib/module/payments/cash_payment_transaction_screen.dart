@@ -108,7 +108,7 @@ class _CashPaymentTransactionScreenState
   }
 
   clearPayment() {
-    print(">>> clearPayment running : ${totalPayment}");
+    print(">>> clearPayment running : $totalPayment");
 
     String result = totalPayment.substring(0, totalPayment.length - 1);
 
@@ -134,8 +134,8 @@ class _CashPaymentTransactionScreenState
       style: ElevatedButton.styleFrom(
         fixedSize: Size(MediaQuery.of(context).size.width / 6,
             MediaQuery.of(context).size.width / 6),
-        shape: CircleBorder(),
-        padding: EdgeInsets.all(24),
+        shape: const CircleBorder(),
+        padding: const EdgeInsets.all(24),
       ),
       child: Text(number.toString()),
     );
@@ -199,7 +199,7 @@ class _CashPaymentTransactionScreenState
                 const Text("Total Tagihan"),
                 Text(
                   "Rp. ${widget.totalTranscationAmount}",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 21,
                     fontWeight: FontWeight.w600,
                   ),
@@ -213,7 +213,7 @@ class _CashPaymentTransactionScreenState
                   const Text("Total Bayar"),
                   Text(
                     totalPayment,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 36,
                       fontWeight: FontWeight.w600,
                     ),
@@ -242,13 +242,13 @@ class _CashPaymentTransactionScreenState
                 ),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 color: lightPeachColor,
               ),
-              padding: EdgeInsets.all(12),
+              padding: const EdgeInsets.all(12),
               child: Column(
                 children: [
                   Container(
@@ -267,7 +267,7 @@ class _CashPaymentTransactionScreenState
                             // )
                           ],
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -277,7 +277,7 @@ class _CashPaymentTransactionScreenState
                             _buildNumberButton(context, "00"),
                           ],
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [

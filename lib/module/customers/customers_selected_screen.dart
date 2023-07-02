@@ -38,7 +38,7 @@ class _CustomersSelectedScreenState extends State<CustomersSelectedScreen> {
                 Navigator.pop(context);
               }
             },
-            icon: Icon(Icons.check),
+            icon: const Icon(Icons.check),
           ),
         ],
       ),

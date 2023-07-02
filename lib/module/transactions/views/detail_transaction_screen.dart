@@ -75,8 +75,8 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double _width = MediaQuery.of(context).size.width;
-    int _widthIcon = _width ~/ 5;
+    double width = MediaQuery.of(context).size.width;
+    int widthIcon = width ~/ 5;
 
     print("======  ${widget.orderCustomer!.userHandleBy}");
 
@@ -212,7 +212,7 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                               children: [
                                 IconButton(
                                   onPressed: () {},
-                                  icon: Icon(Icons.chat_outlined),
+                                  icon: const Icon(Icons.chat_outlined),
                                 ),
                               ],
                             ),
@@ -235,9 +235,9 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   "Staff Maker :",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 14,
                                   ),
@@ -281,10 +281,10 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                                     "${widget.orderCustomer!.dataItem?.length ?? 0} Item Pesanan"),
                                 IconButton(
                                     onPressed: () {},
-                                    icon: Icon(Icons.find_in_page_outlined))
+                                    icon: const Icon(Icons.find_in_page_outlined))
                               ],
                             ),
-                            Row(
+                            const Row(
                               children: [
                                 Icon(Icons.event_note_rounded),
                                 SizedBox(width: 10),
@@ -455,7 +455,7 @@ class _DetailTransactionScreenState extends State<DetailTransactionScreen> {
                               // proses selanjutnya
 
                               ButtonStatusWidget(
-                                width: _width,
+                                width: width,
                                 orderCustomer: widget.orderCustomer,
                                 statusMap: statusMap,
                               )

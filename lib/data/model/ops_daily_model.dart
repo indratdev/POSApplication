@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:posapplication/data/model/category_model.dart';
 import 'package:posapplication/data/model/tables_model.dart';

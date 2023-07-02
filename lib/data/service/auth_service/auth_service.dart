@@ -134,7 +134,7 @@ class AuthService {
         detailUser = await UserService().readDataUser();
       }
 
-      print(">>> detailuser :: ${detailUser}");
+      print(">>> detailuser :: $detailUser");
 
       return Right(detailUser);
 

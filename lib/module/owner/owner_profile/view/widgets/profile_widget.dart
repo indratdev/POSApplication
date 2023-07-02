@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:posapplication/module/owner/owner_profile/view/owner_profile_screen.dart';
+import 'package:posapplication/module/owner/owner_profile/view/widgets/card_profile_widget.dart';
 
 import '../../../../../data/model/profile_model.dart';
 import '../../../../../shared/constants/constants.dart';
+
+enum ProfileType {
+  companyTypeProfile,
+  countryProfile,
+  currencyProfile,
+  addressProfile,
+}
 
 class ProfileWidget extends StatefulWidget {
   bool isUpdate = false;
@@ -31,15 +39,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     return WillPopScope(
       onWillPop: () async {
         Hive.close();
-
         Navigator.of(context).pop();
-
         return true;
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("PROFILE"),
+          title: const Text("Profil"),
           centerTitle: true,
+          elevation: 0,
           actions: [
             TextButton(
               child: Text(
@@ -84,64 +91,77 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           ],
         ),
         body: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(13),
+          child: SizedBox(
             width: double.infinity,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                CircleAvatar(
-                  backgroundImage: (widget.isUpdate)
-                      ? AssetImage(warningImage)
-                      : AssetImage(noDataImage),
-                  // backgroundColor: Colors.blue,
-                  radius: MediaQuery.of(context).size.width / 5,
-                  backgroundColor: Colors.blue,
-                ),
-                Text(
-                  (widget.isUpdate)
-                      ? widget.profileModel?.bussinessName.toString() ?? ""
-                      : "-",
-                ),
-                Text(
-                  (widget.isUpdate)
-                      ? widget.profileModel?.bussinessPhone.toString() ?? ""
-                      : "-",
-                ),
-                SizedBox(height: 50),
-                ListTile(
-                  title: Text("Tipe Perusahaan"),
-                  subtitle: Text(
-                    (widget.isUpdate)
-                        ? widget.profileModel?.bussinessType.toString() ?? ""
-                        : "-",
+                Container(
+                  color: mainGreen,
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height / 3.5,
+                  margin: const EdgeInsets.only(bottom: 8),
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        backgroundImage: (widget.isUpdate)
+                            ? const AssetImage(warningImage)
+                            : const AssetImage(noDataImage),
+                        radius: MediaQuery.of(context).size.width / 5,
+                      ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.width / 18,
+                          child: FittedBox(
+                              fit: BoxFit.fill,
+                              child: Text(
+                                (widget.isUpdate)
+                                    ? widget.profileModel?.bussinessName
+                                            .toString() ??
+                                        ""
+                                    : "-",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500),
+                              ))),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.width / 18,
+                          child: FittedBox(
+                              fit: BoxFit.fill,
+                              child: Text(
+                                (widget.isUpdate)
+                                    ? widget.profileModel?.bussinessPhone
+                                            .toString() ??
+                                        ""
+                                    : "-",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500),
+                              ))),
+                    ],
                   ),
                 ),
-                ListTile(
-                  title: Text("Negara"),
-                  subtitle: Text(
-                    (widget.isUpdate)
-                        ? widget.profileModel?.bussinessCountry.toString() ?? ""
-                        : "-",
-                  ),
+                CardProfileWidget(
+                  isUpdate: widget.isUpdate,
+                  titleText: "Tipe Perusahaan",
+                  profileType: ProfileType.companyTypeProfile,
+                  profileModel: widget.profileModel,
                 ),
-                ListTile(
-                  title: Text("Mata Uang"),
-                  subtitle: Text(
-                    (widget.isUpdate)
-                        ? widget.profileModel?.bussinessCurrency.toString() ??
-                            ""
-                        : "-",
-                  ),
+                CardProfileWidget(
+                  isUpdate: widget.isUpdate,
+                  titleText: "Negara",
+                  profileType: ProfileType.countryProfile,
+                  profileModel: widget.profileModel,
                 ),
-                ListTile(
-                  title: Text("Alamat"),
-                  subtitle: Text(
-                    (widget.isUpdate)
-                        ? widget.profileModel?.bussinessAddress.toString() ?? ""
-                        : "-",
-                  ),
+                CardProfileWidget(
+                  isUpdate: widget.isUpdate,
+                  titleText: "Mata Uang",
+                  profileType: ProfileType.currencyProfile,
+                  profileModel: widget.profileModel,
+                ),
+                CardProfileWidget(
+                  isUpdate: widget.isUpdate,
+                  titleText: "Alamat",
+                  profileType: ProfileType.addressProfile,
+                  profileModel: widget.profileModel,
                 ),
               ],
             ),

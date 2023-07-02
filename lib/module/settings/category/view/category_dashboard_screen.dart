@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/category_model.dart';
 
 import 'package:posapplication/module/export.dart';
@@ -21,7 +20,7 @@ class _CategoryDashboardScreenState extends State<CategoryDashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Kategori"),
+        title: const Text("Kategori"),
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
@@ -30,7 +29,7 @@ class _CategoryDashboardScreenState extends State<CategoryDashboardScreen> {
             print("object");
             Navigator.pushNamed(context, AppRoutes.categoryManagement);
           },
-          child: Icon(Icons.add)),
+          child: const Icon(Icons.add)),
       body: BlocBuilder<SettingsBloc, SettingsState>(
         builder: (context, state) {
           if (state is SuccessGetAllCategory) {
@@ -59,7 +58,7 @@ class _CategoryDashboardScreenState extends State<CategoryDashboardScreen> {
                     );
                   },
                   child: ListTile(
-                    title: Text("Nama Kategori"),
+                    title: const Text("Nama Kategori"),
                     subtitle: Text(data.categoryName.toString()),
                     // trailing: Text(data.tableName.toString()),
                   ),

@@ -1,4 +1,11 @@
 class TextUtil {
+  static String clipStringTwoClause(String text) {
+    String separatedText = text.replaceAllMapped(RegExp(r'^(.*?)\s'), (match) {
+      return '${match.group(1)}\n';
+    });
+    return separatedText;
+  }
+
   static String substringAndEclipsText(String text) {
     return "${text.substring(0, 20)}...";
   }

@@ -2,7 +2,7 @@ class Validator {
   // basic
   static String? rule(
     String? value, {
-    bool required = false,
+    bool required = true,
   }) {
     if (required && value!.isEmpty) {
       return "This field is required";

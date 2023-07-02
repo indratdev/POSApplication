@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:posapplication/domain/user_repository.dart';
 import 'package:uuid/uuid.dart';
 
-import 'shared_preferences/myshared_preferences.dart';
 
 class GeneralFunction {
   UserRepository userRepository = UserRepository();

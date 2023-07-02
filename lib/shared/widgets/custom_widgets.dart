@@ -21,17 +21,17 @@ class CustomWidgets {
         builder: (BuildContext context) {
           return Dialog(
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)), //this right here
+                borderRadius: BorderRadius.circular(8.0)), //this right here
             child: SizedBox(
-              height: MediaQuery.of(context).size.height / 4,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
+              height: MediaQuery.of(context).size.height / 5,
+              child: const Padding(
+                padding: EdgeInsets.fromLTRB(10, 15, 10, 10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
+                  children: [
                     CircularProgressIndicator.adaptive(),
-                    Text('Loading..'),
+                    Text('Loading...'),
                   ],
                 ),
               ),
@@ -73,8 +73,8 @@ class CustomWidgets {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
                           ),
-                          child: Text("BATAL",
-                              style: const TextStyle(color: Colors.black)),
+                          child: const Text("BATAL",
+                              style: TextStyle(color: Colors.black)),
                         ),
                         const SizedBox(width: 20),
                         ElevatedButton(
@@ -248,10 +248,10 @@ class CustomWidgets {
         return Wrap(
           children: [
             ListTile(
-                leading: Icon(Icons.wallet_outlined),
-                title: Text('Tunai / Cash'),
-                subtitle: Text("Menggunakan uang tunai"),
-                trailing: Icon(Icons.arrow_forward_ios),
+                leading: const Icon(Icons.wallet_outlined),
+                title: const Text('Tunai / Cash'),
+                subtitle: const Text("Menggunakan uang tunai"),
+                trailing: const Icon(Icons.arrow_forward_ios),
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.push(
@@ -262,7 +262,7 @@ class CustomWidgets {
                             totalTranscationAmount: totalTranscationAmount),
                       ));
                 }),
-            ListTile(
+            const ListTile(
               leading: Icon(Icons.wallet_outlined),
               title: Text('Kartu Debit'),
               subtitle: Text("Menggunakan kartu debit"),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/customers_model.dart';
 
 import 'package:qr_flutter/qr_flutter.dart';
@@ -221,7 +220,7 @@ class _CustomersManageScreenState extends State<CustomersManageScreen> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 10),
                       child: SizedBox(
                         width: double.infinity,
                         child: Column(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/shared/constants/constants.dart';
 
 import '../../../../data/model/users_model.dart';

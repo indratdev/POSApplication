@@ -31,7 +31,6 @@ class ProfileService {
         .collection(profilesCollection)
         .doc(FirebaseAuth.instance.currentUser!.uid.toString())
         .set(profile.toJson())
-        // .then((value) => myEither = const Right("Save User Successfully!"))
         .catchError((e) => myEither = Left(e.toString()));
 
     // read

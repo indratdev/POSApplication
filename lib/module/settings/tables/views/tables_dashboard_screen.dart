@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/tables_model.dart';
 import 'package:posapplication/module/export.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
@@ -18,14 +17,14 @@ class _TablesDashboardScreenState extends State<TablesDashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Tables Management"),
+        title: const Text("Tables Management"),
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.pushNamed(context, AppRoutes.tablesManagement);
           },
-          child: Icon(Icons.add)),
+          child: const Icon(Icons.add)),
       body: BlocBuilder<TablesBloc, TablesState>(
         builder: (context, state) {
           if (state is SuccessGetAllTable) {

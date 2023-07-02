@@ -232,7 +232,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
             }
           }
 
-          print(">>> totalOrdersPrice :: ${totalOrdersPrice}");
+          print(">>> totalOrdersPrice :: $totalOrdersPrice");
           return totalOrdersPrice;
         }
 
@@ -246,7 +246,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         var resultCalculateTotalPrice = calculateTotalPrice(allOrdersCustomer);
         updateTotalPrice(resultCalculateTotalPrice);
 
-        print(">>> abc : ${resultCalculateTotalPrice}");
+        print(">>> abc : $resultCalculateTotalPrice");
 
         emit(SuccessSelectedCustomerOrders(
           resultModel: allOrdersCustomer,

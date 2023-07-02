@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posapplication/data/model/tables_model.dart';
 
 import '../../../blocs/export_bloc.dart';
@@ -19,7 +18,7 @@ class _TablesSelectedScreenState extends State<TablesSelectedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Meja"),
+        title: const Text("Meja"),
         centerTitle: true,
         actions: [
           IconButton(
@@ -31,7 +30,7 @@ class _TablesSelectedScreenState extends State<TablesSelectedScreen> {
                 Navigator.pop(context);
               }
             },
-            icon: Icon(Icons.check),
+            icon: const Icon(Icons.check),
           ),
         ],
       ),

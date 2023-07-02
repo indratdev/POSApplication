@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:posapplication/module/owner/owner_profile/view/widgets/profile_widget.dart';
 
@@ -8,7 +7,7 @@ import '../../../../shared/widgets/custom_widgets.dart';
 import '../../../blocs/export_bloc.dart';
 
 class OwnerProfileInfoScreen extends StatefulWidget {
-  OwnerProfileInfoScreen({super.key});
+  const OwnerProfileInfoScreen({super.key});
 
   @override
   State<OwnerProfileInfoScreen> createState() => _OwnerProfileInfoScreenState();

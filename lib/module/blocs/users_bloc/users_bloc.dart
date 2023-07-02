@@ -63,7 +63,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
       try {
         // List<UsersModel> result = await userRepository.readAllUser();
         var result = await HiveService().readAllUserFromBox();
-        print(">>>> result GetAllUsersEvent2 : ${result}");
+        print(">>>> result GetAllUsersEvent2 : $result");
 
         emit(SuccessGetAllUserFromBox(resultModel: result));
       } catch (e) {

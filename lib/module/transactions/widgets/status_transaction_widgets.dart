@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:posapplication/data/model/users_model.dart';
 import 'package:posapplication/module/transactions/widgets/waiting_choose_table_widget.dart';
 import 'package:posapplication/module/transactions/widgets/waiting_status_widget.dart';
 
@@ -12,7 +11,7 @@ class StatusTransactionWidgets extends StatelessWidget {
   final double _width;
   // final List<UsersModel>? usersList;
 
-  StatusTransactionWidgets({
+  const StatusTransactionWidgets({
     super.key,
     required this.statusMap,
     required double width,
@@ -21,8 +20,8 @@ class StatusTransactionWidgets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double _width = MediaQuery.of(context).size.width;
-    int _widthIcon = _width ~/ 5;
+    double width = MediaQuery.of(context).size.width;
+    int widthIcon = width ~/ 5;
 
     return Column(
       children: [
@@ -31,7 +30,7 @@ class StatusTransactionWidgets extends StatelessWidget {
             orderCustomer?.dataTable?.tableID == "" &&
             orderCustomer?.userHandleBy == "") ...[
           WaitingChooseTableWidget(
-            widthIcon: _widthIcon,
+            widthIcon: widthIcon,
             orderCustomer: orderCustomer,
           )
         ],
@@ -40,7 +39,7 @@ class StatusTransactionWidgets extends StatelessWidget {
             orderCustomer?.dataTable?.tableID == "" &&
             orderCustomer?.userHandleBy != "") ...[
           WaitingChooseTableWidget(
-            widthIcon: _widthIcon,
+            widthIcon: widthIcon,
             orderCustomer: orderCustomer,
           )
         ],
@@ -50,7 +49,7 @@ class StatusTransactionWidgets extends StatelessWidget {
             orderCustomer?.dataTable?.tableID != "" &&
             orderCustomer?.userHandleBy == "") ...[
           WaitingStatusWidget(
-            widthIcon: _widthIcon,
+            widthIcon: widthIcon,
             orderCustomer: orderCustomer,
           )
         ],
@@ -58,14 +57,14 @@ class StatusTransactionWidgets extends StatelessWidget {
         // progress
         if (orderCustomer?.status == StatusOrder.progress.name) ...[
           ProgressStatusWidget(
-              widthIcon: _widthIcon, orderCustomer: orderCustomer),
+              widthIcon: widthIcon, orderCustomer: orderCustomer),
         ],
 
         // ready
         if (orderCustomer?.status == StatusOrder.ready.name) ...[
           DoneStatusWidget(
-              width: _width,
-              widthIcon: _widthIcon,
+              width: width,
+              widthIcon: widthIcon,
               orderCustomer: orderCustomer),
         ]
       ],

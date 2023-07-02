@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:posapplication/module/export.dart';
 
 import '../../../data/model/users_model.dart';
 import '../../../shared/constants/constants.dart';
@@ -69,7 +67,7 @@ class _BottomSheetUsersWidgetState extends State<BottomSheetUsersWidget> {
                         color: Colors.green.shade200, thickness: 1, height: 1),
                     Expanded(
                       child: ListView.separated(
-                        separatorBuilder: (context, index) => Divider(),
+                        separatorBuilder: (context, index) => const Divider(),
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
                         padding: const EdgeInsets.only(top: 2.0),
@@ -105,11 +103,11 @@ class _BottomSheetUsersWidgetState extends State<BottomSheetUsersWidget> {
               ));
         } else if (state is LoadingGetAllUserFromBox) {
           return Container(
-            child: CircularProgressIndicator(),
+            child: const CircularProgressIndicator(),
           );
         } else {
           return Container(
-            child: Text('Error'),
+            child: const Text('Error'),
           );
         }
       },
