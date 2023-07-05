@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:posapplication/shared/widgets/twooption_button_widget.dart';
 
 import '../../../../shared/utils/validator/validator.dart';
 import '../../../../data/model/tables_model.dart';
@@ -156,9 +157,6 @@ class _TablesManageScreenState extends State<TablesManageScreen> {
                     controller: noTableController,
                     decoration: const InputDecoration(
                       label: Text("No. Meja"),
-                      // fillColor: Colors.grey.shade300,
-                      // filled: (widget.isUpdate) ? true : false,
-                      // focusColor: (widget.isUpdate) ? Colors.grey : null,
                     ),
                   ),
                 ),
@@ -186,6 +184,8 @@ class _TablesManageScreenState extends State<TablesManageScreen> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(8, 12, 8, 12),
                   child: DropdownButton(
+                    borderRadius: BorderRadius.circular(8),
+                    elevation: 3,
                     isExpanded: true,
                     value: selectedShape,
                     items: dropdownShapes,
@@ -195,50 +195,11 @@ class _TablesManageScreenState extends State<TablesManageScreen> {
                     },
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 12, 8, 12),
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: SizedBox(
-                        height: MediaQuery.of(context).size.height / 16,
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              foregroundColor: Colors.red,
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text("BATAL")),
-                      )),
-                      const SizedBox(width: 10),
-                      (widget.isUpdate)
-                          // UPDATE DATA
-                          ? Expanded(
-                              child: SizedBox(
-                              height: MediaQuery.of(context).size.height / 16,
-                              child: ElevatedButton(
-                                child: const Text("UPDATE"),
-                                onPressed: () {
-                                  // print("update");
-                                  addOrUpdateUser(isUpdate: true);
-                                },
-                              ),
-                            ))
-                          // ADD NEW DATA
-                          : Expanded(
-                              child: SizedBox(
-                                height: MediaQuery.of(context).size.height / 16,
-                                child: ElevatedButton(
-                                  child: const Text("SIMPAN"),
-                                  onPressed: () =>
-                                      addOrUpdateUser(isUpdate: false),
-                                ),
-                              ),
-                            ),
-                    ],
-                  ),
+                TwoOptionButtonWidget(
+                  mainTitleButton: (widget.isUpdate) ? "UPDATE" : "SIMPAN",
+                  mainButtonvoidCallback: (widget.isUpdate)
+                      ? () => addOrUpdateUser(isUpdate: true)
+                      : () => addOrUpdateUser(isUpdate: false),
                 ),
               ],
             ),
@@ -261,17 +222,13 @@ List<DropdownMenuItem<String>> get dropdownShapes {
         value: TableShape.lshape.name.toString(),
         child: const Text("Bentuk L")),
     DropdownMenuItem(
-        value: TableShape.barseat.name.toString(),
-        child: const Text("Bar")),
+        value: TableShape.barseat.name.toString(), child: const Text("Bar")),
     DropdownMenuItem(
-        value: TableShape.oval.name.toString(),
-        child: const Text("Oval")),
+        value: TableShape.oval.name.toString(), child: const Text("Oval")),
     DropdownMenuItem(
-        value: TableShape.square.name.toString(),
-        child: const Text("Persegi")),
+        value: TableShape.square.name.toString(), child: const Text("Persegi")),
     DropdownMenuItem(
-        value: TableShape.others.name.toString(),
-        child: const Text("Lainnya")),
+        value: TableShape.others.name.toString(), child: const Text("Lainnya")),
   ];
   return menuItems;
 }

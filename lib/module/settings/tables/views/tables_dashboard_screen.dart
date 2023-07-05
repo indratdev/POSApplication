@@ -3,6 +3,7 @@ import 'package:posapplication/data/model/tables_model.dart';
 import 'package:posapplication/module/export.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
 
+import '../../../../shared/constants/constants.dart';
 import '../../../blocs/export_bloc.dart';
 
 class TablesDashboardScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class _TablesDashboardScreenState extends State<TablesDashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Tables Management"),
+        title: const Text("Manajemen Meja"),
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
@@ -40,7 +41,7 @@ class _TablesDashboardScreenState extends State<TablesDashboardScreen> {
               itemCount: listTables.length,
               itemBuilder: (context, index) {
                 TablesModel data = listTables[index];
-                print(">>>> data : $data");
+
                 return InkWell(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
@@ -48,10 +49,19 @@ class _TablesDashboardScreenState extends State<TablesDashboardScreen> {
                           TablesManageScreen(isUpdate: true, tableModel: data),
                     ));
                   },
-                  child: ListTile(
-                    title: Text("No. Meja : ${data.tableNo}"),
-                    subtitle: Text("Ukuran : ${data.size.toString()} "),
-                    trailing: Text(data.tableName.toString()),
+                  child: Container(
+                    color: mainWhite,
+                    child: ListTile(
+                      title: Text("Nama : ${data.tableName.toString()}"),
+                      subtitle: Text("No. : ${data.tableNo}"),
+                      trailing: CircleAvatar(
+                        backgroundColor: mainGreen,
+                        child: Text(
+                          data.size.toString(),
+                          style: const TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
                   ),
                 );
               },

@@ -5,6 +5,7 @@ import 'package:posapplication/module/export.dart';
 import 'package:posapplication/module/settings/category/view/category_management_screen.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
 
+import '../../../../shared/constants/constants.dart';
 import '../../../blocs/export_bloc.dart';
 
 class CategoryDashboardScreen extends StatefulWidget {
@@ -20,13 +21,11 @@ class _CategoryDashboardScreenState extends State<CategoryDashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Kategori"),
+        title: const Text("Manajemen Kategori"),
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
-            // Navigator.pushNamed(context, AppRoutes.categoryManagement);
-            print("object");
             Navigator.pushNamed(context, AppRoutes.categoryManagement);
           },
           child: const Icon(Icons.add)),
@@ -41,29 +40,44 @@ class _CategoryDashboardScreenState extends State<CategoryDashboardScreen> {
               );
             }
 
-            return ListView.builder(
-              itemCount: listCategorys.length,
-              itemBuilder: (context, index) {
-                CategoryModel data = listCategorys[index];
-                print(">>>> data : $data");
-                return InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => CategoryManagementScreen(
-                          isUpdate: true,
-                          categoryModel: data,
+            return Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Nama Kategori : ",
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: listCategorys.length,
+                  itemBuilder: (context, index) {
+                    CategoryModel data = listCategorys[index];
+                    print(">>>> data : $data");
+                    return InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => CategoryManagementScreen(
+                              isUpdate: true,
+                              categoryModel: data,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        color: mainWhite,
+                        child: ListTile(
+                          // title: const Text("Nama Kategori"),
+                          title: Text(data.categoryName.toString()),
+                          // trailing: Text(data.tableName.toString()),
                         ),
                       ),
                     );
                   },
-                  child: ListTile(
-                    title: const Text("Nama Kategori"),
-                    subtitle: Text(data.categoryName.toString()),
-                    // trailing: Text(data.tableName.toString()),
-                  ),
-                );
-              },
+                ),
+              ],
             );
           } else {
             return const SizedBox();
