@@ -5,6 +5,8 @@ import 'package:posapplication/module/customers/customers_manage/customers_manag
 
 import 'package:posapplication/shared/routes/app_routes.dart';
 
+import '../../../shared/constants/constants.dart';
+import '../../../shared/utils/TextUtil/text_util.dart';
 import '../../blocs/export_bloc.dart';
 
 class CustomersDashboardScreen extends StatefulWidget {
@@ -55,10 +57,17 @@ class _CustomersDashboardScreenState extends State<CustomersDashboardScreen> {
                           isUpdate: true, customersModel: data),
                     ));
                   },
-                  child: ListTile(
-                    title: Text(data.email ?? ""),
-                    subtitle: Text("${data.fullname}"),
-                    // trailing: Text(data.role.toString()),
+                  child: Container(
+                    color: mainWhite,
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        child: Text(
+                          TextUtil.getInitialName("${data.fullname}"),
+                        ),
+                      ),
+                      title: Text("${data.fullname}"),
+                      subtitle: Text(data.email ?? ""),
+                    ),
                   ),
                 );
               },

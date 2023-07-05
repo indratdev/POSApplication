@@ -62,11 +62,10 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: thirdGreen,
           appBarTheme: const AppBarTheme(color: mainGreen),
-          // bottomAppBarTheme: BottomAppBarTheme(
-          //   // color: Color(0x44000000),
-          //   color: Colors.amber,
-          //   elevation: 0,
-          // ),
+          floatingActionButtonTheme: const FloatingActionButtonThemeData(
+            backgroundColor: mainGreen,
+            elevation: 3,
+          ),
           textTheme:
               GoogleFonts.montserratTextTheme(Theme.of(context).textTheme),
         ),
