@@ -3,6 +3,7 @@ import 'package:posapplication/data/model/items_model.dart';
 import 'package:posapplication/module/export.dart';
 import 'package:posapplication/shared/routes/app_routes.dart';
 
+import '../../../shared/constants/constants.dart';
 import '../../blocs/export_bloc.dart';
 
 class ItemsDashboardScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class _ItemsDashboardScreenState extends State<ItemsDashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Dashboard Item / Barang"),
+        title: const Text("Item / Barang"),
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
@@ -42,7 +43,6 @@ class _ItemsDashboardScreenState extends State<ItemsDashboardScreen> {
               itemCount: listItems.length,
               itemBuilder: (context, index) {
                 ItemsModel data = listItems[index];
-                // print(">>>> data : $data");
                 return InkWell(
                   onTap: () {
                     Navigator.of(context).push(
@@ -54,8 +54,11 @@ class _ItemsDashboardScreenState extends State<ItemsDashboardScreen> {
                       ),
                     );
                   },
-                  child: ListTile(
-                    title: Text(data.itemName.toString()),
+                  child: Container(
+                    color: mainWhite,
+                    child: ListTile(
+                      title: Text(data.itemName.toString()),
+                    ),
                   ),
                 );
               },

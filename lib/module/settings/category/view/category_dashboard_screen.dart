@@ -44,9 +44,18 @@ class _CategoryDashboardScreenState extends State<CategoryDashboardScreen> {
               children: [
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Nama Kategori : ",
-                    textAlign: TextAlign.left,
+                  child: Container(
+                    height: MediaQuery.of(context).size.width / 10,
+                    padding: const EdgeInsets.all(8),
+                    child: const FittedBox(
+                      fit: BoxFit.fill,
+                      child: Text(
+                        "Nama Kategori : ",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 ListView.builder(

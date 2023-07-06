@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:posapplication/data/model/category_model.dart';
+import 'package:posapplication/shared/widgets/twooption_button_widget.dart';
 
 import '../../../../shared/utils/general_function.dart';
 import '../../../../shared/utils/validator/validator.dart';
@@ -66,7 +67,6 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("isupdate : ${widget.isUpdate}");
     return Scaffold(
         appBar: AppBar(
           title: const Text("Pengelolaan Kategori"),
@@ -156,50 +156,11 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 12, 8, 12),
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child: SizedBox(
-                          height: MediaQuery.of(context).size.height / 16,
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                foregroundColor: Colors.red,
-                              ),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text("BATAL")),
-                        )),
-                        const SizedBox(width: 10),
-                        (widget.isUpdate)
-                            // UPDATE DATA
-                            ? Expanded(
-                                child: SizedBox(
-                                height: MediaQuery.of(context).size.height / 16,
-                                child: ElevatedButton(
-                                  child: const Text("UPDATE"),
-                                  onPressed: () {
-                                    addOrUpdateCategory(isUpdate: true);
-                                  },
-                                ),
-                              ))
-                            // ADD NEW DATA
-                            : Expanded(
-                                child: SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height / 16,
-                                  child: ElevatedButton(
-                                    child: const Text("SIMPAN"),
-                                    onPressed: () =>
-                                        addOrUpdateCategory(isUpdate: false),
-                                  ),
-                                ),
-                              ),
-                      ],
-                    ),
+                  TwoOptionButtonWidget(
+                    mainTitleButton: (widget.isUpdate) ? "UPDATE" : "SIMPAN",
+                    mainButtonvoidCallback: (widget.isUpdate)
+                        ? () => addOrUpdateCategory(isUpdate: true)
+                        : addOrUpdateCategory(isUpdate: false),
                   ),
                 ],
               ),

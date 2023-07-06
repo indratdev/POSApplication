@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:posapplication/shared/routes/app_routes.dart';
 import 'package:posapplication/shared/widgets/custom_widgets.dart';
+import 'package:posapplication/shared/widgets/twooption_button_widget.dart';
 
 import '../../../data/model/category_model.dart';
 import '../../../data/model/items_model.dart';
@@ -246,59 +247,70 @@ class _ItemsManagementScreenState extends State<ItemsManagementScreen> {
                         onTap: () {},
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(8, 12, 8, 12),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: SizedBox(
-                              height: MediaQuery.of(context).size.height / 16,
-                              child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    foregroundColor: Colors.red,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text("BATAL")),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          (widget.isUpdate)
-                              // UPDATE DATA
-                              ? Expanded(
-                                  child: SizedBox(
-                                    height:
-                                        MediaQuery.of(context).size.height / 16,
-                                    child: ElevatedButton(
-                                      child: const Text("UPDATE"),
-                                      onPressed: () {
-                                        addOrUpdateItems("", isUpdate: true);
-                                      },
-                                    ),
-                                  ),
-                                )
-                              // ADD NEW DATA
-                              : Expanded(
-                                  child: SizedBox(
-                                    height:
-                                        MediaQuery.of(context).size.height / 16,
-                                    child: ElevatedButton(
-                                      child: const Text("SIMPAN"),
-                                      onPressed: () {
-                                        String itemID = GeneralFunction()
-                                            .generateUniqueItemID();
+                    TwoOptionButtonWidget(
+                      mainTitleButton: (widget.isUpdate) ? "UPDATE" : "SIMPAN",
+                      mainButtonvoidCallback: (widget.isUpdate)
+                          ? () => addOrUpdateItems("", isUpdate: true)
+                          : () {
+                              String itemID =
+                                  GeneralFunction().generateUniqueItemID();
 
-                                        addOrUpdateItems(itemID,
-                                            isUpdate: false);
-                                      },
-                                    ),
-                                  ),
-                                ),
-                        ],
-                      ),
-                    ),
+                              addOrUpdateItems(itemID, isUpdate: false);
+                            },
+                    )
+                    // Padding(
+                    //   padding: const EdgeInsets.fromLTRB(8, 12, 8, 12),
+                    //   child: Row(
+                    //     children: [
+                    //       Expanded(
+                    //         child: SizedBox(
+                    //           height: MediaQuery.of(context).size.height / 16,
+                    //           child: ElevatedButton(
+                    //               style: ElevatedButton.styleFrom(
+                    //                 backgroundColor: Colors.white,
+                    //                 foregroundColor: Colors.red,
+                    //               ),
+                    //               onPressed: () {
+                    //                 Navigator.pop(context);
+                    //               },
+                    //               child: const Text("BATAL")),
+                    //         ),
+                    //       ),
+                    //       const SizedBox(width: 10),
+                    //       (widget.isUpdate)
+                    //           // UPDATE DATA
+                    //           ? Expanded(
+                    //               child: SizedBox(
+                    //                 height:
+                    //                     MediaQuery.of(context).size.height / 16,
+                    //                 child: ElevatedButton(
+                    //                   child: const Text("UPDATE"),
+                    //                   onPressed: () {
+                    //                     addOrUpdateItems("", isUpdate: true);
+                    //                   },
+                    //                 ),
+                    //               ),
+                    //             )
+                    //           // ADD NEW DATA
+                    //           : Expanded(
+                    //               child: SizedBox(
+                    //                 height:
+                    //                     MediaQuery.of(context).size.height / 16,
+                    //                 child: ElevatedButton(
+                    //                   child: const Text("SIMPAN"),
+                    //                   onPressed: () {
+                    //                     String itemID = GeneralFunction()
+                    //                         .generateUniqueItemID();
+
+                    //                     addOrUpdateItems(itemID,
+                    //                         isUpdate: false);
+                    //                   },
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
